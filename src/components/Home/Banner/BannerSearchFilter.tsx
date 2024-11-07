@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ChevronDown, Search, SlidersHorizontal, Home, MapPin, KeyRound, Bed, Bath, } from "lucide-react"
+import { ChevronDown, Search, Home, MapPin, KeyRound, Bed, Bath, } from "lucide-react"
 import { cn } from "@/lib/utils"
 import menuicon from "../../../../public/assets/logo/dots.png"
 import Image from "next/image"
@@ -34,7 +34,8 @@ const BannerSearchFilter = () => {
               <div className="w-full max-w-7xl mx-auto p-6">
       <div className="relative">
         {/* Search Type Toggle */}
-        <div className="flex justify-start mb-5 rounded-lg p-1  backdrop-blur-sm shadow-sm gap-5">
+        {/* sily is none  backdrop-blur-sm */}
+        <div className="flex justify-start mb-5 rounded-lg p-1  shadow-sm gap-5">
           <button
             onClick={() => setSearchType('sale')}
             className={cn(

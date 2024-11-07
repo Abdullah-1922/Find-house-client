@@ -40,8 +40,11 @@
   .menu-bar ul {
     list-style: none;
     display: flex;
+    background-color: var(--color-white);
   }
   
+  
+
   .menu-bar ul li {
     /* width: 120px; */
     padding: 10px 30px;
@@ -61,7 +64,7 @@
 
   .menu-bar ul li a:hover {
     color: var(--color-white); 
-    padding: 15px 25px;
+    padding: 10px 20px;
     background-color: #414754;
     transition: all 0.3s;
     border-radius: 5px;
