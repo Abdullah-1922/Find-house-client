@@ -39,7 +39,7 @@ const Navbar = () => {
           <div className="dropdown-menu">
             <ul>
               <li>
-                <a href="#">Listing Grid</a>
+              <Link href="/list-grid">Listing Grid</Link>
               </li>
               <li>
                 <a href="#">Listing List</a>
