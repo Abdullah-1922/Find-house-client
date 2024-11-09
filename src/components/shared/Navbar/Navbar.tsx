@@ -4,6 +4,7 @@ import navbarLogo from '../../../../public/assets/logo/logo-light-dark.svg'
 import Image from 'next/image';
 import languageLogo from '../../../../public/assets/logo/globe.png'
 import Sidebar from './SideBar/Sidebar';
+import Link from 'next/link';
 const Navbar = () => {
     return (
         <>
@@ -15,9 +16,9 @@ const Navbar = () => {
       </h1>
       <ul>
          <li>
-          <a href="#">
+          <Link href="/">
            Home  <i className="fas fa-caret-down"></i>
-          </a>
+          </Link>
           <div className="dropdown-menu">
             <ul>
               <li>
