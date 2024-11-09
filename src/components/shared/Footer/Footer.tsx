@@ -7,7 +7,7 @@ import Link from "next/link"
 const Footer = () => {
     return (
    <div className="h-[400px]">
-     <footer className="w-full h-[400px]  bg-white border-t flex flex-col justify-around ">
+     <footer className="w-full h-[400px]   bg-white border-t flex flex-col justify-around ">
         <div className="grid grid-cols-1 gap-6 px-4 pt-8 md:grid-cols-4 md:gap-8  mx-32">
           {/* Logo & Info Section */}
           <div className="space-y-4">
