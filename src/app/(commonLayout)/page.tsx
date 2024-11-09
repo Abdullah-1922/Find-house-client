@@ -1,3 +1,4 @@
+import Apartmentforrent from "@/components/Home/Apartmentforrent/Apartmentforrent";
 import Banner from "@/components/Home/Banner/Banner";
 import PopularPlaces from "@/components/Home/PopularPlaces/PopularPlaces";
 import RecentProperties from "@/components/Home/RecentProperties/RecentProperties";
@@ -12,6 +13,7 @@ export default function Home() {
     <RecentProperties/>
     <WhyChooseUs/>
     <PopularPlaces/>
+    <Apartmentforrent/>
  </div>
   );
 }
