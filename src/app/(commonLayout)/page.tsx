@@ -1,4 +1,5 @@
 import Apartmentforrent from "@/components/Home/Apartmentforrent/Apartmentforrent";
+import ArticlesAndTips from "@/components/Home/ArticlesAndTips/ArticlesAndTips";
 import Banner from "@/components/Home/Banner/Banner";
 import MeetOurAgents from "@/components/Home/MeetOurAgents/MeetOurAgents";
 import PopularPlaces from "@/components/Home/PopularPlaces/PopularPlaces";
@@ -16,6 +17,7 @@ export default function Home() {
     <PopularPlaces/>
     <Apartmentforrent/>
     <MeetOurAgents/>
+    <ArticlesAndTips/>
  </div>
   );
 }
