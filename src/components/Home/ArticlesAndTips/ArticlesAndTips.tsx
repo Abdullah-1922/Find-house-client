@@ -49,7 +49,7 @@ const ArticlesAndTips = () => {
 
   return (
     <div>
-      <div className="mt-20">
+      <div className="mt-20 ">
         <h2 className="text-center text-4xl font-bold">Articles & Tips</h2>
         <p className="text-center">Read the latest news from our blog.</p>
       </div>
