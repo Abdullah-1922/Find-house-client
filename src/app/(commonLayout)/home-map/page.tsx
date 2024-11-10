@@ -1,3 +1,4 @@
+import RecentProperties from "@/components/Home/RecentProperties/RecentProperties";
 import IndustryLocation from "./_components/IndustryLocation";
 
 const HomeMap = () => {
@@ -5,6 +6,7 @@ const HomeMap = () => {
     <>
       <div className="">
         <IndustryLocation />
+        <RecentProperties />
       </div>
     </>
   );
