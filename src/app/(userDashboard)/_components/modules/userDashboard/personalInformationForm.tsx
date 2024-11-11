@@ -112,7 +112,7 @@ const PersonalInformationForm: React.FC<PersonalInformationFormProps> = ({
             />
           </div>
         </div>
-        <p className="text-start text-green-500">Update Password</p>
+        <p className="text-start text-green-500 mt-5">Update Password</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <div>
             <label htmlFor="newPassword">New Password</label>

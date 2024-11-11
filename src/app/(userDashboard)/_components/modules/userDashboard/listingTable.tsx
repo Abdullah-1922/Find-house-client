@@ -77,8 +77,8 @@ export default function ListingsTable() {
                 <TableCell>{format(listing.date, 'dd MMM yyyy')}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span>{listing.rating.toFixed(1)}</span>
+                    <Star className="size-4 fill-yellow-400 text-yellow-400 mb-1" />
+                    <p>{listing.rating.toFixed(1)}</p>
                   </div>
                 </TableCell>
                 <TableCell>

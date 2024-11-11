@@ -56,9 +56,10 @@ export default function DashboardSidebar() {
       {/* Hamburger Icon for Mobile */}
       <button
         onClick={handleToggleSidebar}
-        className="absolute left-4 z-50 block lg:hidden text-black focus:outline-none"
+        className="absolute top-[56px] left-2 z-50  lg:hidden focus:outline-none border rounded-md px-2 py-1 flex items-center gap-1 whitespace-nowrap text-xs bg-[#414754] text-white"
       >
         <Dock />
+        Open SideBar
       </button>
 
       {/* Sidebar Overlay on Mobile */}

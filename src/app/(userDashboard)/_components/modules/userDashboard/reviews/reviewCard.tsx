@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { Delete, Eye, StarIcon } from 'lucide-react';
+import { Delete, Eye, Star } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
@@ -20,7 +20,7 @@ const ReviewCard: React.FC<Review> = ({
   rating,
 }) => {
   return (
-    <Card className="bg-white p-4 rounded-lg mb-4 flex justify-between items-center gap-5">
+    <Card className="bg-white p-4 rounded-lg mb-4 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-5">
       <div>
         <div className="flex items-center mb-2">
           <Image
@@ -40,7 +40,7 @@ const ReviewCard: React.FC<Review> = ({
 
         <div className="flex items-center mt-2">
           {[...Array(rating)].map((_, i) => (
-            <StarIcon key={i} className="w-5 h-5 text-yellow-500" />
+            <Star key={i} className="w-5 h-5 text-yellow-500" />
           ))}
         </div>
       </div>
