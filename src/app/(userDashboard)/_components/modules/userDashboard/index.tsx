@@ -14,7 +14,7 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="space-y-10 mt-5">
+    <div className="space-y-10">
       <DashboardStats />
       <ListingsTable />
       <MessagesList />

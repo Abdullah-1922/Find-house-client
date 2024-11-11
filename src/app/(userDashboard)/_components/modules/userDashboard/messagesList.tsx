@@ -61,26 +61,28 @@ export default function MessagesList() {
         {messages.map((message) => (
           <div
             key={message.id}
-            className="flex flex-col md:flex-row items-start gap-4 rounded-lg border p-4"
+            className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 rounded-lg border p-4"
           >
-            <Avatar className="size-16">
-              <AvatarImage
-                src={message.sender.avatar}
-                alt={message.sender.name}
-              />
-              <AvatarFallback>{message.sender.initials}</AvatarFallback>
-            </Avatar>
-            <div className="flex items-start gap-4">
-              <div className="grid flex-1 items-center gap-1">
-                <div className="flex flex-col">
-                  <div className="font-semibold">{message.sender.name}</div>
-                  <div className="text-sm text-muted-foreground">
-                    {message.timestamp}
+            <div className="flex flex-col md:flex-row items-start gap-2">
+              <Avatar className="size-16">
+                <AvatarImage
+                  src={message.sender.avatar}
+                  alt={message.sender.name}
+                />
+                <AvatarFallback>{message.sender.initials}</AvatarFallback>
+              </Avatar>
+              <div className="flex items-start gap-4">
+                <div className="grid flex-1 items-center gap-1">
+                  <div className="flex flex-col">
+                    <div className="font-semibold">{message.sender.name}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {message.timestamp}
+                    </div>
                   </div>
+                  <p className="text-sm text-muted-foregrounds">
+                    {message.content}
+                  </p>
                 </div>
-                <p className="text-sm text-muted-foregrounds">
-                  {message.content}
-                </p>
               </div>
             </div>
             <div className="flex items-center justify-center gap-2 mt-7">

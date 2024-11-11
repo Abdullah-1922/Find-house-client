@@ -1,14 +1,14 @@
-import "./Navbar.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import navbarLogo from "../../../../public/assets/logo/logo-light-dark.svg";
-import Image from "next/image";
-import languageLogo from "../../../../public/assets/logo/globe.png";
-import Sidebar from "./SideBar/Sidebar";
-import Link from "next/link";
+import './Navbar.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import navbarLogo from '../../../../public/assets/logo/logo-light-dark.svg';
+import Image from 'next/image';
+import languageLogo from '../../../../public/assets/logo/globe.png';
+import Sidebar from './SideBar/Sidebar';
+import Link from 'next/link';
 const Navbar = () => {
   return (
     <>
-      <div className="lg:flex  hidden">
+      <div className="lg:flex hidden">
         <div className="menu-bar ">
           <div className="flex items-center gap-10">
             <h1 className="logo">

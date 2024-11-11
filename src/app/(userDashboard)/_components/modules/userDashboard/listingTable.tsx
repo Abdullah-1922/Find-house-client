@@ -72,16 +72,20 @@ export default function ListingsTable() {
           </TableHeader>
           <TableBody>
             {listings.map((listing) => (
-              <TableRow key={listing.id}>
-                <TableCell className="font-medium">{listing.name}</TableCell>
-                <TableCell>{format(listing.date, 'dd MMM yyyy')}</TableCell>
-                <TableCell>
+              <TableRow className="overflow-x-auto" key={listing.id}>
+                <TableCell className="font-medium whitespace-nowrap">
+                  {listing.name}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {format(listing.date, 'dd MMM yyyy')}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
                   <div className="flex items-center gap-1">
                     <Star className="size-4 fill-yellow-400 text-yellow-400 mb-1" />
                     <p>{listing.rating.toFixed(1)}</p>
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="whitespace-nowrap">
                   <Badge
                     variant="outline"
                     className={
@@ -93,7 +97,7 @@ export default function ListingsTable() {
                     {listing.status}
                   </Badge>
                 </TableCell>
-                <TableCell>
+                <TableCell className="whitespace-nowrap">
                   <Button
                     variant="ghost"
                     size="icon"
