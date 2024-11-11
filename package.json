@@ -20,9 +20,14 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@react-google-maps/api": "^2.20.3",
     "@reduxjs/toolkit": "^2.3.0",
+    "aos": "^3.0.0-beta.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+<<<<<<< HEAD
     "date-fns": "^4.1.0",
+=======
+    "embla-carousel-autoplay": "^8.3.1",
+>>>>>>> 39e02b24014da6cc12f8eb7b526a9560198ed1e3
     "embla-carousel-react": "^8.3.1",
     "framer-motion": "^11.11.11",
     "lucide-react": "^0.453.0",
@@ -38,7 +43,11 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@types/google.maps": "^3.58.1",
+=======
+    "@types/aos": "^3.0.7",
+>>>>>>> 39e02b24014da6cc12f8eb7b526a9560198ed1e3
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
