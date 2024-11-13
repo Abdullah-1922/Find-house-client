@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
 interface NavItem {
   title: string;
@@ -49,24 +50,26 @@ export default function DashboardSidebar() {
   }, []);
 
   const sidebarVariants = {
-    open: { x: 0, opacity: 1, transition: { type: 'spring', damping: 30 } },
-    closed: { x: '-100%', opacity: 0, transition: { damping: 30 } },
+    open: { x: 0 },
+    closed: { x: '-100%' },
   };
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden flex items-center px-3 py-2 mt-[70px] text-white border rounded-md bg-[#414754]"
-      >
-        <Dock />
-        <span>{isOpen ? 'Close' : 'Open'} Sidebar</span>
-      </button>
+      <div>
+        <Button
+          onClick={() => setIsOpen(!isOpen)}
+          className="absolute right-5 w-[140px] lg:hidden flex items-center px-3 py-2 mt-[97px] text-white rounded-md bg-[#24324A] border-none"
+        >
+          <Dock />
+          <p>{isOpen ? 'Close' : 'Open'} Sidebar</p>
+        </Button>
+      </div>
 
       {/* Sidebar Overlay */}
       {isOpen && isMobile && (
         <div
-          className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
+          className="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
@@ -76,7 +79,7 @@ export default function DashboardSidebar() {
         initial="closed"
         animate={isOpen || !isMobile ? 'open' : 'closed'}
         variants={sidebarVariants}
-        className="fixed top-0 left-0 z-50 h-full w-64 bg-[#1e2837] text-white shadow-lg lg:block"
+        className="fixed top-0 left-0 z-20 h-full w-64 bg-[#1e2837] text-white lg:block"
       >
         <div className="flex flex-col items-center p-4 bg-[#24324A]">
           <Link href="/" className="flex items-center gap-2 font-semibold">

@@ -55,7 +55,7 @@ export default function DashboardStats() {
 
   return (
     <div className="space-y-6 bg-white rounded-md border p-5">
-      <h2 className="text-xl font-semibold tracking-tight text-gray-700">
+      <h2 className="text-lg md:text-xl font-semibold tracking-tight text-gray-700">
         Manage Dashboard
       </h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
