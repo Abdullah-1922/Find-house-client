@@ -215,7 +215,7 @@ export default function HomeMap() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <Card className="absolute right-10 top-7/12 w-80 bg-white/95 z-20">
+        <Card className="absolute right-10 top-7/12 w-80 md:w-[400px] bg-white/95 z-20">
           <CardContent className="p-4 space-y-4">
             <div className="space-y-2 z-[999] cursor-pointer">
               <label className="text-sm font-medium">Property Status</label>

@@ -84,6 +84,20 @@ const properties: Property[] = [
     imageUrl:
       'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
   },
+  {
+    id: '4',
+    title: 'Real House Luxury Villa',
+    location: 'Est St. 77 - Central Park South, NYC',
+    price: 150000,
+    bedrooms: 6,
+    bathrooms: 3,
+    area: 720,
+    garages: 2,
+    featured: true,
+    status: 'For Sale',
+    imageUrl:
+      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
+  },
 ];
 
 export default function ResentPropertySlider() {
@@ -102,7 +116,7 @@ export default function ResentPropertySlider() {
           align: 'start',
           loop: true,
         }}
-        className="w-full"
+        className="w-full mx-4"
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {properties.map((property) => (
@@ -115,7 +129,7 @@ export default function ResentPropertySlider() {
                   <div className="absolute top-4 left-4 right-4 z-10 flex justify-between">
                     <Badge
                       variant="secondary"
-                      className="bg-gray-800 text-white"
+                      className="bg-gray-800 hover:bg-gray-900 text-white"
                     >
                       Featured
                     </Badge>
@@ -123,8 +137,8 @@ export default function ResentPropertySlider() {
                       variant="secondary"
                       className={
                         property.status === 'For Sale'
-                          ? 'bg-red-500 text-white'
-                          : 'bg-amber-500 text-white'
+                          ? 'bg-red-500 hover:bg-red-600 text-white'
+                          : 'bg-amber-500 hover:bg-amber-600 text-white'
                       }
                     >
                       {property.status}
@@ -245,6 +259,8 @@ export default function ResentPropertySlider() {
             </CarouselItem>
           ))}
         </CarouselContent>
+        <CarouselPrevious className="hidden md:flex" />
+        <CarouselNext className="hidden md:flex" />
       </Carousel>
     </div>
   );
