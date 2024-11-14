@@ -8,14 +8,14 @@ import Image from "next/image";
 
 const GridViewCard = ({ property }: { property: TProperty }) => {
   return (
-    <Card className="overflow-hidden rounded-lg bg-white shadow-sm">
+    <Card className="overflow-hidden rounded-lg bg-white shadow-sm w-80">
       <div className="relative">
         <Image
           src={property.image}
           alt={property.title}
           width={600}
-          height={400}
-          className="h-[340px] w-full object-cover"
+          height={300}
+          className="h-[220px] w-full object-cover"
         />
         <div className="absolute left-4 right-4 top-4 flex justify-between">
           {property.featured && (
@@ -103,8 +103,9 @@ const GridViewCard = ({ property }: { property: TProperty }) => {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex items-center gap-3 border-t p-4">
-        <Avatar className="h-10 w-10 rounded-full">
+      <CardFooter className="flex items-center justify-between gap-3 border-t p-4">
+      <div className="flex  items-center gap-3">
+      <Avatar className="h-10 w-10 rounded-full">
           <AvatarImage src={property.agent.image} alt={property.agent.name} />
           <AvatarFallback>{property.agent.name[0]}</AvatarFallback>
         </Avatar>
@@ -112,8 +113,12 @@ const GridViewCard = ({ property }: { property: TProperty }) => {
           <span className="text-sm font-medium text-gray-900">
             {property.agent.name}
           </span>
-          <span className="text-sm text-gray-500">{property.postedTime}</span>
+      
         </div>
+      </div>
+      <div>
+      <span className="text-sm text-gray-500">{property.postedTime}</span>
+      </div>
       </CardFooter>
     </Card>
   );
