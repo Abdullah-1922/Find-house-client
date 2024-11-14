@@ -210,74 +210,121 @@ export default function HomeMap() {
       )}
 
       <motion.div
-        className="absolute top-4 right-4 w-[300px] bg-white/95 z-[999] shadow-lg"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <Card className="absolute right-10 top-7/12 w-80 md:w-[400px] bg-white/95 z-20">
-          <CardContent className="p-4 space-y-4">
-            <div className="space-y-2 z-[999] cursor-pointer">
-              <label className="text-sm font-medium">Property Status</label>
-              <Select
-                value={filters.status}
-                onValueChange={(value) =>
-                  setFilters({ ...filters, status: value })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Any Status" />
-                </SelectTrigger>
-                <SelectContent className="z-[999]">
-                  <SelectItem value="Any Status">Any Status</SelectItem>
-                  <SelectItem value="For Sale">For Sale</SelectItem>
-                  <SelectItem value="For Rent">For Rent</SelectItem>
-                  <SelectItem value="Sold">Sold</SelectItem>
-                </SelectContent>
-              </Select>
+        <Card className="absolute bottom-2 md:mx-0 md:top-10 md:right-10 w-full md:w-[400px] md:h-[450px] bg-white/95 z-[999]">
+          <CardContent className="p-4">
+            <div className="flex flex-row md:flex-col gap-3 w-full">
+              <div className="w-full">
+                <label className="text-sm font-medium">Property Status</label>
+                <Select
+                  value={filters.status}
+                  onValueChange={(value) =>
+                    setFilters({ ...filters, status: value })
+                  }
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Any Status" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[999] w-full">
+                    <SelectItem value="Any Status">Any Status</SelectItem>
+                    <SelectItem value="For Sale">For Sale</SelectItem>
+                    <SelectItem value="For Rent">For Rent</SelectItem>
+                    <SelectItem value="Sold">Sold</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="w-full">
+                <label className="text-sm font-medium">Property Type</label>
+                <Select
+                  value={filters.type}
+                  onValueChange={(value) =>
+                    setFilters({ ...filters, type: value })
+                  }
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Any Type" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[999] w-full">
+                    <SelectItem value="Any Type">Any Type</SelectItem>
+                    <SelectItem value="House">House</SelectItem>
+                    <SelectItem value="Apartment">Apartment</SelectItem>
+                    <SelectItem value="Condo">Condo</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
-            <div className="space-y-2 z-[999] cursor-pointer ">
-              <label className="text-sm font-medium">Property Type</label>
-              <Select
-                value={filters.type}
-                onValueChange={(value) =>
-                  setFilters({ ...filters, type: value })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Any Type" />
-                </SelectTrigger>
-                <SelectContent className="z-[999]">
-                  <SelectItem value="Any Type">Any Type</SelectItem>
-                  <SelectItem value="House">House</SelectItem>
-                  <SelectItem value="Apartment">Apartment</SelectItem>
-                  <SelectItem value="Condo">Condo</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="flex flex-row md:flex-col gap-3 w-full">
+              <div className="w-full">
+                <label className="text-sm font-medium">Location</label>
+                <Select
+                  value={filters.location}
+                  onValueChange={(value) =>
+                    setFilters({ ...filters, location: value })
+                  }
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Any Location" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[999] w-full">
+                    <SelectItem value="Any Location">Any Location</SelectItem>
+                    <SelectItem value="New York">New York</SelectItem>
+                    <SelectItem value="Brooklyn">Brooklyn</SelectItem>
+                    <SelectItem value="Queens">Queens</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex gap-3 w-full md:flex-row md:gap-3">
+                <div className="w-1/2">
+                  <label className="text-sm font-medium">Beds</label>
+                  <Select
+                    value={filters.beds}
+                    onValueChange={(value) =>
+                      setFilters({ ...filters, beds: value })
+                    }
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Any" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[999] w-full">
+                      <SelectItem value="Any">Any</SelectItem>
+                      <SelectItem value="1">1+</SelectItem>
+                      <SelectItem value="2">2+</SelectItem>
+                      <SelectItem value="3">3+</SelectItem>
+                      <SelectItem value="4">4+</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="w-1/2">
+                  <label className="text-sm font-medium">Baths</label>
+                  <Select
+                    value={filters.baths}
+                    onValueChange={(value) =>
+                      setFilters({ ...filters, baths: value })
+                    }
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Any" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[999] w-full">
+                      <SelectItem value="Any">Any</SelectItem>
+                      <SelectItem value="1">1+</SelectItem>
+                      <SelectItem value="2">2+</SelectItem>
+                      <SelectItem value="3">3+</SelectItem>
+                      <SelectItem value="4">4+</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-2 z-[999] cursor-pointer ">
-              <label className="text-sm font-medium">Location</label>
-              <Select
-                value={filters.location}
-                onValueChange={(value) =>
-                  setFilters({ ...filters, location: value })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Any Location" />
-                </SelectTrigger>
-                <SelectContent className="z-[999]">
-                  <SelectItem value="Any Location">Any Location</SelectItem>
-                  <SelectItem value="New York">New York</SelectItem>
-                  <SelectItem value="Brooklyn">Brooklyn</SelectItem>
-                  <SelectItem value="Queens">Queens</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2 z-[999] cursor-pointer ">
+            <div className="w-full mt-4">
               <label className="text-sm font-medium">
                 Price Range: ${filters.priceRange[0].toLocaleString()} - $
                 {filters.priceRange[1].toLocaleString()}
@@ -291,57 +338,13 @@ export default function HomeMap() {
                 onValueChange={(value) =>
                   setFilters({ ...filters, priceRange: value })
                 }
-                className="py-4"
+                className="py-4 w-full"
               />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2 z-[999] cursor-pointer ">
-                <label className="text-sm font-medium">Beds</label>
-                <Select
-                  value={filters.beds}
-                  onValueChange={(value) =>
-                    setFilters({ ...filters, beds: value })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Any" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[999]">
-                    <SelectItem value="Any">Any</SelectItem>
-                    <SelectItem value="1">1+</SelectItem>
-                    <SelectItem value="2">2+</SelectItem>
-                    <SelectItem value="3">3+</SelectItem>
-                    <SelectItem value="4">4+</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2 z-[999] cursor-pointer ">
-                <label className="text-sm font-medium">Baths</label>
-                <Select
-                  value={filters.baths}
-                  onValueChange={(value) =>
-                    setFilters({ ...filters, baths: value })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Any" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[999]">
-                    <SelectItem value="Any">Any</SelectItem>
-                    <SelectItem value="1">1+</SelectItem>
-                    <SelectItem value="2">2+</SelectItem>
-                    <SelectItem value="3">3+</SelectItem>
-                    <SelectItem value="4">4+</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
 
             <Button
               onClick={handleSearch}
-              className="w-full bg-gray-800 hover:bg-gray-900"
+              className="w-full mt-4 bg-gray-800 hover:bg-gray-900"
             >
               Search
             </Button>
