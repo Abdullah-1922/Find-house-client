@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
-
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface NavItem {
   title: string;
@@ -21,7 +21,15 @@ interface NavItem {
 }
 
 const navigation: NavItem[] = [
-  { title: 'Home', href: '/' },
+  {
+    title: 'Home',
+    href: '/',
+    submenu: [
+      { title: 'All Listings', href: '/listing/all' },
+      { title: 'Featured', href: '/listing/featured' },
+      { title: 'Recent', href: '/listing/recent' },
+    ],
+  },
   {
     title: 'Listing',
     href: '/listing',
@@ -54,57 +62,54 @@ const navigation: NavItem[] = [
   { title: 'Contact', href: '/contact' },
 ];
 
-export default function Component() {
+export default function DashboardNavbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [hoveredItem, setHoveredItem] = React.useState<string | null>(null);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = React.useState(false);
   const hoverTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = (title: string) => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     setHoveredItem(title);
   };
 
   const handleMouseLeave = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
-    hoverTimeoutRef.current = setTimeout(() => {
-      setHoveredItem(null);
-    }, 300); // Delay to allow moving to submenu
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(() => setHoveredItem(null), 300);
   };
 
   return (
-    <header className="fixed top-0 z-50 border-b bg-[#24324A] right-0 left-0  md:left-64">
-      <nav className="flex items-center gap-4 justify-between py-[11px] px-2 md:px-5 text-white  w-full">
+    <header className="fixed top-0 z-20 border-b bg-gray-800 right-0 left-0 md:left-64">
+      <nav className="flex items-center gap-4 justify-between py-[13px] px-2 md:px-5 text-white w-full">
         {/* Mobile menu button */}
         <div className="flex items-center gap-2">
           <div className="lg:hidden">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <span className="sr-only">Open menu</span>
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                size="icon"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="border-none"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d={
-                    isMenuOpen
-                      ? 'M6 18L18 6M6 6l12 12'
-                      : 'M4 6h16M4 12h16M4 18h16'
-                  }
-                />
-              </svg>
-            </Button>
+                <span className="sr-only">Open menu</span>
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d={
+                      isMenuOpen
+                        ? 'M6 18L18 6M6 6l12 12'
+                        : 'M4 6h16M4 12h16M4 18h16'
+                    }
+                  />
+                </svg>
+              </Button>
+            </motion.div>
           </div>
 
           {/* Desktop navigation */}
@@ -117,13 +122,10 @@ export default function Component() {
               >
                 {item.submenu ? (
                   <DropdownMenu open={hoveredItem === item.title}>
-                    <DropdownMenuTrigger asChild>
+                    <DropdownMenuTrigger className="border-none" asChild>
                       <Button
-                        variant="ghost"
                         className={cn(
-                          'flex items-center gap-1 font-medium text-white',
-                          item.title === 'Pages' &&
-                            'hover:bg-white hover:text-black'
+                          'flex items-center gap-1 text-white border-none bg-transparent hover:bg-transparent'
                         )}
                       >
                         {item.title}
@@ -133,13 +135,21 @@ export default function Component() {
                     <DropdownMenuContent align="start">
                       {item.submenu.map((subitem) => (
                         <DropdownMenuItem key={subitem.title} asChild>
-                          <Link href={subitem.href}>{subitem.title}</Link>
+                          <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <Link href={subitem.href}>{subitem.title}</Link>
+                          </motion.div>
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
-                  <Button variant="ghost" asChild className="text-white">
+                  <Button
+                    asChild
+                    className="text-white border-none bg-transparent hover:bg-transparent"
+                  >
                     <Link href={item.href}>{item.title}</Link>
                   </Button>
                 )}
@@ -151,19 +161,14 @@ export default function Component() {
         {/* Mobile navigation */}
         {isMenuOpen && (
           <div className="absolute left-0 top-16 z-50 w-full bg-background shadow-lg lg:hidden border-none">
-            <div className="flex flex-col gap-4 -mt-1 bg-[#24324A]">
+            <div className="flex flex-col gap-4 -mt-1 bg-gray-800">
               {navigation.map((item) => (
                 <div key={item.title}>
                   {item.submenu ? (
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
-                          variant="ghost"
-                          className={cn(
-                            'w-full justify-between text-white',
-                            item.title === 'Pages' &&
-                              'hover:text-white hover:bg-white'
-                          )}
+                          className={cn('w-full justify-between text-white')}
                         >
                           {item.title}
                           <ChevronDown className="h-4 w-4" />
@@ -178,11 +183,7 @@ export default function Component() {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   ) : (
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start text-white"
-                      asChild
-                    >
+                    <Button className="w-full justify-start text-white" asChild>
                       <Link href={item.href}>{item.title}</Link>
                     </Button>
                   )}
@@ -192,16 +193,60 @@ export default function Component() {
           </div>
         )}
 
-        {/* User profile */}
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium whitespace-nowrap">
-            Hi, Mary!
-          </span>
-          <Avatar>
-            <AvatarImage src="/placeholder.svg" alt="User" />
-            <AvatarFallback>M</AvatarFallback>
-          </Avatar>
-        </div>
+        {/* User profile dropdown */}
+        <DropdownMenu
+          open={isProfileMenuOpen}
+          onOpenChange={setIsProfileMenuOpen}
+        >
+          <DropdownMenuTrigger asChild>
+            <div
+              className="absolute right-3 flex items-center gap-2 cursor-pointer"
+              onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+            >
+              <Avatar>
+                <AvatarImage
+                  src="https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg"
+                  alt="User"
+                />
+                <AvatarFallback>U</AvatarFallback>
+              </Avatar>
+              <span className="text-sm font-medium whitespace-nowrap">
+                Hi, Mary!
+              </span>
+            </div>
+          </DropdownMenuTrigger>
+          <AnimatePresence>
+            {isProfileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <DropdownMenuContent align="end" className="w-48 mt-2">
+                  {[
+                    { title: 'Edit Profile', href: '/profile/edit' },
+                    { title: 'Add Property', href: '/property/add' },
+                    { title: 'Payment', href: '/payment' },
+                    {
+                      title: 'Change Password',
+                      href: '/profile/change-password',
+                    },
+                    { title: 'Logout', href: '/logout' },
+                  ].map((item) => (
+                    <DropdownMenuItem key={item.title} asChild>
+                      <Link href={item.href}>
+                        <motion.div whileHover={{ scale: 1.05 }}>
+                          {item.title}
+                        </motion.div>
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </DropdownMenu>
       </nav>
     </header>
   );
