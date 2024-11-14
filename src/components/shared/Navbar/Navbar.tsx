@@ -7,7 +7,7 @@ import Sidebar from "./SideBar/Sidebar";
 import Link from "next/link";
 const Navbar = () => {
   return (
-    <>
+    <div className="bg-white">
       <div className="lg:flex  hidden">
         <div className="menu-bar ">
           <div className="flex items-center gap-10">
@@ -89,7 +89,7 @@ const Navbar = () => {
                 </div>
               </li>
               <li>
-                <a href="#">Blog</a>
+                <Link href="/blogs">Blog</Link>
               </li>
               <li>
                 <a href="#">Contact us</a>
@@ -163,7 +163,7 @@ const Navbar = () => {
       <div className="lg:hidden flex">
         <Sidebar></Sidebar>
       </div>
-    </>
+    </div>
   );
 };
 
