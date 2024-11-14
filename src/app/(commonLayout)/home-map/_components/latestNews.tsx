@@ -85,13 +85,13 @@ const NewsCard: React.FC<{ article: NewsArticle; index: number }> = ({
 }) => {
   return (
     <MotionCard
-      className="overflow-hidden flex gap-3"
+      className="overflow-hidden md:flex gap-3"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ y: -5 }}
     >
-      <motion.div className="relative h-full w-full">
+      <motion.div className="relative h-48 md:h-full w-full">
         <Image
           src={article.image}
           alt={article.title}
@@ -99,7 +99,7 @@ const NewsCard: React.FC<{ article: NewsArticle; index: number }> = ({
           objectFit="cover"
         />
       </motion.div>
-      <div className="flex flex-col">
+      <div className="md:flex flex-col">
         <CardHeader>
           <CardTitle>{article.title}</CardTitle>
           <p className="text-sm text-gray-500">

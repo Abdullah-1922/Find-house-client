@@ -166,11 +166,11 @@ export default function HappyCustomers() {
     const interval = setInterval(() => {
       const nextSlide = (currentSlide + 1) % testimonials.length;
       instanceRef.current?.moveToIdx(nextSlide);
-    }, 3000); // Change slide every 3 seconds
+    }, 1200); // Change slide every 3 seconds
 
     // Cleanup interval on unmount
     return () => clearInterval(interval);
-  }, [currentSlide, instanceRef]);
+  }, [instanceRef]);
 
   return (
     <section className="bg-gray-100 py-16">
