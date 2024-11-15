@@ -60,11 +60,20 @@ const PlaceCard: React.FC<Place> = ({ name, properties, image, featured }) => (
     )}
 
     {/* Image Scaling Only on Hover */}
-    <div className="h-[350px]">
-      <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-        <Image src={image} alt={name} layout="fill" objectFit="cover" />
-      </motion.div>
-    </div>
+
+    <motion.div
+      className="h-64"
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Image
+        className="w-full h-64 object-cover transition-transform duration-300 ease-in-out transform group-hover:scale-110"
+        src={image}
+        alt={name}
+        layout="fill"
+        objectFit="cover"
+      />
+    </motion.div>
   </div>
 );
 
@@ -73,7 +82,7 @@ export default function PopularPlaces() {
     <section className="max-w-7xl mx-auto px-4">
       <SectionTitle header="MOST POPULAR" title="PLACES" />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
-        <div className="col-span-12 md:col-span-4 h-[350px]">
+        <div className="col-span-12 md:col-span-4">
           <PlaceCard {...places[0]} />
         </div>
         <div className="col-span-12 md:col-span-8">
