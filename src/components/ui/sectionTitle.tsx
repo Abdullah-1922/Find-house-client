@@ -11,8 +11,8 @@ export default function SectionTitle({
     <div className="flex items-center gap-4 mb-6">
       <div className="w-3.5 h-14 rounded bg-gray-800" />
       <div>
-        <h2 className="text-sm font-semibold text-gray-800">{header}</h2>
-        <h3 className="text-2xl font-bold text-gray-950">{title}</h3>
+        <h2 className="text-sm uppercase font-semibold text-gray-800">{header}</h2>
+        <h3 className="text-2xl uppercase font-bold ">{title}</h3>
       </div>
     </div>
   );

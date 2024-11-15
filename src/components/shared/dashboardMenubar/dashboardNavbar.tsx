@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 interface NavItem {
   title: string;
@@ -194,59 +195,47 @@ export default function DashboardNavbar() {
         )}
 
         {/* User profile dropdown */}
-        <DropdownMenu
-          open={isProfileMenuOpen}
-          onOpenChange={setIsProfileMenuOpen}
-        >
-          <DropdownMenuTrigger asChild>
-            <div
-              className="absolute right-3 flex items-center gap-2 cursor-pointer"
-              onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-            >
-              <Avatar>
-                <AvatarImage
-                  src="https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg"
-                  alt="User"
-                />
-                <AvatarFallback>U</AvatarFallback>
-              </Avatar>
-              <span className="text-sm font-medium whitespace-nowrap">
-                Hi, Mary!
-              </span>
+        <div className="dropdown dropdown-end">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar flex justify-center items-center w-36 bg-gray-50/50 hover:bg-gray-200/60"
+          >
+            <div className="w-10 rounded-full">
+              <Image
+                width={1000}
+                height={1000}
+                alt="user profile image"
+                src="https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg"
+              />
             </div>
-          </DropdownMenuTrigger>
-          <AnimatePresence>
-            {isProfileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-              >
-                <DropdownMenuContent align="end" className="w-48 mt-2">
-                  {[
-                    { title: 'Edit Profile', href: '/profile/edit' },
-                    { title: 'Add Property', href: '/property/add' },
-                    { title: 'Payment', href: '/payment' },
-                    {
-                      title: 'Change Password',
-                      href: '/profile/change-password',
-                    },
-                    { title: 'Logout', href: '/logout' },
-                  ].map((item) => (
-                    <DropdownMenuItem key={item.title} asChild>
-                      <Link href={item.href}>
-                        <motion.div whileHover={{ scale: 1.05 }}>
-                          {item.title}
-                        </motion.div>
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </DropdownMenu>
+            <h3 tabIndex={0} role="button" className="text-sm">
+              Hi, Mary <i className="fas fa-caret-right text-gray-500"></i>
+            </h3>
+          </div>
+
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-2"
+          >
+            <li>
+              <Link href={'#'} className="justify-between text-gray-900">
+                Profile
+                <span className="badge">New</span>
+              </Link>
+            </li>
+            <li>
+              <Link className="text-gray-900" href={'#'}>
+                Settings
+              </Link>
+            </li>
+            <li>
+              <Link className="text-gray-900" href={'#'}>
+                Logout
+              </Link>
+            </li>
+          </ul>
+        </div>
       </nav>
     </header>
   );

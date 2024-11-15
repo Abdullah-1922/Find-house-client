@@ -79,7 +79,7 @@ const PlaceCard: React.FC<Place> = ({ name, properties, image, featured }) => (
 
 export default function PopularPlaces() {
   return (
-    <section className="max-w-7xl mx-auto px-4">
+    <section className="max-w-7xl mx-auto px-2 md:px-4">
       <SectionTitle header="MOST POPULAR" title="PLACES" />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
         <div className="col-span-12 md:col-span-4">

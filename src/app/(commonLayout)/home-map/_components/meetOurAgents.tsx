@@ -130,7 +130,7 @@ const AgentCard: React.FC<{ agent: Agent; index: number }> = ({
 
 export default function MeetOurAgents() {
   return (
-    <div className="max-w-7xl mx-auto px-4">
+    <div className="max-w-7xl mx-auto px-2 md:px-4">
       <SectionTitle header="MEET OUR" title="TEAM" />
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"

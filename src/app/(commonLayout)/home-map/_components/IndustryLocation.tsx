@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -14,7 +15,6 @@ import { Slider } from '@/components/ui/slider';
 import { Marker, Popup, TileLayer, MapContainer } from 'react-leaflet';
 import L from 'leaflet'; // Import Leaflet directly
 import 'leaflet/dist/leaflet.css';
-import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 
 // Sample property data

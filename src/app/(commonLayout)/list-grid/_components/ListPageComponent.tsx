@@ -128,24 +128,7 @@ export default function Component() {
       postedTime: "2 months ago",
       image: "https://code-theme.com/html/findhouses/images/blog/b-11.jpg",
     },
-    {
-      id: 3,
-      title: "Real House Luxury Villa",
-      price: 9000,
-      location: "Est St, 77 - Central Park South, NYC",
-      bedrooms: 6,
-      bathrooms: 3,
-      area: 720,
-      garages: 2,
-      status: "For Sale",
-      featured: false,
-      agent: {
-        name: "katy Teddy",
-        image: "/placeholder.svg?height=40&width=40",
-      },
-      postedTime: "2 months ago",
-      image: "https://code-theme.com/html/findhouses/images/blog/b-11.jpg",
-    },
+  
   ];
 
   return (
@@ -212,7 +195,7 @@ export default function Component() {
       >
         {properties.map((property) =>
           viewMode === "grid" ? (
-            <GridViewCard key={property.id} property={property} />
+            <GridViewCard className="gap-5" key={property.id} property={property} />
           ) : (
             <ListViewCard key={property.id} property={property} />
           )

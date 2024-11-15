@@ -9,10 +9,10 @@ import { Button } from '@/components/ui/button';
 const Navbar = () => {
   return (
     <>
-      <div className="lg:flex  hidden">
+      <div className="lg:flex hidden z-[999] absolute w-full text-gray-900">
         <div className="menu-bar ">
           <div className="flex items-center gap-10">
-            <h1 className="logo">
+            <Link href={'/'} className="logo">
               <Image
                 className="w-14"
                 width={1000}
@@ -20,85 +20,88 @@ const Navbar = () => {
                 src={navbarLogo}
                 alt="navigation logo"
               />
-            </h1>
+            </Link>
             <ul>
               <li>
-                <a href="#">
+                <Link href="#">
                   Home <i className="fas fa-caret-down"></i>
-                </a>
-                <div className="dropdown-menu">
+                </Link>
+                <div className="dropdown-menu mt-1">
                   <ul>
                     <li>
-                      <a href="#">Home Map</a>
+                      <Link href="/">Home</Link>
                     </li>
                     <li>
-                      <a href="#">Home Video</a>
+                      <Link href="/home-map">Home Map</Link>
+                    </li>
+                    <li>
+                      <Link href="/home-video">Home Video</Link>
                     </li>
                   </ul>
                 </div>
               </li>
               <li>
-                <a href="#">
+                <Link href="#">
                   Listing <i className="fas fa-caret-down"></i>
-                </a>
-                <div className="dropdown-menu">
+                </Link>
+                <div className="dropdown-menu mt-1">
                   <ul>
                     <li>
-                      <a href="#">Listing Grid</a>
+                      <Link href="/list-grid">Listing Grid</Link>
                     </li>
                     <li>
-                      <a href="#">Listing List</a>
+                      <Link href="#">Listing List</Link>
                     </li>
                     <li>
-                      <a href="#">All Agents</a>
+                      <Link href="#">All Agents</Link>
                     </li>
                     <li>
-                      <a href="#">All Agencies</a>
+                      <Link href="#">All Agencies</Link>
                     </li>
                   </ul>
                 </div>
               </li>
               <li>
-                <a href="#">
+                <Link href="#">
                   Pages <i className="fas fa-caret-down"></i>
-                </a>
-                <div className="dropdown-menu">
+                </Link>
+                <div className="dropdown-menu mt-1">
                   <ul>
                     <li>
-                      <a href="#">
+                      <Link href="#">
                         Shop <i className="fas fa-caret-right"></i>
-                      </a>
-                      <div className="dropdown-menu-1">
+                      </Link>
+                      <div className="dropdown-menu-1 ml-1 -mt-1">
                         <ul>
                           <li>
-                            <a href="#">Order Page</a>
+                            <Link href="#">Order Page</Link>
                           </li>
                           <li>
-                            <a href="#">All Product</a>
+                            <Link href="#">All Product</Link>
                           </li>
                         </ul>
                       </div>
                     </li>
                     <li>
-                      <a href="#">About US</a>
+                      <Link href="#">About US</Link>
                     </li>
 
                     <li>
-                      <a href="#">FAQ</a>
+                      <Link href="#">FAQ</Link>
                     </li>
                   </ul>
                 </div>
               </li>
               <li>
-                <a href="#">Blog</a>
+                <Link href="/blogs">Blog</Link>
               </li>
               <li>
-                <a href="#">Contact us</a>
+                <Link href="#">Contact us</Link>
               </li>
             </ul>
           </div>
           <div className="flex justify-center items-center gap-5">
-            <div className="flex justify-center gap-x-2 items-center">
+            <div className="flex justify-center gap-x-2 items-center bg-gray-300 px-2 rounded-md">
               <Image
                 className="w-5"
                 src={languageLogo}
@@ -106,17 +109,15 @@ const Navbar = () => {
                 width={1000}
                 height={1000}
               />
-              <h2 className="font-bold border-r border-gray-700 pr-5 text-gray-600">
-                ENG
-              </h2>
+              <h2 className="font-bold">ENG</h2>
             </div>
-            <h2 className="border-r border-gray-700 pr-5">Sign In</h2>
+            <h2 className="border-r border-l border-gray-700 px-3 ">Sign In</h2>
 
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost btn-circle avatar flex justify-center items-center w-36"
+                className="btn btn-ghost btn-circle avatar flex justify-center items-center w-36 bg-gray-50/50 hover:bg-gray-200/60"
               >
                 <div className="w-10 rounded-full">
                   <Image
@@ -126,11 +127,7 @@ const Navbar = () => {
                     src="https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg"
                   />
                 </div>
-                <h3
-                  tabIndex={0}
-                  role="button"
-                  className="text-gray-500 text-sm"
-                >
+                <h3 tabIndex={0} role="button" className="text-sm">
                   Hi, Mary <i className="fas fa-caret-right text-gray-500"></i>
                 </h3>
               </div>
@@ -140,22 +137,22 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <a className="justify-between">
+                  <Link href={'#'} className="justify-between">
                     Profile
                     <span className="badge">New</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <Link href={'#'}>Settings</Link>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <Link href={'#'}>Logout</Link>
                 </li>
               </ul>
             </div>
 
             <Link href={'/dashboard/user'}>
-              <Button className="text-white py-3 px-5 bg-gray-600 hover:bg-gray-700 h-[45px] rounded font-bold">
+              <Button className="text-white py-3 px-5 bg-gray-800 hover:bg-gray-900 h-[45px] rounded font-bold">
                 Add Listing
               </Button>
             </Link>

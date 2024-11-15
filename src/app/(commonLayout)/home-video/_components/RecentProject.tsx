@@ -1,11 +1,4 @@
-'use client';
-
-import React from 'react';
-import SectionTitle from '@/components/ui/sectionTitle';
-import { motion } from 'framer-motion';
 import PropertyCard from '@/components/shared/card/PropertyCard';
-import { Button } from '@/components/ui/button';
-import { CircleArrowRight } from 'lucide-react';
 
 interface Property {
   id: string;
@@ -123,37 +116,25 @@ const properties: Property[] = [
   },
 ];
 
-export default function FeaturedProperties() {
-  const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.2,
-      },
-    },
-  };
+const RecentProject = () => {
   return (
-    <div className="relative z-10 max-w-7xl m-auto px-2 md:px-2 md:px-4">
-      <SectionTitle header="FEATURED" title="PROPERTIES" />
+    <div className="max-w-7xl mx-auto px-2 md:px-4">
+      <div>
+        <h2 className="text-center text-4xl font-bold pt-20">
+          Featured Properties
+        </h2>
+        <p className="text-center text-gray-500">
+          We provide full service at every step.
+        </p>
+      </div>
 
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
-        variants={containerVariants}
-      >
-        {properties.slice(0, 6).map((property, index) => (
-          <PropertyCard key={index} property={property} />
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 p-4">
+        {properties.slice(0, 6).map((property) => (
+          <PropertyCard key={property.id} property={property} />
         ))}
-      </motion.div>
-
-      <div className="flex items-center justify-center my-5">
-        <Button className="flex items-center gap-2 bg-gray-800 hover:bg-gray-900 rounded-full">
-          See More
-          <CircleArrowRight />
-        </Button>
       </div>
     </div>
   );
-}
+};
+
+export default RecentProject;
