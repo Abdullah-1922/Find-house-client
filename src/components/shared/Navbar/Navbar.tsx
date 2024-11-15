@@ -5,9 +5,10 @@ import Image from "next/image";
 import languageLogo from "../../../../public/assets/logo/globe.png";
 import Sidebar from "./SideBar/Sidebar";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 const Navbar = () => {
   return (
-    <div className="bg-white">
+    <>
       <div className="lg:flex  hidden">
         <div className="menu-bar ">
           <div className="flex items-center gap-10">
@@ -153,9 +154,11 @@ const Navbar = () => {
               </ul>
             </div>
 
-            <button className="text-white py-3 px-5 bg-gray-600 rounded font-bold">
-              Add Listing <i className="fas fa-laptop-house ml-2"></i>
-            </button>
+            <Link href={"/dashboard/user"}>
+              <Button className="text-white py-3 px-5 bg-gray-600 hover:bg-gray-700 h-[45px] rounded font-bold">
+                Add Listing
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -163,7 +166,7 @@ const Navbar = () => {
       <div className="lg:hidden flex">
         <Sidebar></Sidebar>
       </div>
-    </div>
+    </>
   );
 };
 

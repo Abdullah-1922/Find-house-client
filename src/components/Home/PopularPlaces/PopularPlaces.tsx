@@ -1,3 +1,4 @@
+import SectionTitle from "@/components/ui/sectionTitle";
 import Image from "next/image";
 const locations = [
     {
@@ -46,10 +47,8 @@ const PopularPlaces = () => {
     });
   return (
     <div>
-      <div>
-        <h2 className="text-center text-4xl font-bold">Popular Places</h2>
-        <p className="text-center"> Properties In Most Popular Places.</p>
-      </div>
+    
+      <SectionTitle header="Most Popular" title="Places"/>
      <div className="flex justify-center mt-20">
      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
       {locations.map((location, index) => (

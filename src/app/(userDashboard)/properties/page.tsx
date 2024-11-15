@@ -1,5 +1,11 @@
+import Container from '@/components/ui/container';
 import React from 'react';
+import Properties from '../_components/modules/properties';
 
 export default function PropertiesPage() {
-  return <div>PropertiesPage</div>;
+  return (
+    <Container>
+      <Properties />
+    </Container>
+  );
 }
