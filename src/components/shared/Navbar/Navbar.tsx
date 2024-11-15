@@ -1,11 +1,11 @@
-import './Navbar.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import navbarLogo from '../../../../public/assets/logo/logo-light-dark.svg';
-import Image from 'next/image';
-import languageLogo from '../../../../public/assets/logo/globe.png';
-import Sidebar from './SideBar/Sidebar';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import "./Navbar.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import navbarLogo from "../../../../public/assets/logo/logo-light-dark.svg";
+import Image from "next/image";
+import languageLogo from "../../../../public/assets/logo/globe.png";
+import Sidebar from "./SideBar/Sidebar";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 const Navbar = () => {
   return (
     <>
@@ -29,10 +29,10 @@ const Navbar = () => {
                 <div className="dropdown-menu">
                   <ul>
                     <li>
-                      <a href="#">Home Map</a>
+                      <Link href="/home-map">Home Map</Link>
                     </li>
                     <li>
-                      <a href="#">Home Video</a>
+                      <Link href="/home-video">Home Video</Link>
                     </li>
                   </ul>
                 </div>
@@ -44,7 +44,7 @@ const Navbar = () => {
                 <div className="dropdown-menu">
                   <ul>
                     <li>
-                      <a href="#">Listing Grid</a>
+                      <Link href="/list-grid">Listing Grid</Link>
                     </li>
                     <li>
                       <a href="#">Listing List</a>
@@ -90,7 +90,7 @@ const Navbar = () => {
                 </div>
               </li>
               <li>
-                <a href="#">Blog</a>
+                <Link href="/blogs">Blog</Link>
               </li>
               <li>
                 <a href="#">Contact us</a>
@@ -154,7 +154,7 @@ const Navbar = () => {
               </ul>
             </div>
 
-            <Link href={'/dashboard/user'}>
+            <Link href={"/dashboard/user"}>
               <Button className="text-white py-3 px-5 bg-gray-600 hover:bg-gray-700 h-[45px] rounded font-bold">
                 Add Listing
               </Button>

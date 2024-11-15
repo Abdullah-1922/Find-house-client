@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Home, Twitter } from "lucide-react"
+import { Twitter } from "lucide-react"
 import Image from "next/image";
 import Link from "next/link"
 
