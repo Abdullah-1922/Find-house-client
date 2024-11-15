@@ -28,7 +28,7 @@ const Navbar = () => {
                 <div className="dropdown-menu">
                   <ul>
                     <li>
-                      <a href="#">Home Map</a>
+                      <Link href="/home-map">Home Map</Link>
                     </li>
                     <li>
                       <Link href="/home-video">Home Video</Link>
