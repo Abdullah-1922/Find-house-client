@@ -16,7 +16,7 @@ const partnersData = [
 const OurPartners = () => {
   return (
     <div
-      className="h-[400px] mt-10"
+      className="h-[400px] "
       style={{
         backgroundImage:
           'url(https://code-theme.com/html/findhouses/images/bg/bg-white-3.png)',
@@ -27,6 +27,10 @@ const OurPartners = () => {
         <p className="text-center text-gray-500">
           The Companies That Represent Us.
         </p>
+
+        <h2 className="text-center text-4xl font-bold pt-20 mb-3">Our Partners</h2>
+        <p className="text-center text-gray-500">The Companies That Represent Us.</p>
+
       </div>
 
       <div

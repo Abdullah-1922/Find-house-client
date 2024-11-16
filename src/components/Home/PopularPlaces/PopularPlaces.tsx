@@ -85,6 +85,7 @@ const PopularPlaces = () => {
           </div>
         ))}
       </div>
+     </div>
     </div>
   );
 };
