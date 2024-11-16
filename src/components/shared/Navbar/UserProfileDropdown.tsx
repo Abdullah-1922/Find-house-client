@@ -20,7 +20,7 @@ export default function UserProfileDropdown() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative h-14 w-40 space-x-2 rounded-full hover:border bg-gray-50/10 hover:bg-gray-200/10"
+          className="relative h-[50px] w-40 space-x-2 rounded-full hover:border bg-gray-50/10 hover:bg-gray-200/10"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage
