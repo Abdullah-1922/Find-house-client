@@ -8,8 +8,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 const Navbar = () => {
   return (
-    <>
-      <div className="lg:flex  hidden">
+    <div className="bg-white">
+      <div className="lg:flex   hidden">
         <div className="menu-bar ">
           <div className="flex items-center gap-10">
             <h1 className="logo">
@@ -74,7 +74,7 @@ const Navbar = () => {
                             <a href="#">Order Page</a>
                           </li>
                           <li>
-                            <a href="#">All Product</a>
+                            <Link href="/products">All Product</Link>
                           </li>
                         </ul>
                       </div>
@@ -166,7 +166,7 @@ const Navbar = () => {
       <div className="lg:hidden flex">
         <Sidebar></Sidebar>
       </div>
-    </>
+    </div>
   );
 };
 
