@@ -11,12 +11,12 @@ const DashboardNavbar = () => {
       <div className="fixed top-0 lg:flex hidden z-[999] w-full text-gray-900">
         <div className="menu-bar flex flex-row justify-between items-center bg-gray-800 gap-5 w-full mr-64 py-3 px-3">
           <div className="flex items-center gap-10">
-            <ul>
+            <ul className="px-2 space-x-4">
               <li>
                 <Link href="#">
                   Home <i className="fas fa-caret-down"></i>
                 </Link>
-                <div className="dropdown-menu mt-1">
+                <div className="dropdown-menu mt-0.5">
                   <ul>
                     <li>
                       <Link href="/">Home</Link>
@@ -34,7 +34,7 @@ const DashboardNavbar = () => {
                 <Link href="#">
                   Listing <i className="fas fa-caret-down"></i>
                 </Link>
-                <div className="dropdown-menu mt-1">
+                <div className="dropdown-menu mt-0.5">
                   <ul>
                     <li>
                       <Link href="/list-grid">Listing Grid</Link>
@@ -46,7 +46,7 @@ const DashboardNavbar = () => {
                       <Link href="#">All Agents</Link>
                     </li>
                     <li>
-                      <Link href="#">All Agencies</Link>
+                      <Link href="/agencies">All Agencies</Link>
                     </li>
                   </ul>
                 </div>
@@ -55,29 +55,40 @@ const DashboardNavbar = () => {
                 <Link href="#">
                   Pages <i className="fas fa-caret-down"></i>
                 </Link>
-                <div className="dropdown-menu mt-1">
+                <div className="dropdown-menu mt-0.5">
                   <ul>
                     <li>
                       <Link href="#">
                         Shop <i className="fas fa-caret-right"></i>
                       </Link>
-                      <div className="dropdown-menu-1 ml-1 -mt-1">
+                      <div className="dropdown-menu-1 ml-1 -mt-0.5">
                         <ul>
                           <li>
                             <Link href="#">Order Page</Link>
                           </li>
                           <li>
-                            <Link href="#">All Product</Link>
+                            <Link href="/products">All Product</Link>
                           </li>
                         </ul>
                       </div>
                     </li>
                     <li>
-                      <Link href="#">About US</Link>
+                      <Link href="/about-us">About US</Link>
                     </li>
 
                     <li>
-                      <Link href="#">FAQ</Link>
+                      <Link href="/faq">FAQ</Link>
+                    </li>
+                    <li>
+                      <Link href="/pricing-packages">Pricing Table</Link>
+                    </li>
+                    <li>
+                      <Link href="/coming-soon">Coming Soon</Link>
+                    </li>
+                    <li>
+                      <Link href="/under-constrauction">
+                        Under construction
+                      </Link>
                     </li>
                   </ul>
                 </div>

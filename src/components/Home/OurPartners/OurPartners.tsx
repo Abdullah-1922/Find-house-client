@@ -28,9 +28,12 @@ const OurPartners = () => {
           The Companies That Represent Us.
         </p>
 
-        <h2 className="text-center text-4xl font-bold pt-20 mb-3">Our Partners</h2>
-        <p className="text-center text-gray-500">The Companies That Represent Us.</p>
-
+        <h2 className="text-center text-4xl font-bold pt-20 mb-3">
+          Our Partners
+        </h2>
+        <p className="text-center text-gray-500">
+          The Companies That Represent Us.
+        </p>
       </div>
 
       <div

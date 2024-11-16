@@ -6,7 +6,7 @@ const layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="bg-[#F5F7FB]">
       <Navbar />
-      <div className="pt-20">{children}</div>
+      <div>{children}</div>
       <Footer />
     </div>
   );
