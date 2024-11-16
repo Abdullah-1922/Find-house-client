@@ -89,6 +89,12 @@ const Navbar = () => {
                     <li>
                       <Link href="/pricing-packages">Pricing Table</Link>
                     </li>
+                    <li>
+                      <Link href="/coming-soon">Coming Soon</Link>
+                    </li>
+                    <li>
+                      <Link href="/under-constrauction">Under construction</Link>
+                    </li>
                   </ul>
                 </div>
               </li>
