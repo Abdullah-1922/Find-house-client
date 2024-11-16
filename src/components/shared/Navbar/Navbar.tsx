@@ -80,11 +80,14 @@ const Navbar = () => {
                       </div>
                     </li>
                     <li>
-                      <a href="#">About US</a>
+                      <Link href="/about-us">About US</Link>
                     </li>
 
                     <li>
-                      <a href="#">FAQ</a>
+                      <Link href="/faq">FAQ</Link>
+                    </li>
+                    <li>
+                      <Link href="/pricing-packages">Pricing Table</Link>
                     </li>
                   </ul>
                 </div>
