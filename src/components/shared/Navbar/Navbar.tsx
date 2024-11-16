@@ -9,8 +9,8 @@ import { Button } from '@/components/ui/button';
 import UserProfileDropdown from './UserProfileDropdown';
 const Navbar = () => {
   return (
-    <>
-      <div className="lg:flex hidden z-[999] absolute w-full text-gray-900">
+    <div className="bg-white">
+      <div className="lg:flex   hidden">
         <div className="menu-bar ">
           <div className="flex items-center gap-10">
             <Link href={'/'} className="logo">
@@ -22,7 +22,7 @@ const Navbar = () => {
                 alt="navigation logo"
               />
             </Link>
-            <ul>
+            <ul className="px-2 space-x-4">
               <li>
                 <Link href="#">
                   Home <i className="fas fa-caret-down"></i>
@@ -57,7 +57,7 @@ const Navbar = () => {
                       <Link href="#">All Agents</Link>
                     </li>
                     <li>
-                      <Link href="#">All Agencies</Link>
+                      <Link href="/agencies">All Agencies</Link>
                     </li>
                   </ul>
                 </div>
@@ -78,17 +78,28 @@ const Navbar = () => {
                             <Link href="#">Order Page</Link>
                           </li>
                           <li>
-                            <Link href="#">All Product</Link>
+                            <Link href="/products">All Product</Link>
                           </li>
                         </ul>
                       </div>
                     </li>
                     <li>
-                      <Link href="#">About US</Link>
+                      <Link href="/about-us">About US</Link>
                     </li>
 
                     <li>
-                      <Link href="#">FAQ</Link>
+                      <Link href="/faq">FAQ</Link>
+                    </li>
+                    <li>
+                      <Link href="/pricing-packages">Pricing Table</Link>
+                    </li>
+                    <li>
+                      <Link href="/coming-soon">Coming Soon</Link>
+                    </li>
+                    <li>
+                      <Link href="/under-constrauction">
+                        Under construction
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -128,7 +139,7 @@ const Navbar = () => {
       <div className="lg:hidden flex">
         <Sidebar></Sidebar>
       </div>
-    </>
+    </div>
   );
 };
 
