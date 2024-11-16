@@ -46,9 +46,9 @@ const PopularPlaces = () => {
       year: 'numeric',
     });
   return (
-    <div>
-    
-      <SectionTitle header="Most Popular" title="Places"/>
+    <div className="">
+       <SectionTitle  header="Most Popular" title="Places"/>
+   
      <div className="flex justify-center mt-20">
      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
       {locations.map((location, index) => (
