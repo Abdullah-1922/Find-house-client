@@ -150,7 +150,7 @@ const NewsCard: React.FC<{ article: NewsArticle; index: number }> = ({
 
 export default function LatestNews() {
   return (
-    <div className="max-w-7xl mx-auto px-4">
+    <div className="max-w-7xl mx-auto px-2 md:px-4">
       <SectionTitle header="LATEST" title="NEWS" />
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 gap-8"

@@ -136,7 +136,7 @@ export default function FeaturedProperties() {
     },
   };
   return (
-    <div className="relative z-10 max-w-7xl m-auto px-2 md:px-4">
+    <div className="relative z-10 max-w-7xl m-auto px-2 md:px-2 md:px-4">
       <SectionTitle header="FEATURED" title="PROPERTIES" />
 
       <motion.div

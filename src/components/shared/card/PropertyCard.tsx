@@ -46,7 +46,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
     >
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden border-none">
         <div className="relative aspect-[4/3]">
           <div className="absolute top-4 left-4 right-4 z-10 flex justify-between">
             <Badge

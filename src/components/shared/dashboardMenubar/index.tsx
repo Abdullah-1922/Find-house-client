@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   Building2,
   CreditCard,
@@ -14,10 +14,10 @@ import {
   LogOut,
   Plus,
   User2,
-} from "lucide-react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+} from 'lucide-react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
 interface NavItem {
   title: string;
@@ -26,14 +26,14 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { title: "Dashboard", href: "/dashboard/user", icon: LayoutDashboard },
-  { title: "Profile", href: "/profile", icon: User2 },
-  { title: "My Properties", href: "/properties", icon: Building2 },
-  { title: "Favorited Properties", href: "/favorites", icon: Heart },
-  { title: "Add Property", href: "/properties/new", icon: Plus },
-  { title: "Payments", href: "/payments", icon: CreditCard },
-  { title: "Invoices", href: "/invoices", icon: FileText },
-  { title: "Change Password", href: "/change-password", icon: KeyRound },
+  { title: 'Dashboard', href: '/dashboard/user', icon: LayoutDashboard },
+  { title: 'Profile', href: '/profile', icon: User2 },
+  { title: 'My Properties', href: '/properties', icon: Building2 },
+  { title: 'Favorited Properties', href: '/favorites', icon: Heart },
+  { title: 'Add Property', href: '/properties/new', icon: Plus },
+  { title: 'Payments', href: '/payments', icon: CreditCard },
+  { title: 'Invoices', href: '/invoices', icon: FileText },
+  { title: 'Change Password', href: '/change-password', icon: KeyRound },
 ];
 
 // Updated Dashboard Sidebar Component
@@ -45,13 +45,13 @@ export default function DashboardSidebar() {
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const sidebarVariants = {
     open: { x: 0 },
-    closed: { x: "-100%" },
+    closed: { x: '-100%' },
   };
 
   return (
@@ -62,7 +62,7 @@ export default function DashboardSidebar() {
           className="absolute right-5 w-[140px] lg:hidden flex items-center px-3 py-2 mt-[97px] text-white rounded-md bg-[#24324A] border-none"
         >
           <Dock />
-          <p>{isOpen ? "Close" : "Open"} Sidebar</p>
+          <p>{isOpen ? 'Close' : 'Open'} Sidebar</p>
         </Button>
       </div>
 
@@ -77,11 +77,11 @@ export default function DashboardSidebar() {
       {/* Sidebar */}
       <motion.div
         initial="closed"
-        animate={isOpen || !isMobile ? "open" : "closed"}
+        animate={isOpen || !isMobile ? 'open' : 'closed'}
         variants={sidebarVariants}
         className="fixed top-0 left-0 z-20 h-full w-64 bg-[#1e2837] text-white lg:block"
       >
-        <div className="flex flex-col items-center p-4 bg-[#24324A]">
+        <div className="flex flex-col items-center p-4 bg-[#24324A] -mt-2 md:my-3">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <Image
               src="https://code-theme.com/html/findhouses/images/logo-blue.svg"
@@ -111,7 +111,7 @@ export default function DashboardSidebar() {
               href={item.href}
               key={item.href}
               className={`flex items-center gap-4 p-2 rounded-md text-white/70 hover:bg-white/10 hover:text-white ${
-                pathname === item.href ? "bg-white/10 text-white" : ""
+                pathname === item.href ? 'bg-white/10 text-white' : ''
               }`}
             >
               <item.icon className="h-4 w-4" />
@@ -119,8 +119,8 @@ export default function DashboardSidebar() {
             </Link>
           ))}
           <button
-            onClick={() => console.log("Logging out...")}
-            className="flex items-center gap-4 p-2 rounded-md text-white/70 hover:bg-white/10 hover:text-white"
+            onClick={() => console.log('Logging out...')}
+            className="flex items-center gap-4 p-2 rounded-md text-white/70 hover:bg-white/10 hover:text-white w-full"
           >
             <LogOut className="h-4 w-4" />
             Log Out

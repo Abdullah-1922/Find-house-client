@@ -174,7 +174,7 @@ export default function HappyCustomers() {
 
   return (
     <section className="bg-gray-100 py-16">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-2 md:px-4">
         <SectionTitle header="HAPPY" title="CUSTOMERS" />
         <div ref={sliderRef} className="keen-slider">
           <AnimatePresence>

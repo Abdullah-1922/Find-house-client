@@ -1,155 +1,174 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Bed, Bath, Square, Car, Link2, MessageSquare, ImageIcon } from 'lucide-react'
-import Image from "next/image"
+import PropertyCard from '@/components/shared/card/PropertyCard';
 
+interface Property {
+  id: string;
+  title: string;
+  location: string;
+  price: number;
+  bedrooms: number;
+  bathrooms: number;
+  area: number;
+  garages: number;
+  featured: boolean;
+  status: 'For Sale' | 'For Rent';
+  imageUrl: string;
+}
+
+const properties: Property[] = [
+  {
+    id: '1',
+    title: 'Real House Luxury Villa',
+    location: 'Est St. 77 - Central Park South, NYC',
+    price: 150000,
+    bedrooms: 6,
+    bathrooms: 3,
+    area: 720,
+    garages: 2,
+    featured: true,
+    status: 'For Sale',
+    imageUrl:
+      'https://www.shutterstock.com/image-photo/beautiful-home-exterior-600nw-160071032.jpg',
+  },
+  {
+    id: '2',
+    title: 'Real House Luxury Villa',
+    location: 'Est St. 77 - Central Park South, NYC',
+    price: 150000,
+    bedrooms: 6,
+    bathrooms: 3,
+    area: 720,
+    garages: 2,
+    featured: true,
+    status: 'For Rent',
+    imageUrl:
+      'https://www.premierhomesca.com/wp-content/uploads/2020/03/EL3-Model-11-scaled-e1611704624780.jpg',
+  },
+  {
+    id: '3',
+    title: 'Real House Luxury Villa',
+    location: 'Est St. 77 - Central Park South, NYC',
+    price: 150000,
+    bedrooms: 6,
+    bathrooms: 3,
+    area: 720,
+    garages: 2,
+    featured: true,
+    status: 'For Sale',
+    imageUrl:
+      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
+  },
+  {
+    id: '4',
+    title: 'Real House Luxury Villa',
+    location: 'Est St. 77 - Central Park South, NYC',
+    price: 150000,
+    bedrooms: 6,
+    bathrooms: 3,
+    area: 720,
+    garages: 2,
+    featured: true,
+    status: 'For Sale',
+    imageUrl:
+      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
+  },
+
+  {
+    id: '5',
+    title: 'Lakefront Cabin',
+    location: '321 Lakeview Rd, Lake Tahoe, CA',
+    price: 220000,
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 1000,
+    garages: 1,
+    featured: true,
+    status: 'For Sale',
+    imageUrl:
+      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
+  },
+  {
+    id: '6',
+    title: 'Cozy Downtown Condo',
+    location: '654 Main St, Chicago, IL',
+    price: 160000,
+    bedrooms: 2,
+    bathrooms: 1,
+    area: 750,
+    garages: 0,
+    featured: false,
+    status: 'For Rent',
+    imageUrl:
+      'https://www.shutterstock.com/image-photo/beautiful-home-exterior-600nw-160071032.jpg',
+  },
+  {
+    id: '7',
+    title: 'Luxury Penthouse',
+    location: '77 Park Ave, NYC',
+    price: 450000,
+    bedrooms: 3,
+    bathrooms: 3,
+    area: 1400,
+    garages: 1,
+    featured: true,
+    status: 'For Sale',
+    imageUrl:
+      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
+  },
+];
 
 const PopularProperties = () => {
-    return (
-        <div className="mt-20">
-       <div
-  className="h-[600px] pt-20 relative overflow-hidden"
-  style={{
-    backgroundImage: "url(https://code-theme.com/html/findhouses/images/blog/b-11.jpg)",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  }}
->
-  {/* Overlay for blur effect */}
-  <div
-    className="absolute inset-0"
-    style={{
-      backdropFilter: "blur(8px)",  // Adjust the blur intensity here
-      backgroundColor: "rgba(0, 0, 0, 0.3)",  // Optional: dark overlay to enhance text readability
-    }}
-  ></div>
+  return (
+    <div>
+      <div
+        className="h-full py-20 relative overflow-hidden"
+        style={{
+          backgroundImage:
+            'url(https://code-theme.com/html/findhouses/images/blog/b-11.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* Overlay for blur effect */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backdropFilter: 'blur(8px)',
+            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+          }}
+        ></div>
 
-<div>
-            <div className="flex items-center gap-10 mt-12 justify-center">
-              <div className="z-10">
-                <h1 className="text-3xl font-bold text-white my-5">Popular Properties</h1>
-                <p className="text-white mb-2">We Help you find the best places and offer near</p>
-                <p className="text-white mb-2">you. Bring to the table win-win survival strategies</p>
-                <p className="text-white">to ensure proactive domination going forward.</p>
-                <button className="mt-6 rounded-md bg-gray-800 px-6 py-2.5 text-sm font-medium text-white hover:bg-gray-700">
+        <div className="max-w-7xl mx-auto px-2 md:px-4">
+          <div className="flex flex-col md:flex-row items-center gap-10 justify-between">
+            <div className="z-10 w-full md:w-6/12">
+              <h1 className="text-3xl font-bold text-white my-5">
+                Popular Properties
+              </h1>
+              <p className="text-white">
+                We Help you find the best places and offer near
+              </p>
+              <br />
+              <p className="text-white">
+                you. Bring to the table win-win survival strategies
+              </p>
+              <br />
+              <p className="text-white">
+                to ensure proactive domination going forward.
+              </p>
+              <br />
+              <button className="mt-6 rounded-md bg-gray-800 px-6 py-2.5 text-sm font-medium text-white hover:bg-gray-700">
                 Get Started
               </button>
-              </div>
-          <Card className="z-10 w-80">
-            <CardContent className="p-0">
-              <div className="relative">
-                <Badge className="absolute left-2 top-2 bg-pink-500 text-white">Featured</Badge>
-                <Badge className="absolute right-2 top-2 bg-gray-800/80 text-white">For Sale</Badge>
-                <Image
-                  src="https://code-theme.com/html/findhouses/images/blog/b-11.jpg"
-                  alt="Luxury Villa Interior"
-                  width={400}
-                  height={300}
-                  className="w-full h-[200px] object-cover"
-                />
-                <div className="absolute bottom-2 right-2 flex gap-2">
-                  <Button size="icon" variant="secondary" className="h-8 w-8">
-                    <Link2 className="h-4 w-4" />
-                  </Button>
-                  <Button size="icon" variant="secondary" className="h-8 w-8">
-                    <MessageSquare className="h-4 w-4" />
-                  </Button>
-                  <Button size="icon" variant="secondary" className="h-8 w-8">
-                    <ImageIcon className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-              <div className="p-4 space-y-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <h3 className="text-lg font-bold">Real House Luxury Villa</h3>
-                    <p className="text-xl font-bold">$9,000/mo</p>
-                  </div>
-                  <p className="text-gray-500">Est St, 77 - Central Park South, NYC</p>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-2">
-                    <Bed className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm">6 Bedrooms</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Bath className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm">3 Bathrooms</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Square className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm">720 sq ft</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Car className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm">2 Garages</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="z-10 w-80">
-            <CardContent className="p-0">
-              <div className="relative">
-                <Badge className="absolute left-2 top-2 bg-pink-500 text-white">Featured</Badge>
-                <Badge className="absolute right-2 top-2 bg-gray-800/80 text-white">For Rent</Badge>
-                <Image
-                  src="https://code-theme.com/html/findhouses/images/feature-properties/fp-10.jpg"
-                  alt="Luxury Villa Exterior"
-                  width={400}
-                  height={300}
-                  className="w-full h-[200px] object-cover"
-                />
-                <div className="absolute bottom-2 right-2 flex gap-2">
-                  <Button size="icon" variant="secondary" className="h-8 w-8">
-                    <Link2 className="h-4 w-4" />
-                  </Button>
-                  <Button size="icon" variant="secondary" className="h-8 w-8">
-                    <MessageSquare className="h-4 w-4" />
-                  </Button>
-                  <Button size="icon" variant="secondary" className="h-8 w-8">
-                    <ImageIcon className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-              <div className="p-4 space-y-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <h3 className="text-lg font-bold">Real House Luxury Villa</h3>
-                    <p className="text-xl font-bold">$3,000/mo</p>
-                  </div>
-                  <p className="text-gray-500">Est St, 77 - Central Park South, NYC</p>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-2">
-                    <Bed className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm">6 Bedrooms</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Bath className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm">3 Bathrooms</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Square className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm">720 sq ft</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Car className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm">2 Garages</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div> 
+            </div>
+            <div className="grid grid-cols-2 gap-10 z-20 w-full">
+              {properties.slice(0, 2).map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+            </div>
+          </div>
         </div>
-  
-</div>
-
-      
-        </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default PopularProperties;

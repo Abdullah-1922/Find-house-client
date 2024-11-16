@@ -113,18 +113,20 @@ const Invoice: React.FC<InvoiceProps> = ({
           <table className="w-full text-gray-700 text-sm mb-8 border-collapse">
             <thead>
               <tr className="border-b border-gray-200">
-                <th className="text-left py-2 px-4">DESCRIPTION</th>
-                <th className="text-left py-2 px-4">PRICE</th>
-                <th className="text-left py-2 px-4">VAT ({vatPercentage}%)</th>
-                <th className="text-left py-2 px-4">TOTAL</th>
+                <th className="text-left py-2 px-2 md:px-4">DESCRIPTION</th>
+                <th className="text-left py-2 px-2 md:px-4">PRICE</th>
+                <th className="text-left py-2 px-2 md:px-4">
+                  VAT ({vatPercentage}%)
+                </th>
+                <th className="text-left py-2 px-2 md:px-4">TOTAL</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-gray-200">
-                <td className="py-2 px-4">{description}</td>
-                <td className="py-2 px-4">${price.toFixed(2)}</td>
-                <td className="py-2 px-4">${vatAmount.toFixed(2)}</td>
-                <td className="py-2 px-4">${subTotal.toFixed(2)}</td>
+                <td className="py-2 px-2 md:px-4">{description}</td>
+                <td className="py-2 px-2 md:px-4">${price.toFixed(2)}</td>
+                <td className="py-2 px-2 md:px-4">${vatAmount.toFixed(2)}</td>
+                <td className="py-2 px-2 md:px-4">${subTotal.toFixed(2)}</td>
               </tr>
             </tbody>
           </table>
