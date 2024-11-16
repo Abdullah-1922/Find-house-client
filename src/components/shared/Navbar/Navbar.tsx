@@ -6,6 +6,7 @@ import languageLogo from '../../../../public/assets/logo/globe.png';
 import Sidebar from './SideBar/Sidebar';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import UserProfileDropdown from './UserProfileDropdown';
 const Navbar = () => {
   return (
     <>
@@ -113,43 +114,7 @@ const Navbar = () => {
             </div>
             <h2 className="border-r border-l border-gray-700 px-3 ">Sign In</h2>
 
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar flex justify-center items-center w-36 bg-gray-50/50 hover:bg-gray-200/60"
-              >
-                <div className="w-10 rounded-full">
-                  <Image
-                    width={1000}
-                    height={1000}
-                    alt="user profile image"
-                    src="https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg"
-                  />
-                </div>
-                <h3 tabIndex={0} role="button" className="text-sm">
-                  Hi, Mary <i className="fas fa-caret-right text-gray-500"></i>
-                </h3>
-              </div>
-
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-              >
-                <li>
-                  <Link href={'#'} className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href={'#'}>Settings</Link>
-                </li>
-                <li>
-                  <Link href={'#'}>Logout</Link>
-                </li>
-              </ul>
-            </div>
+            <UserProfileDropdown />
 
             <Link href={'/dashboard/user'}>
               <Button className="text-white py-3 px-5 bg-gray-800 hover:bg-gray-900 h-[45px] rounded font-bold">
