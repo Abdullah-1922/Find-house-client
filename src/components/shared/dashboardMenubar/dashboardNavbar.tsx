@@ -16,7 +16,7 @@ const DashboardNavbar = () => {
                 <Link href="#">
                   Home <i className="fas fa-caret-down"></i>
                 </Link>
-                <div className="dropdown-menu mt-1">
+                <div className="dropdown-menu mt-0.5">
                   <ul>
                     <li>
                       <Link href="/">Home</Link>
@@ -34,7 +34,7 @@ const DashboardNavbar = () => {
                 <Link href="#">
                   Listing <i className="fas fa-caret-down"></i>
                 </Link>
-                <div className="dropdown-menu mt-1">
+                <div className="dropdown-menu mt-0.5">
                   <ul>
                     <li>
                       <Link href="/list-grid">Listing Grid</Link>
@@ -55,13 +55,13 @@ const DashboardNavbar = () => {
                 <Link href="#">
                   Pages <i className="fas fa-caret-down"></i>
                 </Link>
-                <div className="dropdown-menu mt-1">
+                <div className="dropdown-menu mt-0.5">
                   <ul>
                     <li>
                       <Link href="#">
                         Shop <i className="fas fa-caret-right"></i>
                       </Link>
-                      <div className="dropdown-menu-1 ml-1 -mt-1">
+                      <div className="dropdown-menu-1 ml-1 -mt-0.5">
                         <ul>
                           <li>
                             <Link href="#">Order Page</Link>
