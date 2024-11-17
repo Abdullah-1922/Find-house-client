@@ -43,7 +43,7 @@ const DashboardNavbar = () => {
                       <Link href="#">Listing List</Link>
                     </li>
                     <li>
-                      <Link href="#">All Agents</Link>
+                      <Link href="/all-agents">All Agents</Link>
                     </li>
                     <li>
                       <Link href="/agencies">All Agencies</Link>
@@ -97,7 +97,7 @@ const DashboardNavbar = () => {
                 <Link href="/blogs">Blog</Link>
               </li>
               <li>
-                <Link href="#">Contact us</Link>
+                <Link href="/contact-us">Contact us</Link>
               </li>
             </ul>
           </div>
