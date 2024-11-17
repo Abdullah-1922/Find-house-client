@@ -6,12 +6,13 @@ import OurPartners from '@/components/Home/OurPartners/OurPartners';
 import PopularPlaces from '@/components/Home/PopularPlaces/PopularPlaces';
 import RecentProperties from '@/components/Home/RecentProperties/RecentProperties';
 import WhyChooseUs from '@/components/Home/WhyChooseUs/WhyChooseUs';
+import ResentPropertySlider from './home-map/_components/resentPropertySlider';
 
 export default function Home() {
   return (
     <div>
       <Banner />
-      <RecentProperties />
+      <ResentPropertySlider />
       <WhyChooseUs />
       <PopularPlaces />
       <Apartmentforrent />

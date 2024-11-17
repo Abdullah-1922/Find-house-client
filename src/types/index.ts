@@ -1,4 +1,9 @@
-export type TProperty = {
+interface TAgent {
+  name: string;
+  image: string;
+}
+
+export interface TProperty {
   id: number;
   title: string;
   price: number;
@@ -9,10 +14,7 @@ export type TProperty = {
   garages: number;
   status: 'For Sale' | 'For Rent';
   featured: boolean;
-  agent: {
-    name: string;
-    image: string;
-  };
+  agent: TAgent;
   postedTime: string;
-  image: string;
-};
+  imageUrl: string;
+}

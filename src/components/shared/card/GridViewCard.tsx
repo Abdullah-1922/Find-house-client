@@ -1,17 +1,17 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { TProperty } from "@/types";
-import { ImageIcon, Link2, MapPin, Video } from "lucide-react";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { TProperty } from '@/types';
+import { ImageIcon, Link2, MapPin, Video } from 'lucide-react';
+import Image from 'next/image';
 
 const GridViewCard = ({ property }: { property: TProperty }) => {
   return (
-    <Card className="overflow-hidden rounded-lg bg-white shadow-sm w-80">
+    <Card className="overflow-hidden rounded-lg bg-white shadow-sm">
       <div className="relative">
         <Image
-          src={property.image}
+          src={property.imageUrl}
           alt={property.title}
           width={600}
           height={300}
@@ -104,21 +104,20 @@ const GridViewCard = ({ property }: { property: TProperty }) => {
         </div>
       </CardContent>
       <CardFooter className="flex items-center justify-between gap-3 border-t p-4">
-      <div className="flex  items-center gap-3">
-      <Avatar className="h-10 w-10 rounded-full">
-          <AvatarImage src={property.agent.image} alt={property.agent.name} />
-          <AvatarFallback>{property.agent.name[0]}</AvatarFallback>
-        </Avatar>
-        <div className="flex flex-col">
-          <span className="text-sm font-medium text-gray-900">
-            {property.agent.name}
-          </span>
-      
+        <div className="flex  items-center gap-3">
+          <Avatar className="h-10 w-10 rounded-full">
+            <AvatarImage src={property.agent.image} alt={property.agent.name} />
+            <AvatarFallback>{property.agent.name[0]}</AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-gray-900">
+              {property.agent.name}
+            </span>
+          </div>
         </div>
-      </div>
-      <div>
-      <span className="text-sm text-gray-500">{property.postedTime}</span>
-      </div>
+        <div>
+          <span className="text-sm text-gray-500">{property.postedTime}</span>
+        </div>
       </CardFooter>
     </Card>
   );

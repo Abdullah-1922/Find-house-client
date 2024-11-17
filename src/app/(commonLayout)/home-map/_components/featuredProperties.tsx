@@ -6,120 +6,116 @@ import { motion } from 'framer-motion';
 import PropertyCard from '@/components/shared/card/PropertyCard';
 import { Button } from '@/components/ui/button';
 import { CircleArrowRight } from 'lucide-react';
+import { TProperty } from '@/types';
 
-interface Property {
-  id: string;
-  title: string;
-  location: string;
-  price: number;
-  bedrooms: number;
-  bathrooms: number;
-  area: number;
-  garages: number;
-  featured: boolean;
-  status: 'For Sale' | 'For Rent';
-  imageUrl: string;
-}
-
-const properties: Property[] = [
+const properties: TProperty[] = [
   {
-    id: '1',
+    id: 1,
     title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
+    price: 9000,
+    location: 'Est St, 77 - Central Park South, NYC',
     bedrooms: 6,
     bathrooms: 3,
     area: 720,
     garages: 2,
-    featured: true,
     status: 'For Sale',
-    imageUrl:
-      'https://www.shutterstock.com/image-photo/beautiful-home-exterior-600nw-160071032.jpg',
+    featured: true,
+    agent: {
+      name: 'Lisa Jhonson',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-1.jpg',
   },
   {
-    id: '2',
+    id: 2,
     title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
+    price: 8000,
+    location: 'Est St, 77 - Central Park South, NYC',
     bedrooms: 6,
     bathrooms: 3,
     area: 720,
     garages: 2,
-    featured: true,
     status: 'For Rent',
-    imageUrl:
-      'https://www.premierhomesca.com/wp-content/uploads/2020/03/EL3-Model-11-scaled-e1611704624780.jpg',
-  },
-  {
-    id: '3',
-    title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    featured: true,
-    status: 'For Sale',
-    imageUrl:
-      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
-  },
-  {
-    id: '4',
-    title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    featured: true,
-    status: 'For Sale',
-    imageUrl:
-      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
-  },
-
-  {
-    id: '5',
-    title: 'Lakefront Cabin',
-    location: '321 Lakeview Rd, Lake Tahoe, CA',
-    price: 220000,
-    bedrooms: 3,
-    bathrooms: 2,
-    area: 1000,
-    garages: 1,
-    featured: true,
-    status: 'For Sale',
-    imageUrl:
-      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
-  },
-  {
-    id: '6',
-    title: 'Cozy Downtown Condo',
-    location: '654 Main St, Chicago, IL',
-    price: 160000,
-    bedrooms: 2,
-    bathrooms: 1,
-    area: 750,
-    garages: 0,
     featured: false,
-    status: 'For Rent',
-    imageUrl:
-      'https://www.shutterstock.com/image-photo/beautiful-home-exterior-600nw-160071032.jpg',
+    agent: {
+      name: 'Karl Smith',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
   },
   {
-    id: '7',
-    title: 'Luxury Penthouse',
-    location: '77 Park Ave, NYC',
-    price: 450000,
-    bedrooms: 3,
+    id: 3,
+    title: 'Real House Luxury Villa',
+    price: 9000,
+    location: 'Est St, 77 - Central Park South, NYC',
+    bedrooms: 6,
     bathrooms: 3,
-    area: 1400,
-    garages: 1,
-    featured: true,
+    area: 720,
+    garages: 2,
     status: 'For Sale',
-    imageUrl:
-      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
+    featured: false,
+    agent: {
+      name: 'katy Teddy',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
+  },
+  {
+    id: 3,
+    title: 'Real House Luxury Villa',
+    price: 9000,
+    location: 'Est St, 77 - Central Park South, NYC',
+    bedrooms: 6,
+    bathrooms: 3,
+    area: 720,
+    garages: 2,
+    status: 'For Sale',
+    featured: false,
+    agent: {
+      name: 'katy Teddy',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
+  },
+  {
+    id: 3,
+    title: 'Real House Luxury Villa',
+    price: 9000,
+    location: 'Est St, 77 - Central Park South, NYC',
+    bedrooms: 6,
+    bathrooms: 3,
+    area: 720,
+    garages: 2,
+    status: 'For Sale',
+    featured: false,
+    agent: {
+      name: 'katy Teddy',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
+  },
+  {
+    id: 3,
+    title: 'Real House Luxury Villa',
+    price: 9000,
+    location: 'Est St, 77 - Central Park South, NYC',
+    bedrooms: 6,
+    bathrooms: 3,
+    area: 720,
+    garages: 2,
+    status: 'For Sale',
+    featured: false,
+    agent: {
+      name: 'katy Teddy',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
   },
 ];
 
@@ -144,7 +140,7 @@ export default function FeaturedProperties() {
         variants={containerVariants}
       >
         {properties.slice(0, 6).map((property, index) => (
-          <PropertyCard key={index} property={property} />
+          <PropertyCard isGridView={true} key={index} property={property} />
         ))}
       </motion.div>
 
