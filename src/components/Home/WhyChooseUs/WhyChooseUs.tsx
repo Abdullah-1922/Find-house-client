@@ -1,13 +1,13 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 const WhyChooseUs = () => {
   return (
-    <div className="">
+    <>
       <div
         className="h-[400px] pt-20"
         style={{
           backgroundImage:
-            "url(https://code-theme.com/html/findhouses/images/bg/bg-service-home-5.jpg)",
+            'url(https://code-theme.com/html/findhouses/images/bg/bg-service-home-5.jpg)',
         }}
       >
         <div className="pt-28">
@@ -18,8 +18,8 @@ const WhyChooseUs = () => {
         </div>
       </div>
 
-      <div className="flex justify-center relative bottom-40">
-        <div className="flex justify-center flex-wrap gap-10 bg-white shadow-xl w-4/5 py-10">
+      <div className="max-w-7xl mx-auto px-2 md:px-4 relative ">
+        <div className="flex justify-center flex-wrap gap-10 bg-white shadow-xl py-10">
           <div className="flex flex-col border-r-4 pr-5 justify-center items-center w-60  ">
             <Image
               className="w-20"
@@ -84,7 +84,7 @@ const WhyChooseUs = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

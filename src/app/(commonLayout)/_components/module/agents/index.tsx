@@ -29,132 +29,132 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import CalenderSchedule from './CalerderSchedule';
-import RequestInquiry from './RequestInquiry';
-import ResentProperties from './ResentProperties';
-import FeaturedProperties from './FeatureProperties';
+import CalenderSchedule from '../agencies/CalerderSchedule';
+import RequestInquiry from '../agencies/RequestInquiry';
+import ResentProperties from '../agencies/ResentProperties';
+import FeaturedProperties from '../agencies/FeatureProperties';
 
-const agencies = [
+const agents = [
   {
     id: 1,
-    name: 'Capital Partners',
-    logo: 'https://code-theme.com/html/findhouses/images/partners/ag-2.jpg',
+    name: 'Arling Tracy',
+    image:
+      'https://code-theme.com/html/findhouses/images/testimonials/ts-2.jpg',
     listings: 3,
     office: '(234) 0200 17813',
     mobile: '(657) 9854 12095',
     fax: '809 123 0951',
     email: 'info@agent.com',
-    agent: {
-      name: 'Arling Tracy',
-      image:
-        'https://code-theme.com/html/findhouses/images/testimonials/ts-2.jpg',
+    company: {
+      name: 'Capital Partners',
+      logo: 'https://code-theme.com/html/findhouses/images/partners/ag-2.jpg',
     },
   },
   {
     id: 2,
-    name: 'Legacy Park',
-    logo: 'https://code-theme.com/html/findhouses/images/partners/ag-1.jpg',
+    name: 'Carle Jhons',
+    image:
+      'https://code-theme.com/html/findhouses/images/testimonials/ts-2.jpg',
     listings: 5,
     office: '(234) 0200 17813',
     mobile: '(657) 9854 12095',
     fax: '809 123 0951',
     email: 'info@legacy.com',
-    agent: {
-      name: 'Carle Jhons',
-      image:
-        'https://code-theme.com/html/findhouses/images/testimonials/ts-2.jpg',
+    company: {
+      name: 'Legacy Park',
+      logo: 'https://code-theme.com/html/findhouses/images/partners/ag-1.jpg',
     },
   },
   {
     id: 3,
-    name: 'Live Property',
-    logo: 'https://code-theme.com/html/findhouses/images/partners/ag-3.jpg',
+    name: 'Michael Brown',
+    image:
+      'https://code-theme.com/html/findhouses/images/testimonials/ts-2.jpg',
     listings: 7,
     office: '(234) 0200 17813',
     mobile: '(657) 9854 12095',
     fax: '809 123 0951',
     email: 'info@liveproperty.com',
-    agent: {
-      name: 'Michael Brown',
-      image:
-        'https://code-theme.com/html/findhouses/images/testimonials/ts-2.jpg',
+    company: {
+      name: 'Live Property',
+      logo: 'https://code-theme.com/html/findhouses/images/partners/ag-3.jpg',
     },
   },
   {
     id: 4,
-    name: 'Dream Estates',
-    logo: 'https://code-theme.com/html/findhouses/images/partners/ag-4.jpg',
+    name: 'Sophia Turner',
+    image:
+      'https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg',
     listings: 4,
     office: '(456) 7890 12345',
     mobile: '(876) 5432 10987',
     fax: '809 456 7890',
     email: 'info@dreamestates.com',
-    agent: {
-      name: 'Sophia Turner',
-      image:
-        'https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg',
+    company: {
+      name: 'Dream Estates',
+      logo: 'https://code-theme.com/html/findhouses/images/partners/ag-4.jpg',
     },
   },
   {
     id: 5,
-    name: 'NextGen Realty',
-    logo: 'https://code-theme.com/html/findhouses/images/partners/ag-5.jpg',
+    name: 'David Smith',
+    image:
+      'https://code-theme.com/html/findhouses/images/testimonials/ts-3.jpg',
     listings: 6,
     office: '(789) 1234 56789',
     mobile: '(654) 3210 98765',
     fax: '809 321 7654',
     email: 'info@nextgenrealty.com',
-    agent: {
-      name: 'David Smith',
-      image:
-        'https://code-theme.com/html/findhouses/images/testimonials/ts-3.jpg',
+    company: {
+      name: 'NextGen Realty',
+      logo: 'https://code-theme.com/html/findhouses/images/partners/ag-5.jpg',
     },
   },
   {
     id: 6,
-    name: 'Urban Living',
-    logo: 'https://code-theme.com/html/findhouses/images/partners/ag-6.jpg',
+    name: 'Emma Wilson',
+    image:
+      'https://code-theme.com/html/findhouses/images/testimonials/ts-4.jpg',
     listings: 8,
     office: '(321) 6540 98765',
     mobile: '(987) 6543 21098',
     fax: '809 654 0987',
     email: 'info@urbanliving.com',
-    agent: {
-      name: 'Emma Wilson',
-      image:
-        'https://code-theme.com/html/findhouses/images/testimonials/ts-4.jpg',
+    company: {
+      name: 'Urban Living',
+      logo: 'https://code-theme.com/html/findhouses/images/partners/ag-6.jpg',
     },
   },
   {
     id: 7,
-    name: 'Prime Properties',
-    logo: 'https://code-theme.com/html/findhouses/images/partners/ag-7.jpg',
+    name: 'Liam Johnson',
+    image:
+      'https://code-theme.com/html/findhouses/images/testimonials/ts-5.jpg',
     listings: 10,
     office: '(876) 5432 10987',
     mobile: '(456) 7890 12345',
     fax: '809 876 5432',
     email: 'info@primeproperties.com',
-    agent: {
-      name: 'Liam Johnson',
-      image:
-        'https://code-theme.com/html/findhouses/images/testimonials/ts-5.jpg',
+    company: {
+      name: 'Prime Properties',
+      logo: 'https://code-theme.com/html/findhouses/images/partners/ag-7.jpg',
     },
   },
 ];
 
 const ITEMS_PER_PAGE = 6;
 
-export default function OurAgencies() {
+export default function AllAgents() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isGridView, setIsGridView] = useState(true);
 
-  const totalPages = Math.ceil(agencies.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(agents.length / ITEMS_PER_PAGE);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const paginatedAgencies = agencies.slice(
+  const paginatedAgencies = agents.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -170,7 +170,7 @@ export default function OurAgencies() {
           <span className="mx-2">/</span>
           <span>Listings</span>
         </nav>
-        <h1 className="mb-8 text-3xl font-bold">Our Agencies</h1>
+        <h1 className="mb-8 text-3xl font-bold">All Agents</h1>
       </div>
 
       <div className="flex gap-5 w-full">
@@ -178,7 +178,7 @@ export default function OurAgencies() {
           {/* Filters */}
           <div className="mb-6 flex flex-row items-center justify-between gap-4">
             <p className="text-muted-foreground">
-              {agencies.length} Search results
+              {agents.length} Search results
             </p>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
@@ -229,19 +229,19 @@ export default function OurAgencies() {
               isGridView ? 'md:grid-cols-2' : 'grid-cols-1'
             }`}
           >
-            {paginatedAgencies.map((agency) => (
+            {paginatedAgencies.map((agent) => (
               <Card
-                key={agency.id}
+                key={agent.id}
                 className={`${isGridView ? 'flex flex-col' : 'flex flex-row'}`}
               >
                 <CardHeader className="relative">
                   <Badge className="absolute left-4 top-4 py-2 px-3 rounded bg-gray-800 hover:bg-gray-900">
-                    {agency.listings} Listings
+                    {agent.listings} Listings
                   </Badge>
                   <div className="flex justify-center">
                     <Image
-                      src={agency.logo}
-                      alt={agency.name}
+                      src={agent.image}
+                      alt={agent.name}
                       width={200}
                       height={200}
                       className="h-56 w-full object-contain"
@@ -254,12 +254,12 @@ export default function OurAgencies() {
                   } w-full`}
                 >
                   <CardContent className="space-y-4">
-                    <h3 className="text-xl font-semibold">{agency.name}</h3>
+                    <h3 className="text-xl font-semibold">{agent.name}</h3>
                     <div className="space-y-2 text-sm">
-                      <p>Office: {agency.office}</p>
-                      <p>Mobile: {agency.mobile}</p>
-                      <p>Fax: {agency.fax}</p>
-                      <p>Email: {agency.email}</p>
+                      <p>Office: {agent.office}</p>
+                      <p>Mobile: {agent.mobile}</p>
+                      <p>Fax: {agent.fax}</p>
+                      <p>Email: {agent.email}</p>
                     </div>
                     <hr />
                   </CardContent>
@@ -267,12 +267,12 @@ export default function OurAgencies() {
                     <div className="flex items-center gap-2">
                       <Avatar>
                         <AvatarImage
-                          src={agency.agent.image}
-                          alt={agency.agent.name}
+                          src={agent.company.logo}
+                          alt={agent.company.logo}
                         />
-                        <AvatarFallback>{agency.agent.name[0]}</AvatarFallback>
+                        <AvatarFallback>{agent.company.logo[0]}</AvatarFallback>
                       </Avatar>
-                      <span className="text-sm">{agency.agent.name}</span>
+                      <span className="text-sm">{agent.company.name}</span>
                     </div>
                     <Button
                       size={'sm'}

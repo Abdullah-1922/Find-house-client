@@ -1,13 +1,9 @@
-import dynamic from "next/dynamic";
+import ListGridProperties from '../_components/module/listGridProperties';
 
 const ListGridPage = () => {
-  const ListComponent = dynamic(
-    () => import("@/app/(commonLayout)/list-grid/_components/ListPageComponent")
-  );
-
   return (
-    <div className="container max-w-[1200px]">
-      <ListComponent />
+    <div className="mt-5 mb-10">
+      <ListGridProperties />
     </div>
   );
 };

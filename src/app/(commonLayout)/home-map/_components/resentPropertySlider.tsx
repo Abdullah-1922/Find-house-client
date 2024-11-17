@@ -10,77 +10,116 @@ import {
 } from '@/components/ui/carousel';
 import SectionTitle from '@/components/ui/sectionTitle';
 import PropertyCard from '@/components/shared/card/PropertyCard';
+import { TProperty } from '@/types';
 
-interface Property {
-  id: string;
-  title: string;
-  location: string;
-  price: number;
-  bedrooms: number;
-  bathrooms: number;
-  area: number;
-  garages: number;
-  featured: boolean;
-  status: 'For Sale' | 'For Rent';
-  imageUrl: string;
-}
-
-const properties: Property[] = [
+const properties: TProperty[] = [
   {
-    id: '1',
+    id: 1,
     title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
+    price: 9000,
+    location: 'Est St, 77 - Central Park South, NYC',
     bedrooms: 6,
     bathrooms: 3,
     area: 720,
     garages: 2,
-    featured: true,
     status: 'For Sale',
-    imageUrl:
-      'https://www.shutterstock.com/image-photo/beautiful-home-exterior-600nw-160071032.jpg',
+    featured: true,
+    agent: {
+      name: 'Lisa Jhonson',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-1.jpg',
   },
   {
-    id: '2',
+    id: 2,
     title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
+    price: 8000,
+    location: 'Est St, 77 - Central Park South, NYC',
     bedrooms: 6,
     bathrooms: 3,
     area: 720,
     garages: 2,
-    featured: true,
     status: 'For Rent',
-    imageUrl:
-      'https://www.premierhomesca.com/wp-content/uploads/2020/03/EL3-Model-11-scaled-e1611704624780.jpg',
+    featured: false,
+    agent: {
+      name: 'Karl Smith',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
   },
   {
-    id: '3',
+    id: 3,
     title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
+    price: 9000,
+    location: 'Est St, 77 - Central Park South, NYC',
     bedrooms: 6,
     bathrooms: 3,
     area: 720,
     garages: 2,
-    featured: true,
     status: 'For Sale',
-    imageUrl:
-      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
+    featured: false,
+    agent: {
+      name: 'katy Teddy',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
   },
   {
-    id: '4',
+    id: 3,
     title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
+    price: 9000,
+    location: 'Est St, 77 - Central Park South, NYC',
     bedrooms: 6,
     bathrooms: 3,
     area: 720,
     garages: 2,
-    featured: true,
     status: 'For Sale',
-    imageUrl:
-      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
+    featured: false,
+    agent: {
+      name: 'katy Teddy',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
+  },
+  {
+    id: 3,
+    title: 'Real House Luxury Villa',
+    price: 9000,
+    location: 'Est St, 77 - Central Park South, NYC',
+    bedrooms: 6,
+    bathrooms: 3,
+    area: 720,
+    garages: 2,
+    status: 'For Sale',
+    featured: false,
+    agent: {
+      name: 'katy Teddy',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
+  },
+  {
+    id: 3,
+    title: 'Real House Luxury Villa',
+    price: 9000,
+    location: 'Est St, 77 - Central Park South, NYC',
+    bedrooms: 6,
+    bathrooms: 3,
+    area: 720,
+    garages: 2,
+    status: 'For Sale',
+    featured: false,
+    agent: {
+      name: 'katy Teddy',
+      image: '/placeholder.svg?height=40&width=40',
+    },
+    postedTime: '2 months ago',
+    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
   },
 ];
 
@@ -107,7 +146,9 @@ export default function ResentPropertySlider() {
               key={property.id}
               className="md:pl-4 md:basis-1/2 lg:basis-1/3"
             >
-              {isClient && <PropertyCard property={property} />}
+              {isClient && (
+                <PropertyCard isGridView={true} property={property} />
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>

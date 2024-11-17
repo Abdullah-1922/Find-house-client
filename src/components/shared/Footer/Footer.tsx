@@ -1,22 +1,29 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Twitter } from "lucide-react"
-import Image from "next/image";
-import Link from "next/link"
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Twitter } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer = () => {
-    return (
-   <div className="h-[400px]">
-     <footer className="w-full h-[400px]   bg-white border-t flex flex-col justify-around ">
-        <div className="grid grid-cols-1 gap-6 px-4 pt-8 md:grid-cols-4 md:gap-8  mx-32">
+  return (
+    <div className="w-full bg-white border-t">
+      <footer className="max-w-7xl mx-auto px-2 md:px-4 flex flex-col justify-around">
+        <div className="grid grid-cols-1 gap-6 pt-8 md:grid-cols-4 md:gap-8">
           {/* Logo & Info Section */}
           <div className="space-y-4">
-          <Link href="/" className="flex items-end space-x-2">
-              <Image className="w-32" src="https://code-theme.com/html/findhouses/images/logo-black.svg" alt="website logo" width={1000} height={1000} />
+            <Link href="/" className="flex items-end space-x-2">
+              <Image
+                className="w-32"
+                src="https://code-theme.com/html/findhouses/images/logo-black.svg"
+                alt="website logo"
+                width={1000}
+                height={1000}
+              />
             </Link>
             <p className="text-sm text-muted-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum incidunt architecto soluta laboriosam,
-              perspiciatis, aspernatur officiis esse.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum
+              incidunt architecto soluta laboriosam, perspiciatis, aspernatur
+              officiis esse.
             </p>
             <div className="space-y-2">
               <p className="text-sm">95 South Park Avenue, USA</p>
@@ -24,29 +31,44 @@ const Footer = () => {
               <p className="text-sm">support@findhouses.com</p>
             </div>
           </div>
-  
+
           {/* Navigation Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Navigation</h3>
             <div className="grid gap-2">
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
+              <Link
+                href="#"
+                className="text-sm text-muted-foreground hover:text-primary"
+              >
                 Home One
               </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
+              <Link
+                href="#"
+                className="text-sm text-muted-foreground hover:text-primary"
+              >
                 Properties Right
               </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
+              <Link
+                href="#"
+                className="text-sm text-muted-foreground hover:text-primary"
+              >
                 Properties List
               </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
+              <Link
+                href="#"
+                className="text-sm text-muted-foreground hover:text-primary"
+              >
                 Property Details
               </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
+              <Link
+                href="#"
+                className="text-sm text-muted-foreground hover:text-primary"
+              >
                 Agents Listing
               </Link>
             </div>
           </div>
-  
+
           {/* Twitter Feeds Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Twitter Feeds</h3>
@@ -58,18 +80,21 @@ const Footer = () => {
                     <p className="text-sm">
                       @Findhouses All Share Them With Me Baby Said Inspet.
                     </p>
-                    <p className="text-xs text-muted-foreground">about 5 days ago</p>
+                    <p className="text-xs text-muted-foreground">
+                      about 5 days ago
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-  
+
           {/* Newsletter Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Newsletters</h3>
             <p className="text-sm text-muted-foreground">
-              Sign Up for Our Newsletter to get Latest Updates and Offers. Subscribe to receive news in your inbox.
+              Sign Up for Our Newsletter to get Latest Updates and Offers.
+              Subscribe to receive news in your inbox.
             </p>
             <form className="space-y-2">
               <Input type="email" placeholder="Enter Your Email" />
@@ -77,18 +102,24 @@ const Footer = () => {
             </form>
           </div>
         </div>
-  
+
         {/* Bottom Section */}
-        <div  style={{
-        backgroundImage:
-          "url(https://code-theme.com/html/findhouses/images/bg/bg-white-3.png)",
-      }} className="px-4 py-4  ">
-          <div className="flex flex-col items-center justify-between gap-4 pt-8 border-t md:flex-row mx-32">
+        <div
+          style={{
+            backgroundImage:
+              'url(https://code-theme.com/html/findhouses/images/bg/bg-white-3.png)',
+          }}
+          className="px-4 py-4  "
+        >
+          <div className="flex flex-col items-center justify-between gap-4 pt-8 border-t md:flex-row">
             <p className="text-sm text-muted-foreground">
               2021 © Copyright - All Rights Reserved.
             </p>
             <div className="flex gap-4">
-              <Link href="#" className="p-2 text-white bg-blue-600 rounded-sm hover:bg-blue-700">
+              <Link
+                href="#"
+                className="p-2 text-white bg-blue-600 rounded-sm hover:bg-blue-700"
+              >
                 <span className="sr-only">Facebook</span>
                 <svg
                   className="w-4 h-4"
@@ -103,7 +134,10 @@ const Footer = () => {
                   />
                 </svg>
               </Link>
-              <Link href="#" className="p-2 text-white bg-blue-400 rounded-sm hover:bg-blue-500">
+              <Link
+                href="#"
+                className="p-2 text-white bg-blue-400 rounded-sm hover:bg-blue-500"
+              >
                 <span className="sr-only">Twitter</span>
                 <svg
                   className="w-4 h-4"
@@ -114,7 +148,10 @@ const Footer = () => {
                   <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
               </Link>
-              <Link href="#" className="p-2 text-white rounded-sm bg-rose-500 hover:bg-rose-600">
+              <Link
+                href="#"
+                className="p-2 text-white rounded-sm bg-rose-500 hover:bg-rose-600"
+              >
                 <span className="sr-only">Instagram</span>
                 <svg
                   className="w-4 h-4"
@@ -129,7 +166,10 @@ const Footer = () => {
                   />
                 </svg>
               </Link>
-              <Link href="#" className="p-2 text-white bg-red-600 rounded-sm hover:bg-red-700">
+              <Link
+                href="#"
+                className="p-2 text-white bg-red-600 rounded-sm hover:bg-red-700"
+              >
                 <span className="sr-only">YouTube</span>
                 <svg
                   className="w-4 h-4"
@@ -148,8 +188,8 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-   </div>
-    );
+    </div>
+  );
 };
 
 export default Footer;

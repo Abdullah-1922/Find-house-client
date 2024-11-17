@@ -17,7 +17,7 @@ const HomeMap = () => {
       <PropertyServices />
       <FeaturedProperties />
       {/* <PopularPlaces /> */}
-      <PopularPlaces/>
+      <PopularPlaces />
       <MeetOurAgents />
       <LatestNews />
       <HappyCustomers />

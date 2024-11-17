@@ -74,7 +74,7 @@ const testimonials: Testimonial[] = [
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
   testimonial,
 }) => (
-  <Card className="bg-white shadow-lg">
+  <Card className="bg-white shadow-lg px-3">
     <CardContent className="p-6 flex flex-col items-center text-center">
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
