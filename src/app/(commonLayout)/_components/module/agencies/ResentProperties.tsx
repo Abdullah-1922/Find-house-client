@@ -29,7 +29,7 @@ export default function ResentProperties() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Recent Properties</CardTitle>
+        <CardTitle className='text-gray-800"'>Recent Properties</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
