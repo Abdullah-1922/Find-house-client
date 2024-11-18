@@ -18,3 +18,15 @@ export interface TProperty {
   postedTime: string;
   imageUrl: string;
 }
+
+export interface DecodedJWT {
+  email: string;
+  role: string;
+  _id: string;
+  socialId: string;
+  iat: number;
+  exp: number;
+}
+
+export * from './auth/auth.type';
+export * from './user/user.type';

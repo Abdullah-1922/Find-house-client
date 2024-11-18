@@ -1,3 +1,5 @@
+'use client';
+
 import './Navbar.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import navbarLogo from '../../../../public/assets/logo/logo-light-dark.svg';
@@ -7,10 +9,23 @@ import Sidebar from './SideBar/Sidebar';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import UserProfileDropdown from './UserProfileDropdown';
+import SignInModal from '@/app/(commonLayout)/_components/modal/signInModal';
+import Cookies from 'js-cookie';
+import { decodeJWT } from '@/utils/verifyToken';
+import { useGetMeQuery } from '@/redux/api/features/users/user';
+import { DecodedJWT } from '@/types';
+
 const Navbar = () => {
+  const token = Cookies.get('accessToken');
+  const { _id } = decodeJWT(token) as DecodedJWT;
+
+  const { data: user } = useGetMeQuery(_id);
+
+  console.log(user);
+
   return (
     <>
-      <div className="bg-white absolute top-0 z-[999] w-full">
+      <div className="absolute top-0 z-[999] w-full">
         <div className="lg:flex   hidden">
           <div className="menu-bar ">
             <div className="flex items-center gap-10">
@@ -117,20 +132,7 @@ const Navbar = () => {
               </ul>
             </div>
             <div className="flex justify-center items-center gap-5">
-              <div className="flex justify-center gap-x-2 items-center bg-gray-300 px-2 rounded-md">
-                <Image
-                  className="w-5"
-                  src={languageLogo}
-                  alt="world svg for language"
-                  width={1000}
-                  height={1000}
-                />
-                <h2 className="font-bold">ENG</h2>
-              </div>
-              <h2 className="border-r border-l border-gray-700 px-3 ">
-                Sign In
-              </h2>
-
+              <SignInModal />
               <UserProfileDropdown />
 
               <Link href={'/dashboard/user'}>

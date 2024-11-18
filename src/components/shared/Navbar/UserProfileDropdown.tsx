@@ -13,14 +13,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
+import { usePathname } from 'next/navigation';
 
 export default function UserProfileDropdown() {
+  const pathname = usePathname();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative h-[50px] w-40 space-x-2 rounded-full hover:border bg-gray-50/10 hover:bg-gray-200/10"
+          className="relative h-[45px] w-40 space-x-2 rounded-full hover:border hover:bg-gray-50/20  bg-gray-50/10"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage
@@ -29,8 +31,18 @@ export default function UserProfileDropdown() {
             />
             <AvatarFallback>MK</AvatarFallback>
           </Avatar>
-          <span className="text-sm font-normal text-gray-400">Hi, Mary</span>
-          <ChevronRight className="ml-auto h-4 w-4 text-gray-50" />
+          <p
+            className={`text-sm font-normal ${
+              pathname === '/home-video' ? 'text-white' : 'text-black'
+            }`}
+          >
+            Hi, Mary
+          </p>
+          <ChevronRight
+            className={`ml-auto h-4 w-4 ${
+              pathname === '/home-video' ? 'text-white' : 'text-black'
+            }`}
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-52 mt-5" align="end">
