@@ -36,7 +36,7 @@ export default function FeaturedProperties() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Feature Properties</CardTitle>
+        <CardTitle className='text-gray-800"'>Feature Properties</CardTitle>
       </CardHeader>
       <CardContent>
         <Carousel className="w-full">

@@ -1,9 +1,14 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Marker, Popup, TileLayer, MapContainer, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
+import GestureHandling from 'leaflet-gesture-handling';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Slider } from '@/components/ui/slider';
 import {
   Select,
   SelectContent,
@@ -11,11 +16,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
-import { Marker, Popup, TileLayer, MapContainer } from 'react-leaflet';
-import L from 'leaflet'; // Import Leaflet directly
-import 'leaflet/dist/leaflet.css';
-import { motion } from 'framer-motion';
+import { Card, CardContent } from '@/components/ui/card';
+
+// Extend Leaflet to include the gesture handling plugin
+L.Map.addInitHook('addHandler', 'gestureHandling', GestureHandling);
 
 // Sample property data
 const properties = [
@@ -132,6 +136,15 @@ interface Filters {
   areaMax: string;
 }
 
+// Custom component to enable gesture handling on the map instance
+const EnableGestureHandling = () => {
+  const map = useMap();
+  useEffect(() => {
+    map.gestureHandling.enable(); // Enable gesture handling on the map instance
+  }, [map]);
+  return null;
+};
+
 export default function HomeMap() {
   const [filters, setFilters] = useState<Filters>({
     status: 'Any Status',
@@ -150,17 +163,6 @@ export default function HomeMap() {
     setIsClient(true); // Mark the app as client-side rendered
   }, []);
 
-  useEffect(() => {
-    // Initialize Leaflet icon - Only run on client-side to avoid SSR issues
-    if (isClient) {
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: '/marker-icon-2x.png',
-        iconUrl: '/marker-icon.png',
-        shadowUrl: '/marker-shadow.png',
-      });
-    }
-  }, [isClient]);
-
   const handleSearch = () => {
     console.log('Searching with filters:', filters);
   };
@@ -169,8 +171,8 @@ export default function HomeMap() {
   const customIcon = new L.DivIcon({
     className: 'leaflet-div-icon',
     html: `
-      <div class=" flex items-center justify-center hover:scale-110 transition-transform duration-300 -mt-2">
-        <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/location-8631201-7174337.png?f=webp&w=256" class="w-14 h-14 object-cover" alt="Home icon" />
+      <div class="flex items-center justify-center hover:scale-110 transition-transform duration-300 -mt-2">
+        <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/location-8631201-7174337.png?f=webp&w=256" class="w-10 h-10 object-cover bg-white rounded-sm" alt="Home icon" />
       </div>
     `,
     iconSize: [30, 30],
@@ -183,8 +185,10 @@ export default function HomeMap() {
         <MapContainer
           center={[40.7128, -74.006]}
           zoom={13}
+          scrollWheelZoom={false}
           className="h-full w-full"
         >
+          <EnableGestureHandling /> {/* Enable gesture handling here */}
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
@@ -193,7 +197,7 @@ export default function HomeMap() {
             <Marker
               key={property.id}
               position={[property.lat, property.lng]}
-              icon={customIcon} // Apply custom marker icon
+              icon={customIcon}
             >
               <Popup>
                 <div className="p-2">

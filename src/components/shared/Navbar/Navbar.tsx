@@ -10,7 +10,7 @@ import UserProfileDropdown from './UserProfileDropdown';
 const Navbar = () => {
   return (
     <>
-      <div className="bg-white absolute top-0 z-[99999] w-full">
+      <div className="bg-white absolute top-0 z-[999] w-full">
         <div className="lg:flex   hidden">
           <div className="menu-bar ">
             <div className="flex items-center gap-10">
@@ -62,6 +62,9 @@ const Navbar = () => {
                       </li>
                     </ul>
                   </div>
+                </li>
+                <li>
+                  <Link href="/property">Property</Link>
                 </li>
                 <li>
                   <Link href="#">

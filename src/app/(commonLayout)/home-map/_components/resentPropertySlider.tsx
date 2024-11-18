@@ -152,8 +152,8 @@ export default function ResentPropertySlider() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="-ml-3 size-16 bg-white text-gray-800 text-2xl hidden md:flex" />
-        <CarouselNext className="-mr-3 size-16 bg-white text-gray-800 text-2xl hidden md:flex" />
+        <CarouselPrevious className="ml-6 size-16 bg-white text-gray-800 text-2xl hidden md:flex" />
+        <CarouselNext className="mr-6 size-16 bg-white text-gray-800 text-2xl hidden md:flex" />
       </Carousel>
     </div>
   );
