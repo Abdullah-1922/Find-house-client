@@ -4,22 +4,15 @@ import './Navbar.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import navbarLogo from '../../../../public/assets/logo/logo-light-dark.svg';
 import Image from 'next/image';
-import languageLogo from '../../../../public/assets/logo/globe.png';
 import Sidebar from './SideBar/Sidebar';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import UserProfileDropdown from './UserProfileDropdown';
 import SignInModal from '@/app/(commonLayout)/_components/modal/signInModal';
-import Cookies from 'js-cookie';
-import { decodeJWT } from '@/utils/verifyToken';
-import { useGetMeQuery } from '@/redux/api/features/users/user';
-import { DecodedJWT } from '@/types';
+import { useUser } from '@/hooks/user.hook';
 
 const Navbar = () => {
-  const token = Cookies.get('accessToken');
-  const { _id } = decodeJWT(token) as DecodedJWT;
-
-  const { data: user } = useGetMeQuery(_id);
+  const { user } = useUser();
 
   console.log(user);
 

@@ -15,6 +15,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Eye, EyeOff, Facebook, Twitter } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import SocialLogin from '../module/signup/socialLogin';
 
 export default function SignInModal() {
   const [open, setOpen] = React.useState(false);
@@ -61,7 +62,7 @@ export default function SignInModal() {
           Sign In
         </Button>
       </DialogTrigger>
-      <DialogContent className="md:max-w-[425px]">
+      <DialogContent className="md:max-w-[425px] z-[999999]">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl">
@@ -70,35 +71,11 @@ export default function SignInModal() {
             </DialogTitle>
           </div>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 py-4">
-          <div className="space-y-2">
-            <Button
-              className="w-full bg-[#4267B2] hover:bg-[#4267B2]/90"
-              variant="default"
-            >
-              <Facebook className="mr-2 h-4 w-4" />
-              Log in with Facebook
-            </Button>
-            <Button
-              className="w-full bg-[#1DA1F2] hover:bg-[#1DA1F2]/90"
-              variant="default"
-            >
-              <Twitter className="mr-2 h-4 w-4" />
-              Log in with Twitter
-            </Button>
-          </div>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                Or
-              </span>
-            </div>
-          </div>
+        {/* Social Login */}
+        <SocialLogin />
 
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Username or Email Address *</Label>
