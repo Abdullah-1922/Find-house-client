@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import './Navbar.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import navbarLogo from '../../../../public/assets/logo/logo-light-dark.svg';
-import Image from 'next/image';
-import languageLogo from '../../../../public/assets/logo/globe.png';
-import Sidebar from './SideBar/Sidebar';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import UserProfileDropdown from './UserProfileDropdown';
-import SignInModal from '@/app/(commonLayout)/_components/modal/signInModal';
-import Cookies from 'js-cookie';
-import { decodeJWT } from '@/utils/verifyToken';
-import { useGetMeQuery } from '@/redux/api/features/users/user';
-import { DecodedJWT } from '@/types';
+import "./Navbar.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import navbarLogo from "../../../../public/assets/logo/logo-light-dark.svg";
+import Image from "next/image";
+import languageLogo from "../../../../public/assets/logo/globe.png";
+import Sidebar from "./SideBar/Sidebar";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import UserProfileDropdown from "./UserProfileDropdown";
+import SignInModal from "@/app/(commonLayout)/_components/modal/signInModal";
+import Cookies from "js-cookie";
+import { decodeJWT } from "@/utils/verifyToken";
+import { useGetMeQuery } from "@/redux/api/features/users/user";
+import { DecodedJWT } from "@/types";
 
 const Navbar = () => {
-  const token = Cookies.get('accessToken');
-  const { _id } = decodeJWT(token) as DecodedJWT;
+  // const token = Cookies.get('accessToken');
+  // const { _id } = decodeJWT(token) as DecodedJWT;
 
-  const { data: user } = useGetMeQuery(_id);
+  // const { data: user } = useGetMeQuery(_id);
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <>
@@ -29,7 +29,7 @@ const Navbar = () => {
         <div className="lg:flex   hidden">
           <div className="menu-bar ">
             <div className="flex items-center gap-10">
-              <Link href={'/'} className="logo">
+              <Link href={"/"} className="logo">
                 <Image
                   className="w-14"
                   width={1000}
@@ -135,7 +135,7 @@ const Navbar = () => {
               <SignInModal />
               <UserProfileDropdown />
 
-              <Link href={'/dashboard/user'}>
+              <Link href={"/dashboard/user"}>
                 <Button className="text-white py-3 px-5 bg-gray-800 hover:bg-gray-900 h-[45px] rounded font-bold">
                   Add Listing
                 </Button>

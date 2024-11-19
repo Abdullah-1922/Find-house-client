@@ -5,7 +5,7 @@ export interface TUser {
   firstName: string;
   secondName: string;
   auth: TAuth;
-  email: string;
+  email?: string;
   image: string;
   role: string;
   paymentHistory: any[];
