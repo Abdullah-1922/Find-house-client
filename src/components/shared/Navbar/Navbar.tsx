@@ -72,7 +72,7 @@ const Navbar = () => {
                   </div>
                 </li>
                 <li>
-                  <Link href="/property">Property</Link>
+                  <Link href="/all-properties">Properties</Link>
                 </li>
                 <li>
                   <Link href="#">

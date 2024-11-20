@@ -12,10 +12,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Eye, EyeOff, Facebook, Twitter } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import SocialLogin from '../module/signup/socialLogin';
+import { useLoginMutation } from '@/redux/api/features/auth/auth';
+import { toast, Toaster } from 'sonner';
+import Cookies from 'js-cookie';
 
 export default function SignInModal() {
   const [open, setOpen] = React.useState(false);
@@ -24,9 +27,10 @@ export default function SignInModal() {
     password: '',
     remember: false,
   });
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const pathname = usePathname();
-  console.log(pathname);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [loginFn, { isLoading }] = useLoginMutation();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -43,9 +47,42 @@ export default function SignInModal() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const resetForm = () => {
+    setFormData({
+      email: '',
+      password: '',
+      remember: false,
+    });
+    setErrorMessage(null);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+
+    try {
+      const res: any = await loginFn({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // If login successful
+      if (res?.data?.success) {
+        toast.success('Login successful');
+        Cookies.set('accessToken', res.data.data.accessToken);
+        Cookies.set('refreshToken', res.data.data.refreshToken);
+        resetForm();
+        setOpen(false);
+      }
+
+      // If error occurs
+      if (res?.error) {
+        setErrorMessage(
+          res.error?.data?.message || 'Something went wrong. Please try again.'
+        );
+      }
+    } catch (error) {
+      setErrorMessage('An unexpected error occurred. Please try again.');
+    }
   };
 
   return (
@@ -129,12 +166,18 @@ export default function SignInModal() {
             <Button
               className="w-full bg-gray-800 hover:bg-gray-800/90"
               type="submit"
+              disabled={isLoading}
             >
-              Sign In
+              {isLoading ? 'Signing in...' : 'Sign In'}
             </Button>
+            {errorMessage && (
+              <p className="mt-2 text-center text-sm text-red-600">
+                {errorMessage}
+              </p>
+            )}
           </div>
           <p className="mt-5 text-center">
-            You have no account ?{' '}
+            You have no account?{' '}
             <Link
               onClick={() => setOpen(false)}
               className="text-blue-500 underline"
@@ -144,6 +187,7 @@ export default function SignInModal() {
             </Link>
           </p>
         </form>
+        <Toaster />
       </DialogContent>
     </Dialog>
   );

@@ -130,16 +130,17 @@ export default function SignUpForm() {
               <p className="text-sm text-red-500">{errors.email.message}</p>
             )}
           </div>
-          <div className="space-y-2 relative">
+          <div className="space-y-2">
             <Label htmlFor="password">Your Password</Label>
             <Input
+              className="relative"
               id="password"
               placeholder="Enter your password"
               type={showPassword ? 'text' : 'password'}
               {...register('password')}
             />
             <div
-              className="absolute inset-y-0 right-3 top-5 flex items-center cursor-pointer"
+              className="absolute inset-y-0 top-5 flex items-center cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -148,16 +149,17 @@ export default function SignUpForm() {
               <p className="text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
-          <div className="space-y-2 relative">
+          <div className="space-y-2">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
             <Input
+              className="relative"
               id="confirmPassword"
               placeholder="Confirm your password"
               type={showConfirmPassword ? 'text' : 'password'}
               {...register('confirmPassword')}
             />
             <div
-              className="absolute inset-y-0 right-3 top-5 flex items-center cursor-pointer"
+              className="absolute inset-y-0 top-5 flex items-center cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
