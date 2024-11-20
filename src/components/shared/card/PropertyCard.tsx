@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import Link from "next/link";
+import React, { useState } from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import Link from 'next/link';
 import {
   Bed,
   Car,
@@ -19,10 +19,11 @@ import {
   ShowerHead,
   Square,
   Video,
-} from "lucide-react";
+} from 'lucide-react';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { TProperty } from "@/types/property/property.type";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import NextLink from 'next/link';
+import { TProperty } from '@/types';
 
 interface PropertyCardProps {
   property: TProperty;
@@ -44,17 +45,17 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
     >
       <Card
         className={`overflow-hidden border-none ${
-          isGridView ? "flex flex-col" : "flex flex-row justify-between"
+          isGridView ? 'flex flex-col' : 'flex flex-row justify-between'
         }`}
       >
         <div
           className={`relative aspect-[4/3] ${
-            isGridView ? "" : "w-1/2 md:w-1/3"
-          } ${isGridView === undefined && "flex flex-col"}`}
+            isGridView ? '' : 'w-1/2 md:w-1/3'
+          } ${isGridView === undefined && 'flex flex-col'}`}
         >
           <div
             className={`absolute top-4 left-4 right-4 z-10 flex justify-between ${
-              isGridView ? "" : "flex-col md:flex-row gap-3"
+              isGridView ? '' : 'flex-col md:flex-row gap-3'
             }`}
           >
             <Badge
@@ -66,9 +67,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
             <Badge
               variant="secondary"
               className={
-                property?.category === "rent"
-                  ? "bg-red-500 hover:bg-red-600 text-white"
-                  : "bg-amber-500 hover:bg-amber-600 text-white"
+                property?.category === 'rent'
+                  ? 'bg-red-500 hover:bg-red-600 text-white'
+                  : 'bg-amber-500 hover:bg-amber-600 text-white'
               }
             >
               {property.category}
@@ -101,17 +102,17 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                 </h3>
               </div>
               <motion.div
-                initial={{ opacity: 0, x: "100%" }}
+                initial={{ opacity: 0, x: '100%' }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: "100%" }}
+                exit={{ opacity: 0, x: '100%' }}
                 transition={{
-                  type: "spring",
+                  type: 'spring',
                   stiffness: 200,
                   damping: 25,
                 }}
                 className="absolute inset-0 flex justify-end items-end mb-3 mr-3 gap-3"
               >
-                <Link href={`property/${property._id}`}>
+                <NextLink href={`/all-properties/${property._id}`}>
                   <Button
                     variant="outline"
                     size="icon"
@@ -119,7 +120,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                   >
                     <IconLink className="h-4 w-4" />
                   </Button>
-                </Link>
+                </NextLink>
                 <Button variant="outline" size="icon" className="rounded-full">
                   <Video className="h-4 w-4" />
                 </Button>
@@ -144,7 +145,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
             </div>
             <div
               className={`grid gap-4 ${
-                isGridView ? "grid-cols-2" : "grid-cols-1 md:grid-cols-2"
+                isGridView ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2'
               }`}
             >
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -161,7 +162,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Car className="h-4 w-4" />
-                <span>{property.garages || "N/A"} Garages</span>
+                <span>{property.garages || 'N/A'} Garages</span>
               </div>
             </div>
           </CardContent>
@@ -190,7 +191,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
               <div className={`flex items-center gap-2 md:gap-3`}>
                 <Avatar
                   className={`size-10 rounded-full ${
-                    isGridView ? "" : "size-6 md:size-10 "
+                    isGridView ? '' : 'size-6 md:size-10 '
                   }`}
                 >
                   <AvatarImage
@@ -202,7 +203,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                 <div className="flex flex-col">
                   <span
                     className={`text-sm md:text-sm font-medium text-gray-900 ${
-                      isGridView ? "" : "text-xs md:text-sm"
+                      isGridView ? '' : 'text-xs md:text-sm'
                     }`}
                   >
                     {property.ownedBy.firstName}
@@ -212,13 +213,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
               <div>
                 <span
                   className={`text-sm text-gray-500 whitespace-nowrap ${
-                    isGridView ? "" : "text-xs md:text-sm"
+                    isGridView ? '' : 'text-xs md:text-sm'
                   }`}
                 >
-                  {new Date(property.createdAt).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
+                  {new Date(property.createdAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
                   })}
                 </span>
               </div>

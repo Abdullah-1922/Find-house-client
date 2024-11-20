@@ -18,6 +18,7 @@ import { Eye, EyeOff, Facebook, Twitter } from 'lucide-react';
 import { useSignupMutation } from '@/redux/api/features/auth/auth';
 import { toast, Toaster } from 'sonner';
 import Cookies from 'js-cookie';
+import SocialLogin from './socialLogin';
 
 const signUpSchema = z
   .object({
@@ -93,30 +94,8 @@ export default function SignUpForm() {
         </CardDescription>
       </CardHeader>
       <CardContent className="border rounded p-4">
-        <div className="flex flex-col md:flex-row gap-3">
-          <Button
-            className="w-full bg-[#4267B2] hover:bg-[#4267B2]/90"
-            variant="default"
-          >
-            <Facebook className="mr-2 size-5" />
-            Log in with Facebook
-          </Button>
-          <Button
-            className="w-full bg-[#1DA1F2] hover:bg-[#1DA1F2]/90"
-            variant="default"
-          >
-            <Twitter className="mr-2 size-5" />
-            Log in with Twitter
-          </Button>
-        </div>
-        <div className="relative my-4">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">Or</span>
-          </div>
-        </div>
+        {/* Social Login */}
+        <SocialLogin />
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
             <Label htmlFor="firstName">First Name</Label>
@@ -151,16 +130,17 @@ export default function SignUpForm() {
               <p className="text-sm text-red-500">{errors.email.message}</p>
             )}
           </div>
-          <div className="space-y-2 relative">
+          <div className="space-y-2">
             <Label htmlFor="password">Your Password</Label>
             <Input
+              className="relative"
               id="password"
               placeholder="Enter your password"
               type={showPassword ? 'text' : 'password'}
               {...register('password')}
             />
             <div
-              className="absolute inset-y-0 right-3 top-5 flex items-center cursor-pointer"
+              className="absolute inset-y-0 top-5 flex items-center cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -169,16 +149,17 @@ export default function SignUpForm() {
               <p className="text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
-          <div className="space-y-2 relative">
+          <div className="space-y-2">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
             <Input
+              className="relative"
               id="confirmPassword"
               placeholder="Confirm your password"
               type={showConfirmPassword ? 'text' : 'password'}
               {...register('confirmPassword')}
             />
             <div
-              className="absolute inset-y-0 right-3 top-5 flex items-center cursor-pointer"
+              className="absolute inset-y-0 top-5 flex items-center cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}

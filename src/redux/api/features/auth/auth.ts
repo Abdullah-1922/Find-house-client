@@ -2,6 +2,7 @@ import { baseApi } from '../../baseApi';
 
 const blogApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    // signup by email
     signup: builder.mutation({
       query: (userData) => {
         console.log(userData);
@@ -12,6 +13,17 @@ const blogApi = baseApi.injectEndpoints({
         };
       },
     }),
+    // Login by email
+    login: builder.mutation({
+      query: (userData) => {
+        console.log(userData);
+        return {
+          url: `/auth/login/email`,
+          method: 'POST',
+          body: userData,
+        };
+      },
+    }),
   }),
 });
-export const { useSignupMutation } = blogApi;
+export const { useSignupMutation, useLoginMutation } = blogApi;

@@ -1,41 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { TUser } from "../user/user.type";
+import { TUser } from '../user/user.type';
 
+export type PropertyStatus = 'active' | 'non-active';
 
-export type PropertyStatus = "active" | "non-active";
-
-export type PropertyCategory = "sell" | "rent";
+export type PropertyCategory = 'sell' | 'rent';
 
 export type PropertyType =
-  | "house"
-  | "commercial"
-  | "apartment"
-  | "lot"
-  | "garage";
+  | 'house'
+  | 'commercial'
+  | 'apartment'
+  | 'lot'
+  | 'garage';
 
 export type Features =
-  | "Air Conditioning"
-  | "Swimming Pool"
-  | "Central Heating"
-  | "Laundry Room"
-  | "Gym"
-  | "Alarm"
-  | "Window Covering"
-  | "Refrigerator"
-  | "TV Cable & WIFI"
-  | "Microwave";
+  | 'Air Conditioning'
+  | 'Swimming Pool'
+  | 'Central Heating'
+  | 'Laundry Room'
+  | 'Gym'
+  | 'Alarm'
+  | 'Window Covering'
+  | 'Refrigerator'
+  | 'TV Cable & WIFI'
+  | 'Microwave';
 
 export type ExtraInfoAge =
-  | "0-1"
-  | "0-5"
-  | "0-10"
-  | "0-15"
-  | "0-20"
-  | "0-50"
-  | "50+";
-
-
+  | '0-1'
+  | '0-5'
+  | '0-10'
+  | '0-15'
+  | '0-20'
+  | '0-50'
+  | '50+';
 
 export interface ILocation {
   address: string;
@@ -60,7 +57,7 @@ export interface IContactInfo {
   _id: string;
   email?: string;
 }
-type UserProperty={
+type UserProperty = {
   _id: string;
   firstName: string;
   secondName: string;
@@ -73,20 +70,10 @@ type UserProperty={
   createdAt: string;
   updatedAt: string;
   __v: number;
-}
-
-
-
-
-
-
-
-
-
-
+};
 
 export type TProperty = {
-  author: UserProperty ;
+  author: UserProperty;
   ownedBy: UserProperty;
   status: PropertyStatus;
   feedback: string[];

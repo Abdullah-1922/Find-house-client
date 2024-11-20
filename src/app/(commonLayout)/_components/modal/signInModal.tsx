@@ -12,9 +12,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Eye, EyeOff, Facebook, Twitter } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import SocialLogin from '../module/signup/socialLogin';
+import { useLoginMutation } from '@/redux/api/features/auth/auth';
+import { toast, Toaster } from 'sonner';
+import Cookies from 'js-cookie';
 
 export default function SignInModal() {
   const [open, setOpen] = React.useState(false);
@@ -23,9 +27,10 @@ export default function SignInModal() {
     password: '',
     remember: false,
   });
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const pathname = usePathname();
-  console.log(pathname);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [loginFn, { isLoading }] = useLoginMutation();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -42,9 +47,42 @@ export default function SignInModal() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const resetForm = () => {
+    setFormData({
+      email: '',
+      password: '',
+      remember: false,
+    });
+    setErrorMessage(null);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+
+    try {
+      const res: any = await loginFn({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // If login successful
+      if (res?.data?.success) {
+        toast.success('Login successful');
+        Cookies.set('accessToken', res.data.data.accessToken);
+        Cookies.set('refreshToken', res.data.data.refreshToken);
+        resetForm();
+        setOpen(false);
+      }
+
+      // If error occurs
+      if (res?.error) {
+        setErrorMessage(
+          res.error?.data?.message || 'Something went wrong. Please try again.'
+        );
+      }
+    } catch (error) {
+      setErrorMessage('An unexpected error occurred. Please try again.');
+    }
   };
 
   return (
@@ -61,7 +99,7 @@ export default function SignInModal() {
           Sign In
         </Button>
       </DialogTrigger>
-      <DialogContent className="md:max-w-[425px]">
+      <DialogContent className="md:max-w-[425px] z-[999999]">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl">
@@ -70,35 +108,11 @@ export default function SignInModal() {
             </DialogTitle>
           </div>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 py-4">
-          <div className="space-y-2">
-            <Button
-              className="w-full bg-[#4267B2] hover:bg-[#4267B2]/90"
-              variant="default"
-            >
-              <Facebook className="mr-2 h-4 w-4" />
-              Log in with Facebook
-            </Button>
-            <Button
-              className="w-full bg-[#1DA1F2] hover:bg-[#1DA1F2]/90"
-              variant="default"
-            >
-              <Twitter className="mr-2 h-4 w-4" />
-              Log in with Twitter
-            </Button>
-          </div>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                Or
-              </span>
-            </div>
-          </div>
+        {/* Social Login */}
+        <SocialLogin />
 
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Username or Email Address *</Label>
@@ -152,12 +166,18 @@ export default function SignInModal() {
             <Button
               className="w-full bg-gray-800 hover:bg-gray-800/90"
               type="submit"
+              disabled={isLoading}
             >
-              Sign In
+              {isLoading ? 'Signing in...' : 'Sign In'}
             </Button>
+            {errorMessage && (
+              <p className="mt-2 text-center text-sm text-red-600">
+                {errorMessage}
+              </p>
+            )}
           </div>
           <p className="mt-5 text-center">
-            You have no account ?{' '}
+            You have no account?{' '}
             <Link
               onClick={() => setOpen(false)}
               className="text-blue-500 underline"
@@ -167,6 +187,7 @@ export default function SignInModal() {
             </Link>
           </p>
         </form>
+        <Toaster />
       </DialogContent>
     </Dialog>
   );
