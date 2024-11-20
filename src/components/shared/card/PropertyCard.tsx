@@ -6,22 +6,24 @@ import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import Link from 'next/link';
 import {
   Bed,
   Car,
   Expand,
   Heart,
   ImageIcon,
-  Link,
+  Link as IconLink,
   MapPin,
   Share2,
   ShowerHead,
   Square,
   Video,
 } from 'lucide-react';
-import { TProperty } from '@/types';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import NextLink from 'next/link';
+import { TProperty } from '@/types';
 
 interface PropertyCardProps {
   property: TProperty;
@@ -65,17 +67,17 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
             <Badge
               variant="secondary"
               className={
-                property.status === 'For Sale'
+                property?.category === 'rent'
                   ? 'bg-red-500 hover:bg-red-600 text-white'
                   : 'bg-amber-500 hover:bg-amber-600 text-white'
               }
             >
-              {property.status}
+              {property.category}
             </Badge>
           </div>
 
           <Image
-            src={property.imageUrl}
+            src={property.images[0]}
             alt={property.title}
             fill
             className="object-cover"
@@ -110,13 +112,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                 }}
                 className="absolute inset-0 flex justify-end items-end mb-3 mr-3 gap-3"
               >
-                <NextLink href={`/all-properties/${property.id}`}>
+                <NextLink href={`/all-properties/${property._id}`}>
                   <Button
                     variant="outline"
                     size="icon"
                     className="rounded-full"
                   >
-                    <Link className="h-4 w-4" />
+                    <IconLink className="h-4 w-4" />
                   </Button>
                 </NextLink>
                 <Button variant="outline" size="icon" className="rounded-full">
@@ -138,7 +140,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
               </h3>
               <p className="text-muted-foreground flex items-center gap-1 text-xs">
                 <MapPin className="h-4 w-4" />
-                {property.location}
+                {property.location.city}, {property.location.state}
               </p>
             </div>
             <div
@@ -148,11 +150,11 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
             >
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Bed className="h-4 w-4" />
-                <span>{property.bedrooms} Bedrooms</span>
+                <span>{property.rooms} Bedrooms</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <ShowerHead className="h-4 w-4" />
-                <span>{property.bathrooms} Bathrooms</span>
+                <span>{property.extraInfo.bathrooms} Bathrooms</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Square className="h-4 w-4" />
@@ -160,7 +162,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Car className="h-4 w-4" />
-                <span>{property.garages} Garages</span>
+                <span>{property.garages || 'N/A'} Garages</span>
               </div>
             </div>
           </CardContent>
@@ -193,10 +195,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                   }`}
                 >
                   <AvatarImage
-                    src={property.agent.image}
-                    alt={property.agent.name}
+                    src={property.ownedBy.image}
+                    alt={property.ownedBy.image}
                   />
-                  <AvatarFallback>{property.agent.name[0]}</AvatarFallback>
+                  <AvatarFallback>{property.ownedBy.image}</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
                   <span
@@ -204,7 +206,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                       isGridView ? '' : 'text-xs md:text-sm'
                     }`}
                   >
-                    {property.agent.name}
+                    {property.ownedBy.firstName}
                   </span>
                 </div>
               </div>
@@ -214,7 +216,11 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                     isGridView ? '' : 'text-xs md:text-sm'
                   }`}
                 >
-                  {property.postedTime}
+                  {new Date(property.createdAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
                 </span>
               </div>
             </CardFooter>
