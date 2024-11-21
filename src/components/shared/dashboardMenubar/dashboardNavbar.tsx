@@ -52,6 +52,9 @@ const DashboardNavbar = () => {
                 </div>
               </li>
               <li>
+                <Link href="/all-properties">Properties</Link>
+              </li>
+              <li>
                 <Link href="#">
                   Pages <i className="fas fa-caret-down"></i>
                 </Link>

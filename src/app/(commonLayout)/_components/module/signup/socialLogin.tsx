@@ -13,7 +13,7 @@ export default function SocialLogin() {
               callbackUrl: window.location.origin || '/',
             })
           }
-          className="w-full bg-transparent hover:bg-gray-300 border rounded-full text-black"
+          className="w-full bg-transparent hover:bg-gray-300 border border-gray-800 rounded-full text-black"
           variant="default"
         >
           <Facebook className="mr-2 size-5 text-blue-500" />
@@ -25,7 +25,7 @@ export default function SocialLogin() {
               callbackUrl: window.location.origin || '/',
             })
           }
-          className="w-full bg-transparent hover:bg-gray-300 border rounded-full text-black"
+          className="w-full bg-transparent hover:bg-gray-300 border border-gray-800 rounded-full text-black"
           variant="default"
         >
           <Twitter className="mr-2 size-5 text-blue-500" />

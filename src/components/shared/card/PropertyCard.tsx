@@ -72,13 +72,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                   : 'bg-amber-500 hover:bg-amber-600 text-white'
               }
             >
-              {property.category}
+              {property?.category}
             </Badge>
           </div>
 
           <Image
-            src={property.images[0]}
-            alt={property.title}
+            src={property?.images?.[0]}
+            alt={property?.title}
             fill
             className="object-cover"
           />
@@ -112,7 +112,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                 }}
                 className="absolute inset-0 flex justify-end items-end mb-3 mr-3 gap-3"
               >
-                <NextLink href={`/all-properties/${property._id}`}>
+                <NextLink href={`/all-properties/${property?._id}`}>
                   <Button
                     variant="outline"
                     size="icon"
@@ -136,11 +136,11 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           <CardContent className="p-4 space-y-6">
             <div className="flex items-start flex-col">
               <h3 className="text-lg font-semibold text-gray-600">
-                {property.title}
+                {property?.title}
               </h3>
               <p className="text-muted-foreground flex items-center gap-1 text-xs">
                 <MapPin className="h-4 w-4" />
-                {property.location.city}, {property.location.state}
+                {property?.location.city}, {property?.location.state}
               </p>
             </div>
             <div
@@ -150,19 +150,19 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
             >
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Bed className="h-4 w-4" />
-                <span>{property.rooms} Bedrooms</span>
+                <span>{property?.rooms} Bedrooms</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <ShowerHead className="h-4 w-4" />
-                <span>{property.extraInfo.bathrooms} Bathrooms</span>
+                <span>{property?.extraInfo?.bathrooms} Bathrooms</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Square className="h-4 w-4" />
-                <span>{property.area} sq ft</span>
+                <span>{property?.area} sq ft</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Car className="h-4 w-4" />
-                <span>{property.garages || 'N/A'} Garages</span>
+                <span>{property?.garages || 'N/A'} Garages</span>
               </div>
             </div>
           </CardContent>
@@ -172,7 +172,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
               className={`py-4 border-t flex items-center gap-2 justify-between`}
             >
               <div className="text-sm md:text-lg font-semibold whitespace-nowrap">
-                $ {property.price.toLocaleString()}
+                $ {property?.price.toLocaleString()}
               </div>
               <div className="flex gap-1 md:gap-2">
                 <Button variant="outline" size="icon">
@@ -195,10 +195,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                   }`}
                 >
                   <AvatarImage
-                    src={property.ownedBy.image}
-                    alt={property.ownedBy.image}
+                    src={property?.ownedBy.image}
+                    alt={property?.ownedBy.image}
                   />
-                  <AvatarFallback>{property.ownedBy.image}</AvatarFallback>
+                  <AvatarFallback>{property?.ownedBy.image}</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
                   <span
@@ -206,7 +206,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                       isGridView ? '' : 'text-xs md:text-sm'
                     }`}
                   >
-                    {property.ownedBy.firstName}
+                    {property?.ownedBy.firstName}
                   </span>
                 </div>
               </div>
@@ -216,7 +216,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                     isGridView ? '' : 'text-xs md:text-sm'
                   }`}
                 >
-                  {new Date(property.createdAt).toLocaleDateString('en-US', {
+                  {new Date(property?.createdAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'short',
                     day: 'numeric',

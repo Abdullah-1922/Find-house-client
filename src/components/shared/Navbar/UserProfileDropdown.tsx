@@ -17,12 +17,13 @@ import { usePathname } from 'next/navigation';
 
 export default function UserProfileDropdown() {
   const pathname = usePathname();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative h-[45px] w-40 space-x-2 rounded-full hover:border hover:bg-gray-50/20  bg-gray-50/10"
+          className="relative h-[45px] w-40 space-x-2 rounded-full hover:border hover:bg-gray-50/50  bg-gray-50/40"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage
