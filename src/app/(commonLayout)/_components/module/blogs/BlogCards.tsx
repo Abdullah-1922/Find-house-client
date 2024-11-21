@@ -1,15 +1,14 @@
-"use client";
+'use client';
 
-import { useGetAllBlogsQuery } from "@/redux/api/features/blog/blogApi";
+import { useGetAllBlogsQuery } from '@/redux/api/features/blog/blogApi';
 
-import { TBlog } from "@/types/blog/blog.type";
-import BlogLoadingCard from "../../../../components/shared/card/BlogLoadingCard";
-import BlogCard from "@/components/shared/card/BlogCard";
+import { TBlog } from '@/types/blog/blog.type';
+import BlogLoadingCard from '../../../../../components/shared/card/BlogLoadingCard';
+import BlogCard from '@/components/shared/card/BlogCard';
 
 const BlogCards = () => {
   const { data, isLoading } = useGetAllBlogsQuery(undefined);
   const blogs = data?.data;
-  
 
   return (
     <div>

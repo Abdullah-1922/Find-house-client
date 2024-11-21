@@ -41,7 +41,7 @@ const WhyChooseUs = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-6 rounded-lg max-w-sm border-2 rounded"
+              className="flex flex-col items-center text-center p-6 rounded-lg max-w-sm border-2"
             >
               <div className="mb-4 rounded-full p-3 bg-gray-100">
                 <feature.icon

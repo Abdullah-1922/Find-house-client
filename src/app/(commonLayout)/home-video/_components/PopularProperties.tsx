@@ -1,118 +1,81 @@
 import PropertyCard from '@/components/shared/card/PropertyCard';
+import { TProperty } from '@/types';
 
-interface Property {
-  id: string;
-  title: string;
-  location: string;
-  price: number;
-  bedrooms: number;
-  bathrooms: number;
-  area: number;
-  garages: number;
-  featured: boolean;
-  status: 'For Sale' | 'For Rent';
-  imageUrl: string;
-}
-
-const properties: Property[] = [
+const properties: TProperty[] = [
   {
-    id: '1',
-    title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    featured: true,
-    status: 'For Sale',
-    imageUrl:
-      'https://www.shutterstock.com/image-photo/beautiful-home-exterior-600nw-160071032.jpg',
-  },
-  {
-    id: '2',
-    title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    featured: true,
-    status: 'For Rent',
-    imageUrl:
-      'https://www.premierhomesca.com/wp-content/uploads/2020/03/EL3-Model-11-scaled-e1611704624780.jpg',
-  },
-  {
-    id: '3',
-    title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    featured: true,
-    status: 'For Sale',
-    imageUrl:
-      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
-  },
-  {
-    id: '4',
-    title: 'Real House Luxury Villa',
-    location: 'Est St. 77 - Central Park South, NYC',
-    price: 150000,
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    featured: true,
-    status: 'For Sale',
-    imageUrl:
-      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
-  },
-
-  {
-    id: '5',
-    title: 'Lakefront Cabin',
-    location: '321 Lakeview Rd, Lake Tahoe, CA',
-    price: 220000,
-    bedrooms: 3,
-    bathrooms: 2,
-    area: 1000,
-    garages: 1,
-    featured: true,
-    status: 'For Sale',
-    imageUrl:
-      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
-  },
-  {
-    id: '6',
-    title: 'Cozy Downtown Condo',
-    location: '654 Main St, Chicago, IL',
-    price: 160000,
-    bedrooms: 2,
-    bathrooms: 1,
-    area: 750,
-    garages: 0,
-    featured: false,
-    status: 'For Rent',
-    imageUrl:
-      'https://www.shutterstock.com/image-photo/beautiful-home-exterior-600nw-160071032.jpg',
-  },
-  {
-    id: '7',
-    title: 'Luxury Penthouse',
-    location: '77 Park Ave, NYC',
-    price: 450000,
-    bedrooms: 3,
-    bathrooms: 3,
-    area: 1400,
-    garages: 1,
-    featured: true,
-    status: 'For Sale',
-    imageUrl:
-      'https://townsquare.media/site/192/files/2024/01/attachment-14802-Oxford-Ave-Lubbock-TX-79423-MLS-202316309-Zillow.jpg?w=780&q=75',
+    _id: '67372a4c5c0eade732d63cf8',
+    author: {
+      _id: '673704d3db3cdc44c18d7b6b',
+      firstName: 'Abdullah Al Kafi7',
+      secondName: 'Al Kafi',
+      auth: '673704d3db3cdc44c18d7b69',
+      image:
+        'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png',
+      role: 'user',
+      paymentHistory: [],
+      property: ['67372a4c5c0eade732d63cf8'],
+      createdAt: '2024-11-15T08:22:43.986Z',
+      updatedAt: '2024-11-15T11:02:36.369Z',
+      __v: 0,
+    },
+    ownedBy: {
+      _id: '673704d3db3cdc44c18d7b6b',
+      firstName: 'Abdullah Al Kafi7',
+      secondName: 'Al Kafi',
+      auth: '673704d3db3cdc44c18d7b69',
+      image:
+        'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png',
+      role: 'user',
+      paymentHistory: [],
+      property: ['67372a4c5c0eade732d63cf8'],
+      createdAt: '2024-11-15T08:22:43.986Z',
+      updatedAt: '2024-11-15T11:02:36.369Z',
+      __v: 0,
+    },
+    status: 'active',
+    feedback: [],
+    title: 'Modern Apartment in Downtown4',
+    description:
+      'A spacious modern apartment located in the heart of the city with all the necessary amenities2.',
+    category: 'rent',
+    type: 'apartment',
+    rooms: 3,
+    price: 1500,
+    area: 1200,
+    images: [
+      'https://code-theme.com/html/findhouses/images/feature-properties/fp-1.jpg',
+      'https://code-theme.com/html/findhouses/images/feature-properties/fp-2.jpg',
+    ],
+    location: {
+      address: '1234 Main Street',
+      city: 'New York',
+      state: 'NY',
+      country: 'USA',
+      latitude: '40.712776',
+      longitude: '-74.005974',
+    },
+    extraInfo: {
+      age: '0-10',
+      rooms: 3,
+      bathrooms: 2,
+      _id: '67372a4c5c0eade732d63cf9',
+    },
+    features: [
+      'Air Conditioning',
+      'Central Heating',
+      'TV Cable & WIFI',
+      'Laundry Room',
+    ],
+    contactInfo: {
+      name: 'John Doe',
+      userName: 'johndoe123',
+      phone: '+1 123 456 7890',
+      email: 'johndoe@example.com',
+      _id: '67372a4c5c0eade732d63cfa',
+    },
+    createdAt: '2024-11-15T11:02:36.133Z',
+    updatedAt: '2024-11-17T11:04:31.602Z',
+    comment: ['673896e4ceacaa8f003fa53c', '6739cdbf4cf3dd5b02aae3c1'],
   },
 ];
 
@@ -161,7 +124,11 @@ const PopularProperties = () => {
             </div>
             <div className="grid grid-cols-2 gap-10 z-20 w-full">
               {properties.slice(0, 2).map((property) => (
-                <PropertyCard key={property.id} property={property} />
+                <PropertyCard
+                  key={property.id}
+                  property={property}
+                  isGridView={true}
+                />
               ))}
             </div>
           </div>
