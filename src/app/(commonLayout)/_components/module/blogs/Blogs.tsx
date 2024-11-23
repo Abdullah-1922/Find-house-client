@@ -6,7 +6,7 @@ import { TBlog } from '@/types/blog/blog.type';
 import BlogLoadingCard from '../../../../../components/shared/card/BlogLoadingCard';
 import BlogCard from '@/components/shared/card/BlogCard';
 
-const BlogCards = () => {
+const Blogs = () => {
   const { data, isLoading } = useGetAllBlogsQuery(undefined);
   const blogs = data?.data;
 
@@ -31,4 +31,4 @@ const BlogCards = () => {
   );
 };
 
-export default BlogCards;
+export default Blogs;

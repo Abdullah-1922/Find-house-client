@@ -1,5 +1,6 @@
 import React from 'react';
 import Blogs from '../../_components/module/blogDetails';
+import Banner from '../../_components/ui/shared/banner';
 
 export default function BlogDetails({
   params,
@@ -7,5 +8,10 @@ export default function BlogDetails({
   params: { blogId: string };
 }) {
   const { blogId } = params;
-  return <Blogs blogId={blogId} />;
+  return (
+    <div>
+      <Banner pageName="Blog Details" />
+      <Blogs blogId={blogId} />;
+    </div>
+  );
 }

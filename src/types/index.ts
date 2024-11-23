@@ -11,3 +11,4 @@ export * from './property/property.type';
 export * from './auth/auth.type';
 export * from './user/user.type';
 export * from './blog/blog.type';
+export * from './clogComment/blogComment.type';
