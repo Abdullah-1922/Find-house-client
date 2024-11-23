@@ -7,8 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { X } from 'lucide-react';
 import Link from 'next/link';
 import { TBlog } from '@/types';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -20,7 +18,11 @@ interface SearchModalProps {
   results: TBlog[] | null;
 }
 
-export function SearchModal({ isOpen, onClose, results }: SearchModalProps) {
+export function BlogSearchModal({
+  isOpen,
+  onClose,
+  results,
+}: SearchModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
