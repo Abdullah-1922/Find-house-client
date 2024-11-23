@@ -6,7 +6,6 @@ import { getCurrentUser } from './utils/getCurrentUser';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const user = await getCurrentUser()
-  console.log('pathname', pathname);
 
   if (user) {
     if (pathname === '/signup') {
@@ -14,10 +13,13 @@ export async function middleware(request: NextRequest) {
     }
     // verify user role
     if (!pathname.includes(user.role)) {
+      console.log('verify');
       const response = NextResponse.redirect(new URL('/', request.url));
       response.cookies.delete('accessToken');
       response.cookies.delete('refreshToken');
       return response
+    } else {
+      return NextResponse.next()
     }
   } else {
     if (pathname !== '/signup') {
