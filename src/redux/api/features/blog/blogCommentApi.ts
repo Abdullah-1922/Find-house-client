@@ -3,30 +3,50 @@ import { baseApi } from '../../baseApi';
 const blogCommentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getBlogComments: builder.query({
-      query: (blogId) => {
-        return {
-          url: `/blog-comment/${blogId}`,
-          method: 'GET',
-        };
-      },
-
-      providesTags: (result, error, id) => [{ type: 'SingleBlog', id }],
+      query: (blogId) => ({
+        url: `/blog-comment/${blogId}`,
+        method: 'GET',
+      }),
+      providesTags: (result, error, blogId) => [
+        { type: 'SingleBlog', id: blogId },
+      ],
     }),
     createBlogComment: builder.mutation({
-      query: ({ body }) => {
-        return {
-          url: `/blog-comment`,
-          method: 'POST',
-          body,
-        };
-      },
-      invalidatesTags: (result, error, { id }) => [
+      query: (commentData) => ({
+        url: `/blog-comment`,
+        method: 'POST',
+        body: commentData,
+      }),
+      invalidatesTags: (result, error, { blogId }) => [
         'Blog',
-        { type: 'SingleBlog', id },
+        { type: 'SingleBlog', id: blogId },
+      ],
+    }),
+    updateBlogComment: builder.mutation({
+      query: ({ commentId, updatedData }) => ({
+        url: `/blog-comment/${commentId}`,
+        method: 'PATCH',
+        body: updatedData,
+      }),
+      invalidatesTags: (result, error, { blogId }) => [
+        { type: 'SingleBlog', id: blogId },
+      ],
+    }),
+    deleteBlogComment: builder.mutation({
+      query: (commentId) => ({
+        url: `/blog-comment/${commentId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, { blogId }) => [
+        { type: 'SingleBlog', id: blogId },
       ],
     }),
   }),
 });
 
-export const { useGetBlogCommentsQuery, useCreateBlogCommentMutation } =
-  blogCommentApi;
+export const {
+  useGetBlogCommentsQuery,
+  useCreateBlogCommentMutation,
+  useUpdateBlogCommentMutation,
+  useDeleteBlogCommentMutation,
+} = blogCommentApi;

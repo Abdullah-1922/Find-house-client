@@ -1,6 +1,6 @@
 import React from 'react';
 import Blogs from '../../_components/module/blogDetails';
-import Banner from '../../_components/ui/shared/banner';
+import Banner from '../../_components/shared/banner';
 
 export default function BlogDetails({
   params,

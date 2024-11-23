@@ -1,13 +1,19 @@
-import { TBlog } from "@/types/blog/blog.type";
-import { Heart, MessageCircle } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { useGetBlogCommentsQuery } from '@/redux/api/features/blog/blogCommentApi';
+import { TBlogComment } from '@/types';
+import { TBlog } from '@/types/blog/blog.type';
+import { Heart, MessageCircle } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const BlogCard = ({ blog }: { blog: TBlog }) => {
+  const { data: commentData, isLoading } = useGetBlogCommentsQuery(blog?._id, {
+    skip: !blog?._id,
+  });
+  const comments = commentData?.data as TBlogComment[];
   return (
     <div
       key={blog._id}
-      className="max-w-[340px] bg-white shadow-lg rounded-lg overflow-hidden"
+      className="bg-white shadow-lg rounded-lg overflow-hidden"
     >
       <Image
         src={blog.image}
@@ -20,21 +26,16 @@ const BlogCard = ({ blog }: { blog: TBlog }) => {
         <h2 className="text-xl font-semibold mb-2">{blog.title}</h2>
         <div className="flex items-center text-sm text-gray-500 mb-4">
           <span>
-            {new Date(blog.createdAt).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
+            {new Date(blog.createdAt).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
             })}
           </span>
           <span className="mx-2">•</span>
           <span className="flex items-center">
-            <Heart className="w-4 h-4 mr-1" />
-            {blog.lovedBy.length}
-          </span>
-          <span className="mx-2">•</span>
-          <span className="flex items-center">
             <MessageCircle className="w-4 h-4 mr-1" />
-            {blog.comment.length}
+            {comments?.length}
           </span>
         </div>
         <p className="text-gray-600 mb-4">{blog.description.slice(0, 100)}</p>
@@ -50,7 +51,7 @@ const BlogCard = ({ blog }: { blog: TBlog }) => {
             <Image
               src={
                 blog?.userId?.image ||
-                "https://code-theme.com/html/findhouses/images/blog/b-1.jpg"
+                'https://code-theme.com/html/findhouses/images/blog/b-1.jpg'
               }
               alt={blog?.userId?.firstName}
               width={32}

@@ -11,20 +11,16 @@ const Blogs = () => {
   const blogs = data?.data;
 
   return (
-    <div>
-      <div>
-        <div className="flex justify-center my-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
-            {isLoading &&
-              [1, 2, 3, 4, 5, 6].map((index) => (
-                <BlogLoadingCard key={index} />
-              ))}
+    <div className="max-w-7xl mx-auto px-2 md:px-4">
+      <div className="flex justify-center my-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
+          {isLoading &&
+            [1, 2, 3, 4, 5, 6].map((index) => <BlogLoadingCard key={index} />)}
 
-            {isLoading ||
-              blogs?.map((blog: TBlog) => (
-                <BlogCard key={blog._id} blog={blog} />
-              ))}
-          </div>
+          {isLoading ||
+            blogs?.map((blog: TBlog) => (
+              <BlogCard key={blog._id} blog={blog} />
+            ))}
         </div>
       </div>
     </div>
