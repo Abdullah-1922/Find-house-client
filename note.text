@@ -1,0 +1,8 @@
+0. role based-routing handled
+1. state managed for image uploading
+2. organized fields
+3. updated some fields according to backend
+4. category field added
+5. image uploading
+6. image showed
+7. image delete api created & implemented

@@ -1,14 +1,11 @@
-'use client';
+"use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
-import * as React from 'react';
-import { CloudUpload } from 'lucide-react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -16,85 +13,97 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { Select } from '@/components/ui/select';
-import Image from 'next/image';
-import cloud from '../../../../../../../public/assets/icon/314828_cloud_upload_icon.svg';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Select } from "@/components/ui/select";
+import Image from "next/image";
+import cloud from "../../../../../../../public/assets/icon/314828_cloud_upload_icon.svg";
+import { useCreatePropertyMutation } from "@/redux/api/features/property/propertyApi";
+import { Loader } from "lucide-react";
+import { toast, Toaster } from "sonner";
+import axios from "axios";
+import { useState } from "react";
+import PreviewImage from "@/components/ui/previewImage";
 
 const propertySchema = z.object({
   title: z
-    .string({ required_error: 'Property title is required' })
-    .min(1, 'Property title is required'),
+    .string({ required_error: "Property title is required" })
+    .min(1, "Property title is required"),
+  category: z
+    .string({ required_error: "Property title is required" })
+    .min(1, "Property title is required"),
   description: z
-    .string({ required_error: 'Property description is required' })
-    .min(1, 'Property description is required'),
+    .string({ required_error: "Property description is required" })
+    .min(1, "Property description is required"),
   status: z
-    .string({ required_error: 'Status is required' })
-    .min(1, 'Status is required'),
+    .string({ required_error: "Status is required" })
+    .min(1, "Status is required"),
   type: z
-    .string({ required_error: 'Type is required' })
-    .min(1, 'Type is required'),
+    .string({ required_error: "Type is required" })
+    .min(1, "Type is required"),
   rooms: z
-    .string({ required_error: 'Rooms are required' })
-    .min(1, 'Rooms are required'),
+    .string({ required_error: "Rooms are required" })
+    .min(1, "Rooms are required"),
   price: z
-    .string({ required_error: 'Price is required' })
-    .min(1, 'Price is required'),
+    .string({ required_error: "Price is required" })
+    .min(1, "Price is required"),
   area: z
-    .string({ required_error: 'Area is required' })
-    .min(1, 'Area is required'),
+    .string({ required_error: "Area is required" })
+    .min(1, "Area is required"),
   address: z
-    .string({ required_error: 'Address is required' })
-    .min(1, 'Address is required'),
+    .string({ required_error: "Address is required" })
+    .min(1, "Address is required"),
   city: z
-    .string({ required_error: 'City is required' })
-    .min(1, 'City is required'),
+    .string({ required_error: "City is required" })
+    .min(1, "City is required"),
   state: z
-    .string({ required_error: 'State is required' })
-    .min(1, 'State is required'),
+    .string({ required_error: "State is required" })
+    .min(1, "State is required"),
   country: z
-    .string({ required_error: 'Country is required' })
-    .min(1, 'Country is required'),
+    .string({ required_error: "Country is required" })
+    .min(1, "Country is required"),
   latitude: z.string().optional(),
   longitude: z.string().optional(),
   age: z.string().optional(),
   bathrooms: z.string().optional(),
   features: z.array(z.string()).optional(),
   name: z
-    .string({ required_error: 'Name is required' })
-    .min(1, 'Name is required'),
+    .string({ required_error: "Name is required" })
+    .min(1, "Name is required"),
   username: z
-    .string({ required_error: 'Username is required' })
-    .min(1, 'Username is required'),
-  email: z.string().email('Invalid email address').min(1, 'Email is required'),
+    .string({ required_error: "Username is required" })
+    .min(1, "Username is required"),
+  email: z.string().email("Invalid email address").min(1, "Email is required"),
   phone: z
-    .string({ required_error: 'Phone number is required' })
-    .min(1, 'Phone number is required'),
+    .string({ required_error: "Phone number is required" })
+    .min(1, "Phone number is required"),
 });
 
 const features = [
-  'Air Conditioning',
-  'Swimming Pool',
-  'Central Heating',
-  'Laundry Room',
-  'Gym',
-  'Alarm',
-  'Window Covering',
-  'Refrigerator',
-  'TV Cable & WiFi',
-  'Microwave',
+  "Air Conditioning",
+  "Swimming Pool",
+  "Central Heating",
+  "Laundry Room",
+  "Gym",
+  "Alarm",
+  "Window Covering",
+  "Refrigerator",
+  "TV Cable & WiFi",
+  "Microwave",
 ] as const;
 
 export default function AddProperties() {
+  const [addProperty, { isLoading }] = useCreatePropertyMutation();
+  const [images, setImages] = useState<string[]>([]);
+  const [imageUploading, setImageUploading] = useState<boolean>(false);
+  const [imageUploadingError, setImageUploadingError] = useState<string>("");
   const form = useForm<z.infer<typeof propertySchema>>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
@@ -102,8 +111,93 @@ export default function AddProperties() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof propertySchema>) {
-    console.log(values);
+  // handle image upload
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setImageUploading(true);
+    const cloudName = process.env.NEXT_PUBLIC_CLOUD_NAME;
+    const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
+    const file = event.target.files![0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("cloud_name", cloudName as string);
+    formData.append("upload_preset", uploadPreset as string);
+
+    try {
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        formData
+      );
+      setImages((prev) => [...prev, res.data.secure_url]);
+      setImageUploadingError("");
+    } catch (error: any) {
+      setImageUploadingError("Image upload failed");
+      toast.error("Image upload failed");
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
+  async function onSubmit(values: z.infer<typeof propertySchema>) {
+    const {
+      address,
+      city,
+      state,
+      country,
+      latitude,
+      longitude,
+      age,
+      rooms,
+      bathrooms,
+      price,
+      area,
+
+      ...resValues
+    } = values;
+
+    const formdata = {
+      author: "673704d3db3cdc44c18d7b6b",
+      images,
+      price: Number(price),
+      area: Number(area),
+      location: {
+        address,
+        city,
+        state,
+        country,
+        latitude,
+        longitude,
+      },
+      extraInfo: {
+        age,
+        rooms: Number(rooms),
+        bathrooms: Number(bathrooms),
+      },
+      contactInfo: {
+        name: "user name",
+        userName: "johndoe123",
+        phone: "+1 123 456 7890",
+        email: "johndoe@example.com",
+      },
+      ...resValues,
+    };
+    const res = await addProperty(formdata);
+    const loadingToast = toast.loading("property adding...");
+    if (res?.data?.success) {
+      toast.success("Property Added Successfully", {
+        id: loadingToast,
+      });
+    } else if (res?.error) {
+      toast.error(res.error.data.message, {
+        id: loadingToast,
+      });
+    } else {
+      toast.error("Something went wrong", {
+        id: loadingToast,
+      });
+    }
+    console.log("formdata", res);
   }
 
   return (
@@ -117,22 +211,53 @@ export default function AddProperties() {
                 Property Description And Price
               </h2>
               <div className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Property Title</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your property title"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="flex items-center gap-7">
+                  <div className="w-full">
+                    <FormField
+                      control={form.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Property Title</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter your property title"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <FormField
+                      control={form.control}
+                      name="category"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Category</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select category" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="rent">Rent</SelectItem>
+                              <SelectItem value="sell">Sell</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+
                 <FormField
                   control={form.control}
                   name="description"
@@ -167,8 +292,10 @@ export default function AddProperties() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="for-sale">For Sale</SelectItem>
-                            <SelectItem value="for-rent">For Rent</SelectItem>
+                            <SelectItem value="active">Active</SelectItem>
+                            <SelectItem value="non-active">
+                              Non Active
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -218,7 +345,7 @@ export default function AddProperties() {
                           <SelectContent>
                             {[1, 2, 3, 4, 5].map((num) => (
                               <SelectItem key={num} value={num.toString()}>
-                                {num} {num === 1 ? 'Room' : 'Rooms'}
+                                {num} {num === 1 ? "Room" : "Rooms"}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -261,41 +388,56 @@ export default function AddProperties() {
           </Card>
 
           {/* Property Media */}
-          <Card>
-            <CardContent>
-              <h2 className="text-xl font-semibold text-[#24324A] my-5">
-                Property Media
-              </h2>
-
-              <Label> </Label>
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      <div className="border-4 border-dashed rounded-lg p-8 text-center mx-auto cursor-pointer">
-                        <Image
-                          className="mx-auto"
-                          src={cloud}
-                          alt="cloud_upload"
-                          width={60}
-                          height={40}
-                        />
-                        <p className="mt-2 text-sm text-muted-foreground">
-                          Click Here Or Drop Files To Upload
-                        </p>
-                      </div>
-                    </FormLabel>
-                    <FormControl>
-                      <Input type="file" className="hidden" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-          </Card>
+          <div>
+            <Card className="pt-6">
+              <CardContent>
+                <label
+                  htmlFor="dropzone-file"
+                  className="border-4 block border-dashed rounded-lg p-8 text-center mx-auto cursor-pointer"
+                >
+                  <Image
+                    className="mx-auto"
+                    src={cloud}
+                    alt="cloud_upload"
+                    width={60}
+                    height={40}
+                  />
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Click Here Or Drop Files To Upload
+                  </p>
+                </label>
+                <input
+                  onChange={handleImageUpload}
+                  type="file"
+                  id="dropzone-file"
+                  className="hidden"
+                />
+                <div className="flex gap-4 pt-5 flex-wrap">
+                  {images.map((image) => (
+                    <PreviewImage
+                      setImages={setImages}
+                      key={image}
+                      image={image}
+                    />
+                  ))}
+                  {imageUploading && (
+                    <div className="w-[260px] h-[150px] rounded-lg bg-black/50 flex items-center justify-center">
+                      <Loader
+                        className="animate-spin text-white/90"
+                        size={30}
+                      />
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+            <div className="mt-2">
+              <p className="text-red-500">{imageUploadingError}</p>
+              {imageUploading && (
+                <p className="text-gray-600">Image is uploading...</p>
+              )}
+            </div>
+          </div>
 
           {/* Property Location */}
           <Card>
@@ -410,9 +552,12 @@ export default function AddProperties() {
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="0-1">0-1 Years</SelectItem>
-                          <SelectItem value="1-5">1-5 Years</SelectItem>
-                          <SelectItem value="5-10">5-10 Years</SelectItem>
-                          <SelectItem value="10+">10+ Years</SelectItem>
+                          <SelectItem value="0-5">0-5 Years</SelectItem>
+                          <SelectItem value="0-10…">0-10 Years</SelectItem>
+                          <SelectItem value="0-15">0-15 Years</SelectItem>
+                          <SelectItem value="0-20">0-20 Years</SelectItem>
+                          <SelectItem value="0-50">0-50 Years</SelectItem>
+                          <SelectItem value="50+">50+ Years</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -437,7 +582,7 @@ export default function AddProperties() {
                         <SelectContent>
                           {[1, 2, 3, 4, 5].map((num) => (
                             <SelectItem key={num} value={num.toString()}>
-                              {num} {num === 1 ? 'Room' : 'Rooms'}
+                              {num} {num === 1 ? "Room" : "Rooms"}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -464,7 +609,7 @@ export default function AddProperties() {
                         <SelectContent>
                           {[1, 2, 3, 4].map((num) => (
                             <SelectItem key={num} value={num.toString()}>
-                              {num} {num === 1 ? 'Bathroom' : 'Bathrooms'}
+                              {num} {num === 1 ? "Bathroom" : "Bathrooms"}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -589,9 +734,19 @@ export default function AddProperties() {
           size="lg"
           className="w-full md:w-auto bg-gray-800 hover:bg-gray-900"
         >
-          Submit Property
+          {isLoading ? (
+            <div>
+              <div className="flex items-center gap-2">
+                <span>Submitting</span>{" "}
+                <Loader className="mr-2 h-4 w-4 animate-spin" />
+              </div>
+            </div>
+          ) : (
+            "Submit Property"
+          )}
         </Button>
       </form>
+      <Toaster position="top-center" />
     </Form>
   );
 }

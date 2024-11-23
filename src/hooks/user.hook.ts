@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { useGetMeQuery } from '@/redux/api/features/users/user';
 import { DecodedJWT, TUser } from '@/types';
