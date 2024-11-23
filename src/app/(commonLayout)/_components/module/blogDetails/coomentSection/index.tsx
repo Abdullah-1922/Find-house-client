@@ -21,13 +21,14 @@ export default function CommentSection({ blogId }: { blogId: string }) {
   const handleSeeLess = () => setVisibleComments(3); // Reset to the initial state
 
   return (
-    <div className="my-5">
+    <div className="my-5 border rounded-md p-3 bg-white">
       <h2 className="text-xl font-semibold text-gray-900 mb-4">
         {isLoading ? (
           <Skeleton width={100} />
         ) : (
           `${comments?.length || 0} Comments`
         )}
+        <div className="h-0.5 w-12 bg-gray-800 mt-1" />
       </h2>
       <div className="space-y-4">
         {isLoading
