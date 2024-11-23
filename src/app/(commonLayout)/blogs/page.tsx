@@ -1,5 +1,5 @@
 import Blogs from '../_components/module/blogs/Blogs';
-import Banner from '../_components/ui/shared/banner';
+import Banner from '../_components/shared/banner';
 
 const BlogsPage = () => {
   return (

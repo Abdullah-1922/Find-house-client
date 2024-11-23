@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { ChevronRight } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import { ChevronRight } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,11 +11,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
-import { usePathname } from "next/navigation";
-import { useUser } from "@/hooks/user.hook";
-import { logoutUser } from "@/utils/logutUser";
+} from '@/components/ui/dropdown-menu';
+import { Badge } from '@/components/ui/badge';
+import { usePathname } from 'next/navigation';
+import { useUser } from '@/hooks/user.hook';
+import { logoutUser } from '@/utils/logutUser';
 
 export default function UserProfileDropdown() {
   const pathname = usePathname();
@@ -34,14 +34,14 @@ export default function UserProfileDropdown() {
           </Avatar>
           <p
             className={`text-sm font-normal ${
-              pathname === "/home-video" ? "text-white" : "text-black"
+              pathname === '/home-video' ? 'text-white' : 'text-black'
             }`}
           >
             Hi, {user?.firstName}
           </p>
           <ChevronRight
             className={`ml-auto h-4 w-4 ${
-              pathname === "/home-video" ? "text-white" : "text-black"
+              pathname === '/home-video' ? 'text-white' : 'text-black'
             }`}
           />
         </Button>
