@@ -14,9 +14,11 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import { usePathname } from 'next/navigation';
+import { useUser } from '@/hooks/user.hook';
 
 export default function UserProfileDropdown() {
   const pathname = usePathname();
+  const { user } = useUser();
 
   return (
     <DropdownMenu>
@@ -26,10 +28,7 @@ export default function UserProfileDropdown() {
           className="relative h-[45px] w-40 space-x-2 rounded-full hover:border hover:bg-gray-50/50  bg-gray-50/40"
         >
           <Avatar className="h-8 w-8">
-            <AvatarImage
-              src="https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg"
-              alt="User profile image"
-            />
+            <AvatarImage src={user?.image} alt="User profile image" />
             <AvatarFallback>MK</AvatarFallback>
           </Avatar>
           <p
@@ -37,7 +36,7 @@ export default function UserProfileDropdown() {
               pathname === '/home-video' ? 'text-white' : 'text-black'
             }`}
           >
-            Hi, Mary
+            Hi, {user?.firstName}
           </p>
           <ChevronRight
             className={`ml-auto h-4 w-4 ${

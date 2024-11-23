@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useGetMeQuery } from '@/redux/api/features/users/user';
-import { DecodedJWT } from '@/types';
+import { DecodedJWT, TUser } from '@/types';
 import { decodeJWT } from '@/utils/verifyToken';
 import Cookies from 'js-cookie';
 
@@ -22,12 +22,14 @@ export const useUser = () => {
 
   // Fetch user data
   const {
-    data: user,
+    data: userData,
     isLoading,
     error,
   } = useGetMeQuery(userId!, {
     skip: !userId,
   });
+
+  const user = userData?.data as TUser;
 
   return { user, isLoading, error };
 };

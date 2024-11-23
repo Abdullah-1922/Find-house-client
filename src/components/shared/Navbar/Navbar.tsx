@@ -14,12 +14,12 @@ import { useUser } from '@/hooks/user.hook';
 const Navbar = () => {
   const { user } = useUser();
 
-  // console.log(user);
+  console.log(user);
 
   return (
     <>
       <div className="absolute top-0 z-[999] w-full">
-        <div className="lg:flex   hidden">
+        <div className="lg:flex hidden">
           <div className="menu-bar ">
             <div className="flex items-center gap-10">
               <Link href={'/'} className="logo">
@@ -126,7 +126,7 @@ const Navbar = () => {
             </div>
             <div className="flex justify-center items-center gap-5">
               <SignInModal />
-              <UserProfileDropdown />
+              {user && <UserProfileDropdown />}
 
               <Link href={'/dashboard/user'}>
                 <Button className="text-white py-3 px-5 bg-gray-800 hover:bg-gray-900 h-[45px] rounded font-bold">

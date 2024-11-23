@@ -1,15 +1,13 @@
-import { Home } from 'lucide-react';
-import BlogCards from '../_components/module/blogs/BlogCards';
-import Link from 'next/link';
+import Blogs from '../_components/module/blogs/Blogs';
 import Banner from '../_components/ui/shared/banner';
 
-const Blogs = () => {
+const BlogsPage = () => {
   return (
     <div>
       <Banner pageName="Blogs" />
-      <BlogCards />
+      <Blogs />
     </div>
   );
 };
 
-export default Blogs;
+export default BlogsPage;
