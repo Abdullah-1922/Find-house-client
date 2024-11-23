@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -28,9 +29,10 @@ import cloud from "../../../../../../../public/assets/icon/314828_cloud_upload_i
 import { useCreatePropertyMutation } from "@/redux/api/features/property/propertyApi";
 import { Loader } from "lucide-react";
 import { toast, Toaster } from "sonner";
-import axios from "axios";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import PreviewImage from "@/components/ui/previewImage";
+import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
+import PreviewVideo from "@/components/ui/previewVideo";
 
 const propertySchema = z.object({
   title: z
@@ -103,7 +105,11 @@ export default function AddProperties() {
   const [addProperty, { isLoading }] = useCreatePropertyMutation();
   const [images, setImages] = useState<string[]>([]);
   const [imageUploading, setImageUploading] = useState<boolean>(false);
-  const [imageUploadingError, setImageUploadingError] = useState<string>("");
+  const [videoUploading, setVideoUploading] = useState<boolean>(false);
+  const [videoUrl, setVideoUrl] = useState<string>("");
+
+  console.log("videoUrl", videoUrl);
+
   const form = useForm<z.infer<typeof propertySchema>>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
@@ -111,31 +117,31 @@ export default function AddProperties() {
     },
   });
 
-  // handle image upload
-  const handleImageUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
+  // upload media
+  const handleUpload = async (
+    event: ChangeEvent<HTMLInputElement>,
+    resourceType: "image" | "video"
   ) => {
-    setImageUploading(true);
-    const cloudName = process.env.NEXT_PUBLIC_CLOUD_NAME;
-    const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
-    const file = event.target.files![0];
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("cloud_name", cloudName as string);
-    formData.append("upload_preset", uploadPreset as string);
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (resourceType === "image") setImageUploading(true);
+    if (resourceType === "video") setVideoUploading(true);
 
     try {
-      const res = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData
-      );
-      setImages((prev) => [...prev, res.data.secure_url]);
-      setImageUploadingError("");
+      const secureUrl = await uploadToCloudinary(file, resourceType);
+      if (resourceType === "image") {
+        setImages((prev) => [...prev, secureUrl]);
+      }
+      if (resourceType === "video") {
+        setVideoUrl(secureUrl);
+        toast.success("Video uploaded successfully!");
+      }
     } catch (error: any) {
-      setImageUploadingError("Image upload failed");
-      toast.error("Image upload failed");
+      toast.error(error.message);
     } finally {
-      setImageUploading(false);
+      if (resourceType === "image") setImageUploading(false);
+      if (resourceType === "video") setVideoUploading(false);
     }
   };
 
@@ -188,16 +194,11 @@ export default function AddProperties() {
       toast.success("Property Added Successfully", {
         id: loadingToast,
       });
-    } else if (res?.error) {
-      toast.error(res.error.data.message, {
-        id: loadingToast,
-      });
     } else {
-      toast.error("Something went wrong", {
+      toast.error("Failed to add property", {
         id: loadingToast,
       });
     }
-    console.log("formdata", res);
   }
 
   return (
@@ -407,10 +408,11 @@ export default function AddProperties() {
                   </p>
                 </label>
                 <input
-                  onChange={handleImageUpload}
+                  onChange={(e) => handleUpload(e, "image")}
                   type="file"
                   id="dropzone-file"
                   className="hidden"
+                  accept=".png,.jpg,.jpeg,.webp"
                 />
                 <div className="flex gap-4 pt-5 flex-wrap">
                   {images.map((image) => (
@@ -432,9 +434,57 @@ export default function AddProperties() {
               </CardContent>
             </Card>
             <div className="mt-2">
-              <p className="text-red-500">{imageUploadingError}</p>
               {imageUploading && (
                 <p className="text-gray-600">Image is uploading...</p>
+              )}
+            </div>
+          </div>
+
+          {/* upload video */}
+          <div>
+            <Card className="pt-6">
+              <CardContent>
+                <p className="mb-2">Upload A Video</p>
+                <label
+                  htmlFor="dropzone-video"
+                  className="border-4 block border-dashed rounded-lg p-8 text-center mx-auto cursor-pointer"
+                >
+                  <Image
+                    className="mx-auto"
+                    src={cloud}
+                    alt="cloud_upload"
+                    width={60}
+                    height={40}
+                  />
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Click Here Or Drop Files To Upload Video
+                  </p>
+                </label>
+                <input
+                  onChange={(e) => handleUpload(e, "video")}
+                  type="file"
+                  id="dropzone-video"
+                  className="hidden"
+                  accept="video/*"
+                />
+                <div className="pt-5">
+                  {videoUrl && (
+                    <PreviewVideo setUrl={setVideoUrl} url={videoUrl} />
+                  )}
+                  {videoUploading && (
+                    <div className="w-[350px] h-[200px] rounded-lg bg-black/50 flex items-center justify-center">
+                      <Loader
+                        className="animate-spin text-white/90"
+                        size={30}
+                      />
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+            <div className="mt-2">
+              {imageUploading && (
+                <p className="text-gray-600">Video is uploading...</p>
               )}
             </div>
           </div>
