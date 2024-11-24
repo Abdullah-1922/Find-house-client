@@ -1,45 +1,22 @@
-'use client';
+"use client";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import LightGallery from 'lightgallery/react';
-import 'lightgallery/css/lightgallery.css';
-import 'lightgallery/css/lg-zoom.css';
-import 'lightgallery/css/lg-thumbnail.css';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import LightGallery from "lightgallery/react";
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-export default function PropertyCarousel() {
-  const images = [
-    {
-      src: 'https://code-theme.com/html/findhouses/images/single-property/s-1.jpg',
-      alt: 'Modern kitchen with granite countertops and pendant lighting',
-    },
-    {
-      src: 'https://code-theme.com/html/findhouses/images/single-property/s-2.jpg',
-      alt: 'Elegant dining room with purple chairs and large windows',
-    },
-    {
-      src: 'https://code-theme.com/html/findhouses/images/single-property/s-3.jpg',
-      alt: 'Contemporary hallway with stone accent wall',
-    },
-    {
-      src: 'https://code-theme.com/html/findhouses/images/single-property/s-4.jpg',
-      alt: 'Cozy living room with a stone fireplace',
-    },
-    {
-      src: 'https://code-theme.com/html/findhouses/images/single-property/s-5.jpg',
-      alt: 'Luxury bedroom with large windows and a king-sized bed',
-    },
-    {
-      src: 'https://code-theme.com/html/findhouses/images/single-property/s-6.jpg',
-      alt: 'Spa-like bathroom with marble tiles',
-    },
-  ];
-
+export default function PropertyCarousel({
+  images,
+}: {
+  images: { src: string; alt: string }[];
+}) {
   const onBeforeSlide = (detail: { index: any; prevIndex: any }) => {
     const { index, prevIndex } = detail;
     console.log(index, prevIndex);
@@ -69,8 +46,8 @@ export default function PropertyCarousel() {
         spaceBetween={0}
         slidesPerView={1}
         navigation={{
-          prevEl: '#prev-button',
-          nextEl: '#next-button',
+          prevEl: "#prev-button",
+          nextEl: "#next-button",
         }}
         pagination
         breakpoints={{

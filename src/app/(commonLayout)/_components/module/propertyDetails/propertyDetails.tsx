@@ -1,5 +1,5 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Check } from 'lucide-react';
+import { Card, CardContent } from "@/components/ui/card";
+import { Check } from "lucide-react";
 
 interface PropertyDetailsProps {
   details?: {
@@ -11,39 +11,39 @@ interface PropertyDetailsProps {
     bedrooms: number;
     bath: number;
     garages: number;
-    yearBuilt: string;
+    age: string;
   };
   amenities?: string[];
 }
 
 export default function PropertyDetails({
   details = {
-    id: 'V254680',
-    type: 'House',
-    status: 'For Sale',
+    id: "V254680",
+    type: "House",
+    status: "For Sale",
     price: 230000,
     rooms: 6,
     bedrooms: 7,
     bath: 4,
     garages: 2,
-    yearBuilt: '10/6/2020',
+    age: "0-10",
   },
   amenities = [
-    'Air Cond',
-    'Balcony',
-    'Internet',
-    'Dishwasher',
-    'Bedding',
-    'Cable TV',
-    'Parking',
-    'Pool',
-    'Fridge',
+    "Air Cond",
+    "Balcony",
+    "Internet",
+    "Dishwasher",
+    "Bedding",
+    "Cable TV",
+    "Parking",
+    "Pool",
+    "Fridge",
   ],
 }: PropertyDetailsProps) {
   return (
     <Card className="w-full">
       <CardContent className="p-6">
-        <div className="space-y-6">
+        <div className="space-y-6 capitalize">
           {/* Property Details Section */}
           <div>
             <h2 className="text-xl font-semibold mb-4 text-gray-800">
@@ -94,8 +94,10 @@ export default function PropertyDetails({
                 <div className="font-medium">{details.garages}</div>
               </div>
               <div className="space-y-1">
-                <div className="text-sm text-muted-foreground">Year Built:</div>
-                <div className="font-medium">{details.yearBuilt}</div>
+                <div className="text-sm text-muted-foreground">
+                  Property age:
+                </div>
+                <div className="font-medium">{details.age} Years</div>
               </div>
             </div>
           </div>

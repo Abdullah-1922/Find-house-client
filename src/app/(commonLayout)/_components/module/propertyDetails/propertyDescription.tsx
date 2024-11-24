@@ -1,25 +1,23 @@
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { MapPin } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { MapPin } from "lucide-react";
 
 interface PropertyListingProps {
-  title?: string;
-  price?: number;
-  pricePerSqFt?: number;
-  location?: string;
-  description?: string;
+  title: string;
+  price: number;
+  pricePerSqFt: number;
+  location: string;
+  description: string;
+  category: string;
 }
 
 export default function PropertyDescription({
-  title = 'Luxury Villa House',
-  price = 230000,
-  pricePerSqFt = 1200,
-  location = '77 - Central Park South, NYC',
-  description = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum rerum beatae consequatur, totam fugit, alias fuga aliquam quod tempora a nisi esse magnam nulla quas! Error praesentium, vero dolorum laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum rerum beatae consequatur, totam fugit.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum rerum beatae consequatur, totam fugit, alias fuga aliquam quod tempora a nisi esse magnam nulla quas! Error praesentium, vero dolorum laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum rerum beatae consequatur, totam fugit.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum rerum beatae consequatur, totam fugit, alias fuga aliquam quod tempora a nisi esse magnam nulla quas! Error praesentium, vero dolorum laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum rerum beatae consequatur, totam fugit.`,
+  title,
+  price,
+  pricePerSqFt,
+  location,
+  description,
+  category,
 }: PropertyListingProps) {
   return (
     <Card className="w-full">
@@ -28,8 +26,8 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum rerum beatae conse
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold">{title}</h1>
-              <Badge variant="destructive" className="rounded-full">
-                For Sale
+              <Badge variant="destructive" className="rounded-full capitalize">
+                For {category}
               </Badge>
             </div>
             <div className="flex items-center text-muted-foreground">
@@ -54,7 +52,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum rerum beatae conse
             <div className="h-1 w-12 bg-gray-800 mt-1" />
           </h2>
           <div className="text-muted-foreground space-y-4">
-            {description.split('\n\n').map((paragraph, index) => (
+            {description.split("\n\n").map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
           </div>
