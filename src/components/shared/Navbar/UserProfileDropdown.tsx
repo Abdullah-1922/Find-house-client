@@ -36,7 +36,7 @@ export default function UserProfileDropdown() {
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
-                className="relative h-[45px] w-40 space-x-2 rounded-full hover:border hover:bg-gray-50/50  bg-gray-50/40"
+                className="relative h-[45px] w-40 space-x-2 rounded-full border hover:border-gray-300 hover:bg-gray-50/50  bg-gray-50/40"
               >
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user?.image} alt="User profile image" />
@@ -67,7 +67,7 @@ export default function UserProfileDropdown() {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link href="#" className="flex justify-between">
+            <Link href="/profile" className="flex justify-between">
               Profile
               <Badge variant="secondary" className="ml-2">
                 New
@@ -75,7 +75,7 @@ export default function UserProfileDropdown() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="#">Settings</Link>
+            <Link href="/setting">Settings</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link onClick={() => logoutUser()} href="#">

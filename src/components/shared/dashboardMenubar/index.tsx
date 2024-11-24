@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Building2,
+  CheckCheck,
   CreditCard,
   Dock,
   FileText,
@@ -45,14 +46,17 @@ const roleBasedNavItems = {
   ],
   agent: [
     { title: 'Dashboard', href: '/agent-dashboard', icon: LayoutDashboard },
+    { title: 'Add Property', href: '/add-property', icon: Plus },
     {
       title: 'Sold Properties',
       href: '/agent-dashboard/properties-sold',
-      icon: Plus,
+      icon: CheckCheck,
     },
   ],
   admin: [
     { title: 'Dashboard', href: '/admin-dashboard', icon: LayoutDashboard },
+    { title: 'Add Product', href: '/admin-dashboard/add-product', icon: Plus },
+    { title: 'Add Property', href: '/add-property', icon: Plus },
     {
       title: 'All Properties',
       href: '/admin-dashboard/all-properties',
@@ -69,7 +73,6 @@ const roleBasedNavItems = {
       href: '/admin-dashboard/all-orders',
       icon: FileText,
     },
-    { title: 'Add Product', href: '/admin-dashboard/add-product', icon: Plus },
   ],
 };
 
@@ -136,24 +139,23 @@ export default function DashboardSidebar() {
             />
           </Link>
         </div>
-
-        <div className="flex flex-col items-center gap-2 p-4 border-b border-white/10 mt-5">
-          <div className="h-16 w-16 rounded-full border-4 border-green-400 overflow-hidden">
-            <Image
-              width={1000}
-              height={1000}
-              src={user?.image}
-              alt="Mary Smith"
-              className="object-cover w-full h-full "
-            />
+        <ScrollArea className="h-screen">
+          <div className="flex flex-col items-center gap-2 p-4 border-b border-white/10 mt-5">
+            <div className="h-16 w-16 rounded-full border-4 border-green-400 overflow-hidden">
+              <Image
+                width={1000}
+                height={1000}
+                src={user?.image}
+                alt="Mary Smith"
+                className="object-cover w-full h-full "
+              />
+            </div>
+            <div className="text-center font-medium">
+              {user?.firstName || 'Anonymous'} {user?.secondName}
+            </div>
           </div>
-          <div className="text-center font-medium">
-            {user?.firstName || 'Anonymous'} {user?.secondName}
-          </div>
-        </div>
 
-        <ScrollArea>
-          <nav className="flex-1 p-4 space-y-2 h-full">
+          <nav className="flex-1 p-4 space-y-2 pb-32">
             {navItems.map((item: any) => (
               <Link
                 href={item.href}

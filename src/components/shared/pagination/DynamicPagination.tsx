@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Pagination,
   PaginationContent,
@@ -6,7 +6,7 @@ import {
   PaginationPrevious,
   PaginationNext,
   PaginationLink,
-} from "@/components/ui/pagination";
+} from '@/components/ui/pagination';
 
 interface DynamicPaginationProps {
   currentPage: number;
@@ -25,13 +25,13 @@ const DynamicPagination: React.FC<DynamicPaginationProps> = ({
     for (let i = 0; i < totalPages; i++) {
       pages.push(i + 1);
     }
-    console.log("pages", pages, totalPages);
+    console.log('pages', pages, totalPages);
     return pages;
   };
 
-  const isDisabled = (type: "previous" | "next") =>
-    (type === "previous" && currentPage === 1) ||
-    (type === "next" && currentPage === totalPages);
+  const isDisabled = (type: 'previous' | 'next') =>
+    (type === 'previous' && currentPage === 1) ||
+    (type === 'next' && currentPage === totalPages);
 
   return (
     <Pagination className="text-left mb-4 mt-8 justify-start">
@@ -40,10 +40,10 @@ const DynamicPagination: React.FC<DynamicPaginationProps> = ({
           <PaginationPrevious
             href="#"
             className={
-              isDisabled("previous") ? "pointer-events-none opacity-50" : ""
+              isDisabled('previous') ? 'pointer-events-none opacity-50' : ''
             }
             onClick={() =>
-              !isDisabled("previous") && onPageChange(currentPage - 1)
+              !isDisabled('previous') && onPageChange(currentPage - 1)
             }
           />
         </PaginationItem>
@@ -54,7 +54,8 @@ const DynamicPagination: React.FC<DynamicPaginationProps> = ({
               onClick={() => onPageChange(Number(page))}
               isActive={currentPage === page}
               className={`${
-                currentPage === page && "pointer-events-none opacity-45"
+                currentPage === page &&
+                'pointer-events-none opacity-90 bg-gray-800 text-white rounded-full'
               }`}
             >
               {page}
@@ -65,9 +66,9 @@ const DynamicPagination: React.FC<DynamicPaginationProps> = ({
           <PaginationNext
             href="#"
             className={
-              isDisabled("next") ? "pointer-events-none opacity-50" : ""
+              isDisabled('next') ? 'pointer-events-none opacity-50' : ''
             }
-            onClick={() => !isDisabled("next") && onPageChange(currentPage + 1)}
+            onClick={() => !isDisabled('next') && onPageChange(currentPage + 1)}
           />
         </PaginationItem>
       </PaginationContent>

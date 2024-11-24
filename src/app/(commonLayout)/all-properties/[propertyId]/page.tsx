@@ -7,5 +7,9 @@ export default function PropertyDetails({
   params: { propertyId: string };
 }) {
   console.log(params);
-  return <Property />;
+  return (
+    <div>
+      <Property />
+    </div>
+  );
 }

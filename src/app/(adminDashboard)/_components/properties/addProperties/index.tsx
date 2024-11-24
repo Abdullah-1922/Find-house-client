@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -14,91 +14,92 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
-import Image from "next/image";
-import cloud from "../../../../../../../public/assets/icon/314828_cloud_upload_icon.svg";
-import { useCreatePropertyMutation } from "@/redux/api/features/property/propertyApi";
-import { Loader } from "lucide-react";
-import { toast, Toaster } from "sonner";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import PreviewImage from "@/components/ui/previewImage";
-import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
-import PreviewVideo from "@/components/ui/previewVideo";
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Select } from '@/components/ui/select';
+import Image from 'next/image';
+import cloud from '../../../../../../../public/assets/icon/314828_cloud_upload_icon.svg';
+import { useCreatePropertyMutation } from '@/redux/api/features/property/propertyApi';
+import { Loader } from 'lucide-react';
+import { toast, Toaster } from 'sonner';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import PreviewImage from '@/components/ui/previewImage';
+import { uploadToCloudinary } from '@/utils/uploadToCloudinary';
+import PreviewVideo from '@/components/ui/previewVideo';
+import { useUser } from '@/hooks/user.hook';
 
 const propertySchema = z.object({
   title: z
-    .string({ required_error: "Property title is required" })
-    .min(1, "Property title is required"),
+    .string({ required_error: 'Property title is required' })
+    .min(1, 'Property title is required'),
   category: z
-    .string({ required_error: "Property title is required" })
-    .min(1, "Property title is required"),
+    .string({ required_error: 'Property title is required' })
+    .min(1, 'Property title is required'),
   description: z
-    .string({ required_error: "Property description is required" })
-    .min(1, "Property description is required"),
+    .string({ required_error: 'Property description is required' })
+    .min(1, 'Property description is required'),
   status: z
-    .string({ required_error: "Status is required" })
-    .min(1, "Status is required"),
+    .string({ required_error: 'Status is required' })
+    .min(1, 'Status is required'),
   type: z
-    .string({ required_error: "Type is required" })
-    .min(1, "Type is required"),
+    .string({ required_error: 'Type is required' })
+    .min(1, 'Type is required'),
   rooms: z
-    .string({ required_error: "Rooms are required" })
-    .min(1, "Rooms are required"),
+    .string({ required_error: 'Rooms are required' })
+    .min(1, 'Rooms are required'),
   price: z
-    .string({ required_error: "Price is required" })
-    .min(1, "Price is required"),
+    .string({ required_error: 'Price is required' })
+    .min(1, 'Price is required'),
   area: z
-    .string({ required_error: "Area is required" })
-    .min(1, "Area is required"),
+    .string({ required_error: 'Area is required' })
+    .min(1, 'Area is required'),
   address: z
-    .string({ required_error: "Address is required" })
-    .min(1, "Address is required"),
+    .string({ required_error: 'Address is required' })
+    .min(1, 'Address is required'),
   city: z
-    .string({ required_error: "City is required" })
-    .min(1, "City is required"),
+    .string({ required_error: 'City is required' })
+    .min(1, 'City is required'),
   state: z
-    .string({ required_error: "State is required" })
-    .min(1, "State is required"),
+    .string({ required_error: 'State is required' })
+    .min(1, 'State is required'),
   country: z
-    .string({ required_error: "Country is required" })
-    .min(1, "Country is required"),
+    .string({ required_error: 'Country is required' })
+    .min(1, 'Country is required'),
   latitude: z.string().optional(),
   longitude: z.string().optional(),
   age: z.string().optional(),
   bathrooms: z.string().optional(),
   features: z.array(z.string()).optional(),
   name: z
-    .string({ required_error: "Name is required" })
-    .min(1, "Name is required"),
+    .string({ required_error: 'Name is required' })
+    .min(1, 'Name is required'),
   username: z
-    .string({ required_error: "Username is required" })
-    .min(1, "Username is required"),
-  email: z.string().email("Invalid email address").min(1, "Email is required"),
+    .string({ required_error: 'Username is required' })
+    .min(1, 'Username is required'),
+  email: z.string().email('Invalid email address').min(1, 'Email is required'),
   phone: z
-    .string({ required_error: "Phone number is required" })
-    .min(1, "Phone number is required"),
+    .string({ required_error: 'Phone number is required' })
+    .min(1, 'Phone number is required'),
 });
 
 const features = [
-  "Air Conditioning",
-  "Swimming Pool",
-  "Central Heating",
-  "Laundry Room",
-  "Gym",
-  "Alarm",
-  "Window Covering",
-  "Refrigerator",
-  "TV Cable & WiFi",
-  "Microwave",
+  'Air Conditioning',
+  'Swimming Pool',
+  'Central Heating',
+  'Laundry Room',
+  'Gym',
+  'Alarm',
+  'Window Covering',
+  'Refrigerator',
+  'TV Cable & WiFi',
+  'Microwave',
 ] as const;
 
 export default function AddProperties() {
@@ -110,6 +111,7 @@ export default function AddProperties() {
     useState<boolean>(false);
   const [videoUploading, setVideoUploading] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string[]>([]);
+  const { user } = useUser();
 
   const form = useForm<z.infer<typeof propertySchema>>({
     resolver: zodResolver(propertySchema),
@@ -121,7 +123,7 @@ export default function AddProperties() {
   // upload media
   const handleUpload = async (
     event: ChangeEvent<HTMLInputElement>,
-    resourceType: "image" | "video",
+    resourceType: 'image' | 'video',
     setLoading: Dispatch<SetStateAction<boolean>>,
     setUrl: Dispatch<SetStateAction<string[]>>
   ) => {
@@ -136,8 +138,8 @@ export default function AddProperties() {
       // @ts-ignore
       setUrl((prev) => [...prev, secureUrl]);
 
-      if (resourceType === "video") {
-        toast.success("Video uploaded successfully!");
+      if (resourceType === 'video') {
+        toast.success('Video uploaded successfully!');
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -164,7 +166,7 @@ export default function AddProperties() {
     } = values;
 
     const formdata = {
-      author: "673704d3db3cdc44c18d7b6b",
+      author: user?._id,
       images,
       floorPlanImage: floorImages,
       videoUrl,
@@ -184,22 +186,21 @@ export default function AddProperties() {
         bathrooms: Number(bathrooms),
       },
       contactInfo: {
-        name: "user name",
-        userName: "johndoe123",
-        phone: "+1 123 456 7890",
-        email: "johndoe@example.com",
+        name: `${user?.firstName}, ${user?.secondName}`,
+        phone: 'N/A',
+        email: user?.email ? user?.email : 'N/A',
       },
       ...resValues,
     };
     const res = await addProperty(formdata);
-    console.log("res", res);
-    const loadingToast = toast.loading("property adding...");
+    console.log('res', res);
+    const loadingToast = toast.loading('property adding...');
     if (res?.data?.success) {
-      toast.success("Property Added Successfully", {
+      toast.success('Property Added Successfully', {
         id: loadingToast,
       });
     } else {
-      toast.error("Failed to add property", {
+      toast.error('Failed to add property', {
         id: loadingToast,
       });
     }
@@ -332,33 +333,6 @@ export default function AddProperties() {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name="rooms"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Rooms</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select rooms" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {[1, 2, 3, 4, 5].map((num) => (
-                              <SelectItem key={num} value={num.toString()}>
-                                {num} {num === 1 ? "Room" : "Rooms"}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField
@@ -415,7 +389,7 @@ export default function AddProperties() {
                   </label>
                   <input
                     onChange={(e) =>
-                      handleUpload(e, "image", setImageUploading, setImages)
+                      handleUpload(e, 'image', setImageUploading, setImages)
                     }
                     type="file"
                     id="dropzone-file"
@@ -470,7 +444,7 @@ export default function AddProperties() {
                     onChange={(e) =>
                       handleUpload(
                         e,
-                        "image",
+                        'image',
                         setFloorImageUploading,
                         setFloorImages
                       )
@@ -529,7 +503,7 @@ export default function AddProperties() {
                 </label>
                 <input
                   onChange={(e) =>
-                    handleUpload(e, "video", setVideoUploading, setVideoUrl)
+                    handleUpload(e, 'video', setVideoUploading, setVideoUrl)
                   }
                   type="file"
                   id="dropzone-video"
@@ -699,9 +673,9 @@ export default function AddProperties() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {[1, 2, 3, 4, 5].map((num) => (
+                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                             <SelectItem key={num} value={num.toString()}>
-                              {num} {num === 1 ? "Room" : "Rooms"}
+                              {num} {num === 1 ? 'Room' : 'Rooms'}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -728,7 +702,7 @@ export default function AddProperties() {
                         <SelectContent>
                           {[1, 2, 3, 4].map((num) => (
                             <SelectItem key={num} value={num.toString()}>
-                              {num} {num === 1 ? "Bathroom" : "Bathrooms"}
+                              {num} {num === 1 ? 'Bathroom' : 'Bathrooms'}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -856,12 +830,12 @@ export default function AddProperties() {
           {isLoading ? (
             <div>
               <div className="flex items-center gap-2">
-                <span>Submitting</span>{" "}
+                <span>Submitting</span>{' '}
                 <Loader className="mr-2 h-4 w-4 animate-spin" />
               </div>
             </div>
           ) : (
-            "Submit Property"
+            'Submit Property'
           )}
         </Button>
       </form>

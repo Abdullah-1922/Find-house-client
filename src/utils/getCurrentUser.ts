@@ -19,7 +19,7 @@ export const getCurrentUser = async () => {
 
     // Fetch the user details from the API using the user ID
     const response = await axios.get(
-      `${process.env.BASE_API}/users/${decodedUser._id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/users/${decodedUser._id}`,
       {
         headers: {
           Authorization: `${accessToken}`,
