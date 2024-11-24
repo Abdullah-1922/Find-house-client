@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { FieldValues, useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -26,67 +24,25 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import Image from "next/image";
 import cloud from "../../../../../../../public/assets/icon/314828_cloud_upload_icon.svg";
-import { useCreatePropertyMutation } from "@/redux/api/features/property/propertyApi";
+import {
+  useGetSinglePropertyQuery,
+  useUpdatePropertyMutation,
+} from "@/redux/api/features/property/propertyApi";
 import { Loader } from "lucide-react";
 import { toast, Toaster } from "sonner";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import PreviewImage from "@/components/ui/previewImage";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import PreviewVideo from "@/components/ui/previewVideo";
-
-const propertySchema = z.object({
-  title: z
-    .string({ required_error: "Property title is required" })
-    .min(1, "Property title is required"),
-  category: z
-    .string({ required_error: "Property title is required" })
-    .min(1, "Property title is required"),
-  description: z
-    .string({ required_error: "Property description is required" })
-    .min(1, "Property description is required"),
-  status: z
-    .string({ required_error: "Status is required" })
-    .min(1, "Status is required"),
-  type: z
-    .string({ required_error: "Type is required" })
-    .min(1, "Type is required"),
-  rooms: z
-    .string({ required_error: "Rooms are required" })
-    .min(1, "Rooms are required"),
-  price: z
-    .string({ required_error: "Price is required" })
-    .min(1, "Price is required"),
-  area: z
-    .string({ required_error: "Area is required" })
-    .min(1, "Area is required"),
-  address: z
-    .string({ required_error: "Address is required" })
-    .min(1, "Address is required"),
-  city: z
-    .string({ required_error: "City is required" })
-    .min(1, "City is required"),
-  state: z
-    .string({ required_error: "State is required" })
-    .min(1, "State is required"),
-  country: z
-    .string({ required_error: "Country is required" })
-    .min(1, "Country is required"),
-  latitude: z.string().optional(),
-  longitude: z.string().optional(),
-  age: z.string().optional(),
-  bathrooms: z.string().optional(),
-  features: z.array(z.string()).optional(),
-  name: z
-    .string({ required_error: "Name is required" })
-    .min(1, "Name is required"),
-  username: z
-    .string({ required_error: "Username is required" })
-    .min(1, "Username is required"),
-  email: z.string().email("Invalid email address").min(1, "Email is required"),
-  phone: z
-    .string({ required_error: "Phone number is required" })
-    .min(1, "Phone number is required"),
-});
+import Spinner from "@/components/ui/spinner";
+import { TProperty } from "@/types";
+import Nodata from "@/components/ui/noData";
 
 const features = [
   "Air Conditioning",
@@ -101,22 +57,56 @@ const features = [
   "Microwave",
 ] as const;
 
-export default function AddProperties() {
-  const [addProperty, { isLoading }] = useCreatePropertyMutation();
+export default function EditProperty({ propertyId }: { propertyId: string }) {
+  // fetch single property
+  const { data, isFetching, refetch } = useGetSinglePropertyQuery(propertyId);
+  const property = data?.data as TProperty;
+  const [updateProperty, { isLoading }] = useUpdatePropertyMutation();
   const [images, setImages] = useState<string[]>([]);
   const [imageUploading, setImageUploading] = useState<boolean>(false);
-  const [floorImages, setFloorImages] = useState<string[]>([]);
+  const [floorPlanImage, setFloorImages] = useState<string[]>([]);
   const [floorImageUploading, setFloorImageUploading] =
     useState<boolean>(false);
   const [videoUploading, setVideoUploading] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string[]>([]);
 
-  const form = useForm<z.infer<typeof propertySchema>>({
-    resolver: zodResolver(propertySchema),
-    defaultValues: {
-      features: [],
-    },
+  const form = useForm<TProperty>({
+    defaultValues: {},
   });
+
+  useEffect(() => {
+    if (property) {
+      form.reset({
+        title: property?.title as string,
+        description: property?.description,
+        category: property?.category,
+        status: property?.status,
+        price: property?.price,
+        area: property?.area,
+        address: property?.location.address,
+        city: property?.location.city,
+        state: property?.location.state,
+        country: property?.location.country,
+        latitude: property?.location.latitude,
+        longitude: property?.location.longitude,
+        rooms: property?.extraInfo.rooms,
+        age: property?.extraInfo.age,
+        bathrooms: property?.extraInfo.bathrooms,
+        type: property?.type,
+        features: property?.features,
+        videoUrl: property?.videoUrl,
+        images: property?.images,
+        floorPlanImage: property?.floorPlanImage,
+        name: property?.contactInfo.name,
+        username: property?.contactInfo.userName,
+        phone: property?.contactInfo.phone,
+        email: property?.contactInfo.email,
+      });
+      setImages(property?.images);
+      setFloorImages(property?.floorPlanImage);
+      setVideoUrl(property?.videoUrl);
+    }
+  }, [property]);
 
   // upload media
   const handleUpload = async (
@@ -146,7 +136,7 @@ export default function AddProperties() {
     }
   };
 
-  async function onSubmit(values: z.infer<typeof propertySchema>) {
+  async function onSubmit(values: FieldValues) {
     const {
       address,
       city,
@@ -161,12 +151,10 @@ export default function AddProperties() {
       area,
       ...resValues
     } = values;
-
     const formdata = {
-      new: "his",
       author: "673704d3db3cdc44c18d7b6b",
       images,
-      floorPlanImage: floorImages,
+      floorPlanImage: [...floorPlanImage],
       videoUrl,
       price: Number(price),
       area: Number(area),
@@ -191,20 +179,31 @@ export default function AddProperties() {
       },
       ...resValues,
     };
-    const res = await addProperty(formdata);
-    console.log("res", res);
-    const loadingToast = toast.loading("property adding...");
-    if (res?.data?.success) {
-      toast.success("Property Added Successfully", {
-        id: loadingToast,
-      });
-    } else {
-      toast.error("Failed to add property", {
-        id: loadingToast,
-      });
-    }
+    formdata.floorPlanImage = floorPlanImage;
+    formdata.images = images;
+    formdata.videoUrl = videoUrl;
+    // const res = await updateProperty({ body: formdata, id: propertyId });
+
+    // const loadingToast = toast.loading("property updating...");
+    // if (res?.data?.success) {
+    //   refetch();
+    //   toast.success("Property updated Successfully", {
+    //     id: loadingToast,
+    //   });
+    // } else {
+    //   toast.error("Failed to update property", {
+    //     id: loadingToast,
+    //   });
+    // }
+    console.log("formdata", formdata.extraInfo.rooms);
   }
 
+  if (isFetching) {
+    return <Spinner className="mx-auto my-10 h-[550px]" />;
+  }
+  if (!property) {
+    return <Nodata />;
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mb-10">
@@ -226,6 +225,7 @@ export default function AddProperties() {
                           <FormLabel>Property Title</FormLabel>
                           <FormControl>
                             <Input
+                              defaultValue={property?.title}
                               placeholder="Enter your property title"
                               {...field}
                             />
@@ -244,7 +244,7 @@ export default function AddProperties() {
                           <FormLabel>Category</FormLabel>
                           <Select
                             onValueChange={field.onChange}
-                            defaultValue={field.value}
+                            defaultValue={property.category}
                           >
                             <FormControl>
                               <SelectTrigger>
@@ -289,7 +289,7 @@ export default function AddProperties() {
                         <FormLabel>Status</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          defaultValue={property.status}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -315,7 +315,7 @@ export default function AddProperties() {
                         <FormLabel>Type</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          defaultValue={property.type}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -340,7 +340,7 @@ export default function AddProperties() {
                         <FormLabel>Rooms</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          defaultValue={property.rooms.toString()}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -481,7 +481,7 @@ export default function AddProperties() {
                     accept=".png,.jpg,.jpeg,.webp"
                   />
                   <div className="flex gap-4 pt-5 flex-wrap">
-                    {floorImages.map((image) => (
+                    {floorPlanImage?.map((image) => (
                       <PreviewImage
                         setImages={setFloorImages}
                         key={image}
@@ -537,7 +537,7 @@ export default function AddProperties() {
                   accept="video/*"
                 />
                 <div className="pt-5">
-                  {videoUrl.length > 0 && (
+                  {videoUrl?.length > 0 && (
                     <PreviewVideo setUrl={setVideoUrl} url={videoUrl[0]} />
                   )}
                   {videoUploading && (
@@ -662,7 +662,7 @@ export default function AddProperties() {
                       <FormLabel>Property Age</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        defaultValue={property.extraInfo.age}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -691,7 +691,7 @@ export default function AddProperties() {
                       <FormLabel>Rooms</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        defaultValue={property.extraInfo.rooms.toString()}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -718,7 +718,7 @@ export default function AddProperties() {
                       <FormLabel>Bathrooms</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        defaultValue={property.extraInfo.bathrooms.toString()}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -856,12 +856,12 @@ export default function AddProperties() {
           {isLoading ? (
             <div>
               <div className="flex items-center gap-2">
-                <span>Submitting</span>{" "}
+                <span>Updating...</span>{" "}
                 <Loader className="mr-2 h-4 w-4 animate-spin" />
               </div>
             </div>
           ) : (
-            "Submit Property"
+            "Update Property"
           )}
         </Button>
       </form>

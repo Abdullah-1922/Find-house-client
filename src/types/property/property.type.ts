@@ -73,6 +73,7 @@ type UserProperty = {
 };
 
 export type TProperty = {
+  _id: string;
   author: UserProperty;
   ownedBy: UserProperty;
   status: PropertyStatus;
