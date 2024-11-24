@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import { usePathname } from 'next/navigation';
-import { useUser } from '@/hooks/user.hook';
 import { logoutUser } from '@/utils/logutUser';
 import {
   Tooltip,
@@ -22,6 +21,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tolltip';
+import { useEffect } from 'react';
+import { useUser } from '@/hooks/user.hook';
 
 export default function UserProfileDropdown() {
   const pathname = usePathname();

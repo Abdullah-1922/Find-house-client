@@ -78,6 +78,7 @@ export default function SignUpForm() {
 
       // Show toast notification
       toast.success('Sign-Up Successful!');
+      window.location.reload();
 
       router.push('/');
 
