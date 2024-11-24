@@ -182,20 +182,19 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
     formdata.floorPlanImage = floorPlanImage;
     formdata.images = images;
     formdata.videoUrl = videoUrl;
-    // const res = await updateProperty({ body: formdata, id: propertyId });
+    const res = await updateProperty({ body: formdata, id: propertyId });
 
-    // const loadingToast = toast.loading("property updating...");
-    // if (res?.data?.success) {
-    //   refetch();
-    //   toast.success("Property updated Successfully", {
-    //     id: loadingToast,
-    //   });
-    // } else {
-    //   toast.error("Failed to update property", {
-    //     id: loadingToast,
-    //   });
-    // }
-    console.log("formdata", formdata.extraInfo.rooms);
+    const loadingToast = toast.loading("property updating...");
+    if (res?.data?.success) {
+      refetch();
+      toast.success("Property updated Successfully", {
+        id: loadingToast,
+      });
+    } else {
+      toast.error("Failed to update property", {
+        id: loadingToast,
+      });
+    }
   }
 
   if (isFetching) {
