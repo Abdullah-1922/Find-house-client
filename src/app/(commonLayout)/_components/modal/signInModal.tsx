@@ -23,8 +23,8 @@ import Cookies from "js-cookie";
 export default function SignInModal() {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({
-    email: "kafikafi1922@gmail.com",
-    password: "kafikafi1922@gmail.com",
+    email: "junayednoman05@gmail.com",
+    password: "Noman05",
     remember: false,
   });
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
