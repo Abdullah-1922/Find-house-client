@@ -14,8 +14,6 @@ import { useUser } from '@/hooks/user.hook';
 const Navbar = () => {
   const { user } = useUser();
 
-  console.log(user);
-
   return (
     <>
       <div className="absolute top-0 z-[999] w-full">
@@ -129,7 +127,7 @@ const Navbar = () => {
               {user && <UserProfileDropdown />}
 
               <Link href={'/profile'}>
-                <Button className="text-white py-3 px-5 bg-gray-800 hover:bg-gray-900 h-[45px] rounded font-bold">
+                <Button className="text-white py-3 px-5 bg-gray-800 hover:bg-gray-900 rounded font-bold">
                   Dashboard
                 </Button>
               </Link>

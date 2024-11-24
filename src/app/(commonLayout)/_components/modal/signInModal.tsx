@@ -24,7 +24,9 @@ import { useUser } from '@/hooks/user.hook';
 export default function SignInModal() {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({
-    email: 'rijwanjannat36@gmail.com',
+    // email: 'admin@gmail.com',
+    // password: 'Admin123@',
+    email: 'rijwanjannat10@gmail.com',
     password: 'A123456@',
     remember: false,
   });
@@ -74,6 +76,7 @@ export default function SignInModal() {
         Cookies.set('refreshToken', res.data.data.refreshToken);
         resetForm();
         setOpen(false);
+        window.location.reload();
       }
 
       // If error occurs

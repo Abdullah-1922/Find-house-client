@@ -20,6 +20,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { logoutUser } from '@/utils/logutUser';
 import { useUser } from '@/hooks/user.hook';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface NavItem {
   title: string;
@@ -151,27 +152,29 @@ export default function DashboardSidebar() {
           </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-2">
-          {navItems.map((item: any) => (
-            <Link
-              href={item.href}
-              key={item.href}
-              className={`flex items-center gap-4 p-2 rounded-md text-white/70 hover:bg-white/10 hover:text-white ${
-                pathname === item.href ? 'bg-white/10 text-white' : ''
-              }`}
+        <ScrollArea>
+          <nav className="flex-1 p-4 space-y-2 h-full">
+            {navItems.map((item: any) => (
+              <Link
+                href={item.href}
+                key={item.href}
+                className={`flex items-center gap-4 p-2 rounded-md text-white/70 hover:bg-white/10 hover:text-white ${
+                  pathname === item.href ? 'bg-white/10 text-white' : ''
+                }`}
+              >
+                <item.icon className="h-4 w-4" />
+                {item.title}
+              </Link>
+            ))}
+            <button
+              onClick={() => logoutUser()}
+              className="flex items-center gap-4 p-2 rounded-md text-white/70 hover:bg-white/10 hover:text-white w-full"
             >
-              <item.icon className="h-4 w-4" />
-              {item.title}
-            </Link>
-          ))}
-          <button
-            onClick={() => logoutUser()}
-            className="flex items-center gap-4 p-2 rounded-md text-white/70 hover:bg-white/10 hover:text-white w-full"
-          >
-            <LogOut className="h-4 w-4" />
-            Log Out
-          </button>
-        </nav>
+              <LogOut className="h-4 w-4" />
+              Log Out
+            </button>
+          </nav>
+        </ScrollArea>
       </motion.div>
     </>
   );

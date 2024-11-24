@@ -6,6 +6,8 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const user = await getCurrentUser();
 
+  console.log(user);
+
   // Define allowed paths by role
   const allowedPathsByRole: {
     user: string[];
@@ -20,14 +22,12 @@ export async function middleware(request: NextRequest) {
     ],
     agent: [
       '/profile',
-      '/agent-dashboard',
       '/my-properties',
       '/favorite-properties',
       '/agent-dashboard/properties-sold',
     ],
     admin: [
       '/profile',
-      '/admin-dashboard',
       '/admin-dashboard/all-properties',
       '/admin-dashboard/all-products',
       '/admin-dashboard/all-users',
@@ -46,15 +46,22 @@ export async function middleware(request: NextRequest) {
 
   const role = user.role as keyof typeof allowedPathsByRole;
 
+  console.log(role);
+
   // If the role is invalid or the path is not allowed for the user's role, redirect to home
   const allowedPaths = allowedPathsByRole[role] || [];
-  const isAdminOrAgentPath =
-    pathname.startsWith('/admin-dashboard') ||
-    pathname.startsWith('/agent-dashboard');
+  console.log(allowedPaths);
 
+  // Check if the user is trying to access their own dashboard
+  const isAdminPath = pathname.startsWith('/admin-dashboard');
+  const isAgentPath = pathname.startsWith('/agent-dashboard');
+
+  // Only restrict paths that don't match the user's role
   if (
-    !allowedPaths.includes(pathname) ||
-    (isAdminOrAgentPath && role === 'user')
+    (!allowedPaths.includes(pathname) &&
+      !(isAdminPath && role === 'admin') &&
+      !(isAgentPath && role === 'agent')) ||
+    (role === 'user' && (isAdminPath || isAgentPath))
   ) {
     const response = NextResponse.redirect(new URL('/', request.url));
     response.cookies.delete('accessToken');
@@ -73,7 +80,7 @@ export const config = {
     '/user-dashboard',
     '/my-properties',
     '/favorite-properties',
-    '/agent-dashboard/:path*',
-    '/admin-dashboard/:path*',
+    '/agent-dashboard',
+    '/admin-dashboard',
   ],
 };

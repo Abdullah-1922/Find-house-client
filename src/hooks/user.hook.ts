@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { useGetMeQuery } from '@/redux/api/features/users/user';
 import { DecodedJWT, TUser } from '@/types';
@@ -8,15 +9,22 @@ import Cookies from 'js-cookie';
 export const useUser = () => {
   const [userId, setUserId] = useState<string | null>(null);
 
-  // Decode token and extract user ID
+  // Fetch user ID from token
   useEffect(() => {
-    const token = Cookies.get('accessToken');
-    if (token) {
-      const decoded = decodeJWT(token) as DecodedJWT;
-      if (decoded?._id) {
-        setUserId(decoded._id);
+    const fetchUserId = () => {
+      const token = Cookies.get('accessToken');
+      if (token) {
+        const decoded = decodeJWT(token) as DecodedJWT;
+        if (decoded?._id) {
+          setUserId(decoded._id);
+        }
       }
-    }
+    };
+
+    fetchUserId();
+
+    const interval = setInterval(fetchUserId, 500); // Check every 500ms
+    return () => clearInterval(interval); // Cleanup interval
   }, []);
 
   // Fetch user data
@@ -24,11 +32,18 @@ export const useUser = () => {
     data: userData,
     isLoading,
     error,
+    refetch,
   } = useGetMeQuery(userId!, {
     skip: !userId,
   });
 
   const user = userData?.data as TUser;
+
+  useEffect(() => {
+    if (userId) {
+      refetch();
+    }
+  }, [userId, refetch]);
 
   return { user, isLoading, error };
 };
