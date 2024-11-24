@@ -7,119 +7,11 @@ import PropertyCard from '@/components/shared/card/PropertyCard';
 import { Button } from '@/components/ui/button';
 import { CircleArrowRight } from 'lucide-react';
 import { TProperty } from '@/types';
-
-const properties: TProperty[] = [
-  {
-    id: 1,
-    title: 'Real House Luxury Villa',
-    price: 9000,
-    location: 'Est St, 77 - Central Park South, NYC',
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    status: 'For Sale',
-    featured: true,
-    agent: {
-      name: 'Lisa Jhonson',
-      image: '/placeholder.svg?height=40&width=40',
-    },
-    postedTime: '2 months ago',
-    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-1.jpg',
-  },
-  {
-    id: 2,
-    title: 'Real House Luxury Villa',
-    price: 8000,
-    location: 'Est St, 77 - Central Park South, NYC',
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    status: 'For Rent',
-    featured: false,
-    agent: {
-      name: 'Karl Smith',
-      image: '/placeholder.svg?height=40&width=40',
-    },
-    postedTime: '2 months ago',
-    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
-  },
-  {
-    id: 3,
-    title: 'Real House Luxury Villa',
-    price: 9000,
-    location: 'Est St, 77 - Central Park South, NYC',
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    status: 'For Sale',
-    featured: false,
-    agent: {
-      name: 'katy Teddy',
-      image: '/placeholder.svg?height=40&width=40',
-    },
-    postedTime: '2 months ago',
-    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
-  },
-  {
-    id: 3,
-    title: 'Real House Luxury Villa',
-    price: 9000,
-    location: 'Est St, 77 - Central Park South, NYC',
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    status: 'For Sale',
-    featured: false,
-    agent: {
-      name: 'katy Teddy',
-      image: '/placeholder.svg?height=40&width=40',
-    },
-    postedTime: '2 months ago',
-    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
-  },
-  {
-    id: 3,
-    title: 'Real House Luxury Villa',
-    price: 9000,
-    location: 'Est St, 77 - Central Park South, NYC',
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    status: 'For Sale',
-    featured: false,
-    agent: {
-      name: 'katy Teddy',
-      image: '/placeholder.svg?height=40&width=40',
-    },
-    postedTime: '2 months ago',
-    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
-  },
-  {
-    id: 3,
-    title: 'Real House Luxury Villa',
-    price: 9000,
-    location: 'Est St, 77 - Central Park South, NYC',
-    bedrooms: 6,
-    bathrooms: 3,
-    area: 720,
-    garages: 2,
-    status: 'For Sale',
-    featured: false,
-    agent: {
-      name: 'katy Teddy',
-      image: '/placeholder.svg?height=40&width=40',
-    },
-    postedTime: '2 months ago',
-    imageUrl: 'https://code-theme.com/html/findhouses/images/blog/b-11.jpg',
-  },
-];
+import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
 
 export default function FeaturedProperties() {
+  const { data: propertiesData } = useGetAllPropertiesQuery(undefined);
+  const allProperties = propertiesData?.data as TProperty[];
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -132,14 +24,14 @@ export default function FeaturedProperties() {
     },
   };
   return (
-    <div className="relative z-10 max-w-7xl m-auto px-2 md:px-2 md:px-4">
+    <div className="relative z-10 max-w-7xl m-auto px-2 md:px-4">
       <SectionTitle header="FEATURED" title="PROPERTIES" />
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
         variants={containerVariants}
       >
-        {properties.slice(0, 6).map((property, index) => (
+        {allProperties.slice(0, 6).map((property, index) => (
           <PropertyCard isGridView={true} key={index} property={property} />
         ))}
       </motion.div>

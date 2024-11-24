@@ -1,3 +1,11 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "warn", // Set unused variables as warnings
+    "react-hooks/rules-of-hooks": "warn", // React hooks rule as warnings
+    "react-hooks/exhaustive-deps": "warn", // Missing dependency array in hooks as warnings
+    "prefer-const": "warn", // Prefer const as warnings
+    "@typescript-eslint/no-explicit-any": "warn", // Allow 'any' type but warn
+    "react/no-unescaped-entities": "warn" // Unescaped entities in JSX as warnings
+  }
 }

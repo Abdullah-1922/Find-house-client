@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useGetBlogCommentsQuery } from '@/redux/api/features/blog/blogCommentApi';
 import { Comment } from './comment';
 import { CommentForm } from './commentForm';
@@ -12,14 +13,22 @@ export default function CommentSection({ blogId }: { blogId: string }) {
   });
   const comments = commentData?.data as TBlogComment[];
 
+  // State to manage displayed comments
+  const [visibleComments, setVisibleComments] = useState(3);
+
+  // Handlers for "See More" and "See Less"
+  const handleLoadMore = () => setVisibleComments((prev) => prev + 4); // Show 4 more comments
+  const handleSeeLess = () => setVisibleComments(3); // Reset to the initial state
+
   return (
-    <div className="my-5">
+    <div className="my-5 border rounded-md p-3 bg-white">
       <h2 className="text-xl font-semibold text-gray-900 mb-4">
         {isLoading ? (
           <Skeleton width={100} />
         ) : (
           `${comments?.length || 0} Comments`
         )}
+        <div className="h-0.5 w-12 bg-gray-800 mt-1" />
       </h2>
       <div className="space-y-4">
         {isLoading
@@ -33,14 +42,35 @@ export default function CommentSection({ blogId }: { blogId: string }) {
                 </div>
               </div>
             ))
-          : comments?.map((comment, index) => (
-              <Comment key={index} commentData={comment} />
-            ))}
+          : comments
+              ?.slice(0, visibleComments) // Show only visible comments
+              .map((comment, index) => (
+                <Comment key={index} commentData={comment} />
+              ))}
+      </div>
+      {/* "See More" and "See Less" Button */}
+      <div className="mt-4">
+        {visibleComments < (comments?.length || 0) && (
+          <button
+            onClick={handleLoadMore}
+            className="text-gray-500 hover:underline"
+          >
+            See More
+          </button>
+        )}
+        {visibleComments > 3 && (
+          <button
+            onClick={handleSeeLess}
+            className="ml-4 text-gray-500 hover:underline"
+          >
+            See Less
+          </button>
+        )}
       </div>
       <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">
         Leave a Comment
       </h3>
-      <CommentForm />
+      <CommentForm blogId={blogId} />
     </div>
   );
 }

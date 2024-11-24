@@ -1,36 +1,86 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { getCurrentUser } from './utils/getCurrentUser';
 
-// This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const user = await getCurrentUser()
+  const user = await getCurrentUser();
 
-  if (user) {
-    if (pathname === '/signup') {
-      return NextResponse.redirect(new URL('/', request.url))
+  console.log(user);
+
+  // Define allowed paths by role
+  const allowedPathsByRole: {
+    user: string[];
+    agent: string[];
+    admin: string[];
+  } = {
+    user: [
+      '/profile',
+      '/my-properties',
+      '/favorite-properties',
+      '/user-dashboard',
+    ],
+    agent: [
+      '/profile',
+      '/my-properties',
+      '/favorite-properties',
+      '/agent-dashboard/properties-sold',
+    ],
+    admin: [
+      '/profile',
+      '/admin-dashboard/all-properties',
+      '/admin-dashboard/all-products',
+      '/admin-dashboard/all-users',
+      '/admin-dashboard/all-orders',
+      '/admin-dashboard/add-product',
+    ],
+  };
+
+  // Redirect unauthenticated users to signup or login
+  if (!user) {
+    if (!['/signup', '/login'].includes(pathname)) {
+      return NextResponse.redirect(new URL('/signup', request.url));
     }
-    // verify user role
-    if (!pathname.includes(user.role)) {
-      console.log('verify');
-      const response = NextResponse.redirect(new URL('/', request.url));
-      response.cookies.delete('accessToken');
-      response.cookies.delete('refreshToken');
-      return response
-    } else {
-      return NextResponse.next()
-    }
-  } else {
-    if (pathname !== '/signup') {
-      return NextResponse.redirect(new URL('/', request.url))
-    }
+    return NextResponse.next();
   }
 
-  return NextResponse.next()
+  const role = user.role as keyof typeof allowedPathsByRole;
+
+  console.log(role);
+
+  // If the role is invalid or the path is not allowed for the user's role, redirect to home
+  const allowedPaths = allowedPathsByRole[role] || [];
+  console.log(allowedPaths);
+
+  // Check if the user is trying to access their own dashboard
+  const isAdminPath = pathname.startsWith('/admin-dashboard');
+  const isAgentPath = pathname.startsWith('/agent-dashboard');
+
+  // Only restrict paths that don't match the user's role
+  if (
+    (!allowedPaths.includes(pathname) &&
+      !(isAdminPath && role === 'admin') &&
+      !(isAgentPath && role === 'agent')) ||
+    (role === 'user' && (isAdminPath || isAgentPath))
+  ) {
+    const response = NextResponse.redirect(new URL('/', request.url));
+    response.cookies.delete('accessToken');
+    response.cookies.delete('refreshToken');
+    return response;
+  }
+
+  return NextResponse.next();
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/dashboard/:path*', '/signup'],
-}
+  matcher: [
+    '/profile',
+    '/signup',
+    '/login',
+    '/user-dashboard',
+    '/my-properties',
+    '/favorite-properties',
+    '/agent-dashboard',
+    '/admin-dashboard',
+  ],
+};
