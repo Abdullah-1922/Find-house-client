@@ -20,7 +20,7 @@ export default function Layout({ children }: TLayoutProps) {
           <DashboardNavbar />
         </header>
 
-        <section className="mt-20 px-2 md:pr-6 overflow-y-auto overflow-x-hidden">
+        <section className="mt-20 px-2 md:pr-6 overflow-y-auto overflow-x-hidden py-2">
           {children}
         </section>
       </main>
