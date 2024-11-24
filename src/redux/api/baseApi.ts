@@ -28,6 +28,7 @@ export const baseApi = createApi({
     'SingleProduct',
     'ProductReview',
     'SingleProductReview',
+    "Users",
   ],
 
   endpoints: () => ({}),

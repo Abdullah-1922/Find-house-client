@@ -10,6 +10,24 @@ const blogApi = baseApi.injectEndpoints({
         };
       },
     }),
+    getAllUsers: builder.query({
+      query: (query) => {
+        return {
+          url: query ? `/users/?${query}` : "/users",
+          method: 'GET',
+          providesTags: ["Users"],
+        };
+      },
+    }),
+    updateUserRole: builder.mutation({
+      query: ({ id, role }) => {
+        return {
+          url: `/users/update-role/${id}/${role}`,
+          method: 'PATCH',
+          invalidatesTags: ["Users"],
+        };
+      },
+    }),
   }),
 });
-export const { useGetMeQuery } = blogApi;
+export const { useGetMeQuery, useGetAllUsersQuery, useUpdateUserRoleMutation } = blogApi;
