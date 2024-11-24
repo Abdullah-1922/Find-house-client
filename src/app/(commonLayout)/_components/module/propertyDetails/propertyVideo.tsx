@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import * as React from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Play } from 'lucide-react';
-import Image from 'next/image';
+} from "@/components/ui/dialog";
+import { Play } from "lucide-react";
+import Image from "next/image";
 
 interface PropertyVideoProps {
   title?: string;
@@ -18,9 +18,9 @@ interface PropertyVideoProps {
 }
 
 export default function PropertyVideo({
-  title = 'Property Video',
-  thumbnail = '/placeholder.svg?height=400&width=600',
-  videoUrl = 'https://example.com/video.mp4',
+  title = "Property Video",
+  thumbnail = "https://code-theme.com/html/findhouses/images/single-property/s-3.jpg",
+  videoUrl = "https://example.com/video.mp4",
 }: PropertyVideoProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 

@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { MapPin, Phone, Mail } from 'lucide-react';
-import Image from 'next/image';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { MapPin, Phone, Mail } from "lucide-react";
+import Image from "next/image";
 
 interface AgentInformationProps {
-  agent?: {
+  agent: {
     name: string;
     title: string;
     address: string;
@@ -18,17 +18,7 @@ interface AgentInformationProps {
   };
 }
 
-export default function AgentInformation({
-  agent = {
-    name: 'Lisa Clark',
-    title: 'Agent of Property',
-    address: '302 Av Park, New York',
-    phone: '(234) 0200 17813',
-    email: 'lisa@gmail.com',
-    image:
-      'https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg',
-  },
-}: AgentInformationProps) {
+export default function AgentInformation({ agent }: AgentInformationProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle form submission
@@ -51,7 +41,7 @@ export default function AgentInformation({
             />
           </div>
           <div>
-            <h3 className="font-semibold">{agent.name}</h3>
+            <h3 className="font-semibold capitalize">{agent.name}</h3>
             <p className="text-sm text-muted-foreground">{agent.title}</p>
           </div>
         </div>

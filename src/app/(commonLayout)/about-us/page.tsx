@@ -5,10 +5,10 @@ import { Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import OurPartners from '@/components/Home/OurPartners/OurPartners';
-import ClientsTestimonials from '../home-video/_components/ClientsTestimonials';
+import ClientsTestimonials from '../_components/module/homeVideo/ClientsTestimonials';
 import MeetOurAgents from '@/components/Home/MeetOurAgents/MeetOurAgents';
-import DetailsParallax from '../home-map/_components/detailsParallax';
-import WhyChooseUs from '../home-video/_components/WhyChooseUs';
+import DetailsParallax from '../_components/module/homeMap/detailsParallax';
+import WhyChooseUs from '../_components/module/homeVideo/WhyChooseUs';
 
 const AboutUs = () => {
   const [showVideo, setShowVideo] = useState(false);

@@ -1,12 +1,11 @@
-import IndustryLocation from './_components/IndustryLocation';
-import ResentPropertySlider from './_components/resentPropertySlider';
-import PropertyServices from './_components/propertyServicesParallax';
-import FeaturedProperties from './_components/featuredProperties';
-// import PopularPlaces from './_components/mostPopularPlaces';
-import MeetOurAgents from './_components/meetOurAgents';
-import LatestNews from './_components/latestNews';
-import HappyCustomers from './_components/happyCustomers';
-import DetailsParallax from './_components/detailsParallax';
+import IndustryLocation from '../_components/module/homeMap/IndustryLocation';
+import ResentPropertySlider from '../_components/module/homeMap/resentPropertySlider';
+import PropertyServices from '../_components/module/homeMap/propertyServicesParallax';
+import FeaturedProperties from '../_components/module/homeMap/featuredProperties';
+import MeetOurAgents from '../_components/module/homeMap/meetOurAgents';
+import LatestNews from '../_components/module/homeMap/latestNews';
+import HappyCustomers from '../_components/module/homeMap/happyCustomers';
+import DetailsParallax from '../_components/module/homeMap/detailsParallax';
 import PopularPlaces from '@/components/Home/PopularPlaces/PopularPlaces';
 
 const HomeMap = () => {
