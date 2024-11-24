@@ -32,10 +32,10 @@ type Role = 'user' | 'agent' | 'admin';
 const commonNavItems: NavItem[] = [
   { title: 'Profile', href: '/profile', icon: User2 },
   { title: 'My Properties', href: '/my-properties', icon: Building2 },
-  { title: 'Favorited Properties', href: '/favorite-properties', icon: Heart },
+  { title: 'Favorite Properties', href: '/favorite-properties', icon: Heart },
   { title: 'Payments', href: '/payment', icon: CreditCard },
   { title: 'Invoices', href: '/invoice', icon: FileText },
-  { title: 'Change Password', href: '/setting', icon: KeyRound },
+  { title: 'Setting', href: '/setting', icon: KeyRound },
 ];
 
 const roleBasedNavItems = {
@@ -91,11 +91,13 @@ export default function DashboardSidebar() {
     closed: { x: '-100%' },
   };
 
-  // Determine navigation items based on user role
+  // Access the user's role, ensuring that it is one of the defined roles
+  const userRole: Role = user?.role as Role; // Ensure `user?.role` is a valid Role
+
   // Determine navigation items based on user role
   const navItems = [
     ...commonNavItems, // Add common routes for all roles
-    ...(roleBasedNavItems[user?.role] || []), // Add role-specific routes
+    ...(roleBasedNavItems[userRole] || []), // Add role-specific routes
   ];
 
   return (
@@ -139,13 +141,13 @@ export default function DashboardSidebar() {
             <Image
               width={1000}
               height={1000}
-              src="https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg"
+              src={user?.image}
               alt="Mary Smith"
               className="object-cover w-full h-full "
             />
           </div>
           <div className="text-center font-medium">
-            {user?.firstName || 'Mary Smith'}
+            {user?.firstName || 'Anonymous'} {user?.secondName}
           </div>
         </div>
 
