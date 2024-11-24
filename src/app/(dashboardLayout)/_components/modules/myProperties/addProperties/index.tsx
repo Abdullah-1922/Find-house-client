@@ -33,7 +33,6 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import PreviewImage from "@/components/ui/previewImage";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import PreviewVideo from "@/components/ui/previewVideo";
-import { useUser } from "@/hooks/user.hook";
 
 const propertySchema = z.object({
   title: z
@@ -160,11 +159,11 @@ export default function AddProperties() {
       bathrooms,
       price,
       area,
-
       ...resValues
     } = values;
 
     const formdata = {
+      new: "his",
       author: "673704d3db3cdc44c18d7b6b",
       images,
       floorPlanImage: floorImages,

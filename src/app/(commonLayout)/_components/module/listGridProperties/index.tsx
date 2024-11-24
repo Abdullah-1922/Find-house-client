@@ -30,7 +30,7 @@ export default function ListGridProperties() {
     <div className="max-w-7xl mx-auto px-2 md:px-4">
       <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <p className="text-muted-foreground text-start">
-          {properties.length} Search results
+          {properties?.length} Search results
         </p>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">

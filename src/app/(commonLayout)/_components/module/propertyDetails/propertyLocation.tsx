@@ -5,11 +5,17 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default function ProperLocation() {
+export default function ProperLocation({
+  latitude = 421325,
+  Longitude = 237542,
+}: {
+  latitude?: number;
+  Longitude?: number;
+}) {
   useEffect(() => {
     // Initialize map
     const map = L.map('map', {
-      center: [42.5, -75],
+      center: [latitude, Longitude],
       zoom: 6,
       scrollWheelZoom: false, // Disable scroll zoom by default
     });

@@ -17,6 +17,7 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 import Spinner from '@/components/ui/spinner';
 import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
+import Link from 'next/link';
 
 interface Property {
   id: number;
@@ -39,7 +40,7 @@ export default function PropertiesTable() {
   if (isFetching) return <Spinner className="h-[400px]" />;
 
   const properties = data?.data?.map((property: TProperty) => ({
-    id: property.id,
+    id: property._id,
     name: property.title,
     address: property.location.address,
     rating: 4,
@@ -122,13 +123,15 @@ export default function PropertiesTable() {
               <TableCell className="py-5">{property.views}</TableCell>
               <TableCell className="py-5">
                 <div className="flex gap-3 items-center justify-end">
-                  <Button
-                    variant="outline"
-                    className="text-green-600 hover:text-green-700"
-                    size="sm"
-                  >
-                    Edit
-                  </Button>
+                  <Link href={`/edit-property/${property.id}`}>
+                    <Button
+                      variant="outline"
+                      className="text-green-600 hover:text-green-700"
+                      size="sm"
+                    >
+                      Edit
+                    </Button>
+                  </Link>
                   <Button
                     variant="outline"
                     className="text-red-600 hover:text-red-700"

@@ -6,10 +6,5 @@ export default function PropertyDetails({
 }: {
   params: { propertyId: string };
 }) {
-  console.log(params);
-  return (
-    <div>
-      <Property />
-    </div>
-  );
+  return <Property propertyId={params.propertyId} />;
 }
