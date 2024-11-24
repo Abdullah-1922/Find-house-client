@@ -77,7 +77,7 @@ export default function DashboardSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  const { user } = useUser(); // Access user details, including the role
+  const { user } = useUser();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -92,12 +92,12 @@ export default function DashboardSidebar() {
   };
 
   // Access the user's role, ensuring that it is one of the defined roles
-  const userRole: Role = user?.role as Role; // Ensure `user?.role` is a valid Role
+  const userRole: Role = user?.role as Role;
 
   // Determine navigation items based on user role
   const navItems = [
+    ...(roleBasedNavItems[userRole] || []),
     ...commonNavItems, // Add common routes for all roles
-    ...(roleBasedNavItems[userRole] || []), // Add role-specific routes
   ];
 
   return (

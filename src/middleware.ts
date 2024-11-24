@@ -6,6 +6,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const user = await getCurrentUser();
 
+  // Define allowed paths by role
   const allowedPathsByRole: {
     user: string[];
     agent: string[];
@@ -19,9 +20,9 @@ export async function middleware(request: NextRequest) {
     ],
     agent: [
       '/profile',
+      '/agent-dashboard',
       '/my-properties',
       '/favorite-properties',
-      '/agent-dashboard',
       '/agent-dashboard/properties-sold',
     ],
     admin: [
@@ -35,6 +36,7 @@ export async function middleware(request: NextRequest) {
     ],
   };
 
+  // Redirect unauthenticated users to signup or login
   if (!user) {
     if (!['/signup', '/login'].includes(pathname)) {
       return NextResponse.redirect(new URL('/signup', request.url));
@@ -42,10 +44,18 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const role = user.role as keyof typeof allowedPathsByRole; // Fix applied here
-  const allowedPaths = allowedPathsByRole[role];
+  const role = user.role as keyof typeof allowedPathsByRole;
 
-  if (!allowedPaths.includes(pathname)) {
+  // If the role is invalid or the path is not allowed for the user's role, redirect to home
+  const allowedPaths = allowedPathsByRole[role] || [];
+  const isAdminOrAgentPath =
+    pathname.startsWith('/admin-dashboard') ||
+    pathname.startsWith('/agent-dashboard');
+
+  if (
+    !allowedPaths.includes(pathname) ||
+    (isAdminOrAgentPath && role === 'user')
+  ) {
     const response = NextResponse.redirect(new URL('/', request.url));
     response.cookies.delete('accessToken');
     response.cookies.delete('refreshToken');
@@ -56,5 +66,14 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/profile', '/signup', '/login'],
+  matcher: [
+    '/profile',
+    '/signup',
+    '/login',
+    '/user-dashboard',
+    '/my-properties',
+    '/favorite-properties',
+    '/agent-dashboard/:path*',
+    '/admin-dashboard/:path*',
+  ],
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Home, List, Users, Award } from 'lucide-react';
 
@@ -24,31 +24,32 @@ const stats = [
   { icon: <Award className="w-8 h-8" />, number: 200, label: 'Won Awards' },
 ];
 
+// Custom Hook for Smooth Counting
+const useCountTo = (end: number, duration: number) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const stepTime = (duration / end) * 100;
+
+    const timer = setInterval(() => {
+      start += 1;
+      if (start >= end) {
+        clearInterval(timer);
+        start = end; // Ensure count ends precisely at the target value
+      }
+      setCount(start);
+    }, stepTime);
+
+    return () => clearInterval(timer); // Clean up interval on unmount
+  }, [end, duration]);
+
+  return count;
+};
+
 const DetailsParallax: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-
-  // Function to handle smooth counting
-  const countTo = (end: number, duration: number) => {
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-      let start = 0;
-      let interval = (end / duration) * 100;
-
-      const timer = setInterval(() => {
-        start += 1;
-        if (start >= end) {
-          clearInterval(timer);
-        }
-        setCount(start);
-      }, interval);
-
-      return () => clearInterval(timer); // Clear interval when component unmounts
-    }, [end, duration]);
-
-    return count;
-  };
 
   return (
     <motion.section
@@ -73,7 +74,7 @@ const DetailsParallax: React.FC = () => {
           variants={containerVariants}
         >
           {stats.map((stat, index) => {
-            const animatedNumber = countTo(stat.number, 2000); // 2000ms for smooth counting
+            const animatedNumber = useCountTo(stat.number, 2000); // Use the custom hook here
             return (
               <motion.div
                 key={index}
