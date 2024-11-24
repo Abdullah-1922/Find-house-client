@@ -9,7 +9,7 @@ const PreviewVideo = ({
   setUrl,
 }: {
   url: string;
-  setUrl: Dispatch<SetStateAction<string>>;
+  setUrl: Dispatch<SetStateAction<string[]>>;
 }) => {
   const [loading, setLoading] = useState(false);
 
@@ -21,7 +21,7 @@ const PreviewVideo = ({
         public_id: publicId,
         resource_type: "video",
       });
-      setUrl("");
+      setUrl([]);
     } catch (error: any) {
       toast.error(error.message || "Failed to delete video");
     } finally {
