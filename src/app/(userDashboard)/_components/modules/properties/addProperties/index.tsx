@@ -33,7 +33,6 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import PreviewImage from "@/components/ui/previewImage";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import PreviewVideo from "@/components/ui/previewVideo";
-import { useUser } from "@/hooks/user.hook";
 
 const propertySchema = z.object({
   title: z
