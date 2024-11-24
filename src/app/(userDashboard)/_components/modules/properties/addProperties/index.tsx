@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -28,9 +29,11 @@ import cloud from "../../../../../../../public/assets/icon/314828_cloud_upload_i
 import { useCreatePropertyMutation } from "@/redux/api/features/property/propertyApi";
 import { Loader } from "lucide-react";
 import { toast, Toaster } from "sonner";
-import axios from "axios";
-import { useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import PreviewImage from "@/components/ui/previewImage";
+import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
+import PreviewVideo from "@/components/ui/previewVideo";
+import { useUser } from "@/hooks/user.hook";
 
 const propertySchema = z.object({
   title: z
@@ -103,7 +106,12 @@ export default function AddProperties() {
   const [addProperty, { isLoading }] = useCreatePropertyMutation();
   const [images, setImages] = useState<string[]>([]);
   const [imageUploading, setImageUploading] = useState<boolean>(false);
-  const [imageUploadingError, setImageUploadingError] = useState<string>("");
+  const [floorImages, setFloorImages] = useState<string[]>([]);
+  const [floorImageUploading, setFloorImageUploading] =
+    useState<boolean>(false);
+  const [videoUploading, setVideoUploading] = useState<boolean>(false);
+  const [videoUrl, setVideoUrl] = useState<string[]>([]);
+
   const form = useForm<z.infer<typeof propertySchema>>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
@@ -111,31 +119,31 @@ export default function AddProperties() {
     },
   });
 
-  // handle image upload
-  const handleImageUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
+  // upload media
+  const handleUpload = async (
+    event: ChangeEvent<HTMLInputElement>,
+    resourceType: "image" | "video",
+    setLoading: Dispatch<SetStateAction<boolean>>,
+    setUrl: Dispatch<SetStateAction<string[]>>
   ) => {
-    setImageUploading(true);
-    const cloudName = process.env.NEXT_PUBLIC_CLOUD_NAME;
-    const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
-    const file = event.target.files![0];
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("cloud_name", cloudName as string);
-    formData.append("upload_preset", uploadPreset as string);
+    const file = event.target.files?.[0];
+    if (!file) return;
 
+    setLoading(true);
     try {
-      const res = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData
-      );
-      setImages((prev) => [...prev, res.data.secure_url]);
-      setImageUploadingError("");
+      const secureUrl = await uploadToCloudinary(file, resourceType);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      setUrl((prev) => [...prev, secureUrl]);
+
+      if (resourceType === "video") {
+        toast.success("Video uploaded successfully!");
+      }
     } catch (error: any) {
-      setImageUploadingError("Image upload failed");
-      toast.error("Image upload failed");
+      toast.error(error.message);
     } finally {
-      setImageUploading(false);
+      setLoading(false);
     }
   };
 
@@ -159,6 +167,8 @@ export default function AddProperties() {
     const formdata = {
       author: "673704d3db3cdc44c18d7b6b",
       images,
+      floorPlanImage: floorImages,
+      videoUrl,
       price: Number(price),
       area: Number(area),
       location: {
@@ -183,21 +193,17 @@ export default function AddProperties() {
       ...resValues,
     };
     const res = await addProperty(formdata);
+    console.log("res", res);
     const loadingToast = toast.loading("property adding...");
     if (res?.data?.success) {
       toast.success("Property Added Successfully", {
         id: loadingToast,
       });
-    } else if (res?.error) {
-      toast.error(res.error.data.message, {
-        id: loadingToast,
-      });
     } else {
-      toast.error("Something went wrong", {
+      toast.error("Failed to add property", {
         id: loadingToast,
       });
     }
-    console.log("formdata", res);
   }
 
   return (
@@ -388,11 +394,127 @@ export default function AddProperties() {
           </Card>
 
           {/* Property Media */}
+          <div className="flex xl:flex-row flex-col gap-6">
+            <div className="w-full">
+              <Card className="pt-6">
+                <p className="mb-2 pl-6">Upload Images</p>
+                <CardContent>
+                  <label
+                    htmlFor="dropzone-file"
+                    className="border-4 block border-dashed rounded-lg p-8 text-center mx-auto cursor-pointer"
+                  >
+                    <Image
+                      className="mx-auto"
+                      src={cloud}
+                      alt="cloud_upload"
+                      width={60}
+                      height={40}
+                    />
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Click Here Or Drop Files To Upload
+                    </p>
+                  </label>
+                  <input
+                    onChange={(e) =>
+                      handleUpload(e, "image", setImageUploading, setImages)
+                    }
+                    type="file"
+                    id="dropzone-file"
+                    className="hidden"
+                    accept=".png,.jpg,.jpeg,.webp"
+                  />
+                  <div className="flex gap-4 pt-5 flex-wrap">
+                    {images.map((image) => (
+                      <PreviewImage
+                        setImages={setImages}
+                        key={image}
+                        image={image}
+                      />
+                    ))}
+                    {imageUploading && (
+                      <div className="w-[260px] h-[150px] rounded-lg bg-black/50 flex items-center justify-center">
+                        <Loader
+                          className="animate-spin text-white/90"
+                          size={30}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="mt-2">
+                {imageUploading && (
+                  <p className="text-gray-600">Image is uploading...</p>
+                )}
+              </div>
+            </div>
+            <div className="w-full">
+              <Card className="pt-6">
+                <p className="mb-2 pl-6">Upload Floor Images</p>
+                <CardContent>
+                  <label
+                    htmlFor="dropzone-floor-images"
+                    className="border-4 block border-dashed rounded-lg p-8 text-center mx-auto cursor-pointer"
+                  >
+                    <Image
+                      className="mx-auto"
+                      src={cloud}
+                      alt="cloud_upload"
+                      width={60}
+                      height={40}
+                    />
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Click Here Or Drop Files To Upload
+                    </p>
+                  </label>
+                  <input
+                    onChange={(e) =>
+                      handleUpload(
+                        e,
+                        "image",
+                        setFloorImageUploading,
+                        setFloorImages
+                      )
+                    }
+                    type="file"
+                    id="dropzone-floor-images"
+                    className="hidden"
+                    accept=".png,.jpg,.jpeg,.webp"
+                  />
+                  <div className="flex gap-4 pt-5 flex-wrap">
+                    {floorImages.map((image) => (
+                      <PreviewImage
+                        setImages={setFloorImages}
+                        key={image}
+                        image={image}
+                      />
+                    ))}
+                    {floorImageUploading && (
+                      <div className="w-[260px] h-[150px] rounded-lg bg-black/50 flex items-center justify-center">
+                        <Loader
+                          className="animate-spin text-white/90"
+                          size={30}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="mt-2">
+                {floorImageUploading && (
+                  <p className="text-gray-600">Image is uploading...</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* upload video */}
           <div>
             <Card className="pt-6">
               <CardContent>
+                <p className="mb-2">Upload A Video</p>
                 <label
-                  htmlFor="dropzone-file"
+                  htmlFor="dropzone-video"
                   className="border-4 block border-dashed rounded-lg p-8 text-center mx-auto cursor-pointer"
                 >
                   <Image
@@ -403,25 +525,24 @@ export default function AddProperties() {
                     height={40}
                   />
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Click Here Or Drop Files To Upload
+                    Click Here Or Drop Files To Upload Video
                   </p>
                 </label>
                 <input
-                  onChange={handleImageUpload}
+                  onChange={(e) =>
+                    handleUpload(e, "video", setVideoUploading, setVideoUrl)
+                  }
                   type="file"
-                  id="dropzone-file"
+                  id="dropzone-video"
                   className="hidden"
+                  accept="video/*"
                 />
-                <div className="flex gap-4 pt-5 flex-wrap">
-                  {images.map((image) => (
-                    <PreviewImage
-                      setImages={setImages}
-                      key={image}
-                      image={image}
-                    />
-                  ))}
-                  {imageUploading && (
-                    <div className="w-[260px] h-[150px] rounded-lg bg-black/50 flex items-center justify-center">
+                <div className="pt-5">
+                  {videoUrl.length > 0 && (
+                    <PreviewVideo setUrl={setVideoUrl} url={videoUrl[0]} />
+                  )}
+                  {videoUploading && (
+                    <div className="w-[350px] h-[200px] rounded-lg bg-black/50 flex items-center justify-center">
                       <Loader
                         className="animate-spin text-white/90"
                         size={30}
@@ -432,9 +553,8 @@ export default function AddProperties() {
               </CardContent>
             </Card>
             <div className="mt-2">
-              <p className="text-red-500">{imageUploadingError}</p>
               {imageUploading && (
-                <p className="text-gray-600">Image is uploading...</p>
+                <p className="text-gray-600">Video is uploading...</p>
               )}
             </div>
           </div>
@@ -553,7 +673,7 @@ export default function AddProperties() {
                         <SelectContent>
                           <SelectItem value="0-1">0-1 Years</SelectItem>
                           <SelectItem value="0-5">0-5 Years</SelectItem>
-                          <SelectItem value="0-10…">0-10 Years</SelectItem>
+                          <SelectItem value="0-10">0-10… Years</SelectItem>
                           <SelectItem value="0-15">0-15 Years</SelectItem>
                           <SelectItem value="0-20">0-20 Years</SelectItem>
                           <SelectItem value="0-50">0-50 Years</SelectItem>

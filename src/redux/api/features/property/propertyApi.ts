@@ -77,6 +77,7 @@ const propertyApi = baseApi.injectEndpoints({
                 { type: "SingleProperty", id },
             ],
         }),
+
     }),
 });
 

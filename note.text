@@ -1,3 +1,4 @@
+22 nov
 0. role based-routing handled
 1. state managed for image uploading
 2. organized fields
@@ -6,3 +7,7 @@
 5. image uploading
 6. image showed
 7. image delete api created & implemented
+8. made utils for uploading media(image, video)
+9. updated delete api for image and video
+
+23, nov

@@ -18,13 +18,12 @@ const PreviewImage = ({
     setLoading(true);
     const publicId = image.split("/").pop()?.split(".")[0];
     try {
-      const res = await axios.post("/api/delete-cloudinary-image", {
+      await axios.post("/api/delete-cloudinary-media", {
         public_id: publicId,
       });
-      console.log("res", res);
+
       setImages((images) => images.filter((i) => i !== image));
     } catch (error: any) {
-      console.log("error", error);
       toast.error(error.message || "Failed to delete image");
     } finally {
       setLoading(false);
