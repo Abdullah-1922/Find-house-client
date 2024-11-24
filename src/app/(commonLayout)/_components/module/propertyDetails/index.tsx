@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import PropertyCarousel from './propertyCarousel';
 import CalenderSchedule from '../agencies/CalerderSchedule';

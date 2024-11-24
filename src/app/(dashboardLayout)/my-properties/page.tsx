@@ -1,10 +1,10 @@
-import React from "react";
-import AllProperties from "../admin-dashboard/all-properties/page";
+import React from 'react';
+import MyProperties from '../admin-dashboard/all-properties/page';
 
 export default function MyPropertiesPage() {
   return (
     <div>
-      <AllProperties />
+      <MyProperties />
     </div>
   );
 }
