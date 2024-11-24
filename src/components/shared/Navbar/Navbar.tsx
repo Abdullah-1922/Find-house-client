@@ -128,9 +128,9 @@ const Navbar = () => {
               <SignInModal />
               {user && <UserProfileDropdown />}
 
-              <Link href={'/dashboard/user'}>
+              <Link href={'/profile'}>
                 <Button className="text-white py-3 px-5 bg-gray-800 hover:bg-gray-900 h-[45px] rounded font-bold">
-                  Add Listing
+                  Dashboard
                 </Button>
               </Link>
             </div>
