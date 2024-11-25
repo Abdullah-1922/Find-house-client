@@ -10,25 +10,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useGetAllPropertiesQuery } from "@/redux/api/features/property/propertyApi";
-import { TProduct, TProperty } from "@/types";
+import { TProduct } from "@/types";
 import { format } from "date-fns";
 import { useState } from "react";
 import Spinner from "@/components/ui/spinner";
 import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
 import Link from "next/link";
 import { useGetAllProductsQuery } from "@/redux/api/features/product/productApi";
-
-interface Property {
-  id: number;
-  name: string;
-  address: string;
-  rating: number;
-  reviews: number;
-  dateAdded: string;
-  views: number;
-  imageUrl: string;
-}
 
 export default function AllProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -117,7 +105,7 @@ export default function AllProductsPage() {
                 </TableCell>
                 <TableCell className="py-5">
                   <div className="flex gap-3 items-center justify-end">
-                    <Link href={`/edit-property/${product._id}`}>
+                    <Link href={`/edit-product/${product._id}`}>
                       <Button
                         variant="outline"
                         className="text-green-600 hover:text-green-700"
