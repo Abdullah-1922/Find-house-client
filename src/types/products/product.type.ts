@@ -8,7 +8,7 @@ export interface TProduct {
   images: string[];
   price: number;
   rating: number;
-  admin: TUser;
+  admin: TUser | string;
   review: any[];
   createdAt: string;
   updatedAt: string;

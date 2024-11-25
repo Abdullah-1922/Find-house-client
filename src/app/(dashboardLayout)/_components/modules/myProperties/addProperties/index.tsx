@@ -39,8 +39,8 @@ const propertySchema = z.object({
     .string({ required_error: "Property title is required" })
     .min(1, "Property title is required"),
   category: z
-    .string({ required_error: "Property title is required" })
-    .min(1, "Property title is required"),
+    .string({ required_error: "Property category is required" })
+    .min(1, "Property category is required"),
   description: z
     .string({ required_error: "Property description is required" })
     .min(1, "Property description is required"),
@@ -192,7 +192,7 @@ export default function AddProperties() {
       ...resValues,
     };
     const res = await addProperty(formdata);
-    console.log("res", res);
+
     const loadingToast = toast.loading("property adding...");
     if (res?.data?.success) {
       toast.success("Property Added Successfully", {
