@@ -1,5 +1,5 @@
-import React from 'react';
-import PropertiesTable from './propertiesTable';
+import React from "react";
+import PropertiesTable from "./propertiesTable";
 
 export default function Properties() {
   return (

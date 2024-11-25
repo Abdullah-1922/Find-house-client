@@ -1,38 +1,22 @@
-import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel';
-
-const featuredProperties = [
-  {
-    id: 1,
-    title: 'House Luxury',
-    price: 230000,
-    location: 'San Francisco',
-    status: 'For Sale',
-    image:
-      'https://code-theme.com/html/findhouses/images/feature-properties/fp-2.jpg',
-  },
-  {
-    id: 2,
-    title: 'House Luxury',
-    price: 230000,
-    location: 'San Francisco',
-    status: 'For Sale',
-    image:
-      'https://code-theme.com/html/findhouses/images/feature-properties/fp-3.jpg',
-  },
-];
+} from "@/components/ui/carousel";
+import Spinner from "@/components/ui/spinner";
+import { useGetAllPropertiesQuery } from "@/redux/api/features/property/propertyApi";
+import { TProperty } from "@/types";
+import Link from "next/link";
 
 export default function FeaturedProperties() {
+  const { data, isLoading } = useGetAllPropertiesQuery(`sort=views&limit=3`);
+  const properties = data?.data;
+  if (isLoading) return <Spinner />;
   return (
     <Card>
       <CardHeader>
@@ -41,11 +25,11 @@ export default function FeaturedProperties() {
       <CardContent>
         <Carousel className="w-full">
           <CarouselContent>
-            {featuredProperties.map((property) => (
+            {properties.map((property: TProperty) => (
               <CarouselItem key={property.id}>
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
                   <Image
-                    src={property.image}
+                    src={property.images[0]}
                     alt={property.title}
                     fill
                     className="object-cover"
@@ -55,15 +39,17 @@ export default function FeaturedProperties() {
                     <Badge className="bg-emerald-500 text-white hover:bg-emerald-600">
                       ${property.price.toLocaleString()}
                     </Badge>
-                    <Badge className="bg-rose-500 text-white hover:bg-rose-600">
+                    <Badge className="bg-rose-500 text-white hover:bg-rose-600 capitalize">
                       {property.status}
                     </Badge>
                   </div>
                   <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-xl font-bold text-white">
-                      {property.title}
-                    </h3>
-                    <p className="text-white/90">{property.location}</p>
+                    <Link href={`/all-properties/${property._id}`}>
+                      <h3 className="text-xl font-bold text-white">
+                        {property.title}
+                      </h3>
+                    </Link>
+                    <p className="text-white/90">{`${property.location.address}, ${property.location.city}`}</p>
                   </div>
                 </div>
               </CarouselItem>

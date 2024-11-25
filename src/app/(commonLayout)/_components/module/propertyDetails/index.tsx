@@ -14,7 +14,7 @@ import ProperLocation from "./propertyLocation";
 import PopularTags from "./PopularTags";
 import ResentPropertySlider from "@/app/(commonLayout)/_components/module/homeMap/resentPropertySlider";
 import { useGetSinglePropertyQuery } from "@/redux/api/features/property/propertyApi";
-import { TProperty } from "@/types";
+import { TProperty, TUser } from "@/types";
 import Spinner from "@/components/ui/spinner";
 
 export default function Property({ propertyId }: { propertyId: string }) {
@@ -39,6 +39,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
     videoUrl,
     images,
     contactInfo,
+    floorPlanImage,
   } = property;
   const propertyDetails = {
     _id,
@@ -57,14 +58,15 @@ export default function Property({ propertyId }: { propertyId: string }) {
     alt: "image",
   }));
 
+  const { firstName, secondName, email, image } = property.author;
+
   const agent = {
-    name: contactInfo.name,
+    name: `${firstName} ${secondName}`,
     title: contactInfo.userName,
-    address: location.address,
+    address: `${location.city},  ${location.country}`,
     phone: contactInfo.phone as string,
-    email: contactInfo.email as string,
-    image:
-      "https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg",
+    email,
+    image,
   };
   return (
     <div>
@@ -81,7 +83,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
               location={`${location.address}, ${location.city},  ${location.country}`}
             />
             <PropertyDetails details={propertyDetails} amenities={features} />
-            <FloorPlan />
+            <FloorPlan image={floorPlanImage[0]} />
             <PropertyVideo thumbnail={images[0]} videoUrl={videoUrl} />
             <ProperLocation
               Longitude={Number(location.longitude)}

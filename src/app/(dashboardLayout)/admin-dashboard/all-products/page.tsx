@@ -22,18 +22,17 @@ import {
 } from "@/redux/api/features/product/productApi";
 import { PopConfirm } from "@/components/ui/pop-confirm";
 import { toast } from "sonner";
+import Nodata from "@/components/ui/noData";
 
 export default function AllProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteProduct] = useDeleteProductMutation();
   const limit = 5;
 
-  const { data, isFetching } = useGetAllProductsQuery(
+  const { data, isLoading } = useGetAllProductsQuery(
     `limit=${limit}&page=${currentPage}`
   );
   const productData = data?.data;
-
-  if (isFetching) return <Spinner className="h-[600px]" />;
 
   // handle pagination
   const meta = data?.meta;
@@ -58,6 +57,11 @@ export default function AllProductsPage() {
       });
     }
   };
+
+  if (isLoading) return <Spinner className="h-[600px]" />;
+  if (productData.length === 0) {
+    return <Nodata />;
+  }
 
   return (
     <div className="space-y-6 bg-white rounded-md border p-5">
