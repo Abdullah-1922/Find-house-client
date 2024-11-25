@@ -110,11 +110,11 @@ export default function EditProductPage({
 
   async function onSubmit(values: TProduct) {
     setImagesError(images.length === 0);
+    const loadingToast = toast.loading("Product updating...");
     values.images = images;
     values.price = Number(values.price);
-    const res = await updateProduct({ body: values, id: params?.id });
 
-    const loadingToast = toast.loading("Product updating...");
+    const res = await updateProduct({ body: values, id: params?.id });
     if (res?.data?.success) {
       toast.success("Product Updated Successfully", {
         id: loadingToast,
@@ -124,7 +124,6 @@ export default function EditProductPage({
         id: loadingToast,
       });
     }
-    console.log("values", values);
   }
 
   if (isFetching) return <Spinner className="h-[600px]" />;

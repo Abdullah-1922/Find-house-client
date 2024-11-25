@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Delete, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -16,25 +16,47 @@ import { useState } from "react";
 import Spinner from "@/components/ui/spinner";
 import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
 import Link from "next/link";
-import { useGetAllProductsQuery } from "@/redux/api/features/product/productApi";
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+} from "@/redux/api/features/product/productApi";
+import { PopConfirm } from "@/components/ui/pop-confirm";
+import { toast } from "sonner";
 
 export default function AllProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [deleteProduct] = useDeleteProductMutation();
   const limit = 5;
+
   const { data, isFetching } = useGetAllProductsQuery(
     `limit=${limit}&page=${currentPage}`
   );
   const productData = data?.data;
 
-  if (isFetching) return <Spinner className="h-[400px]" />;
+  if (isFetching) return <Spinner className="h-[600px]" />;
 
   // handle pagination
   const meta = data?.meta;
   const totalPages = meta?.totalPage;
-  console.log("meta", meta);
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     console.log("Selected Page:", page);
+  };
+
+  // handle delete product
+  const handleDeleteProduct = async (id: string) => {
+    const loadingToast = toast.loading("Product deleting...");
+    const res = await deleteProduct(id);
+
+    if (res?.data?.success) {
+      toast.success("Product Deleted Successfully", {
+        id: loadingToast,
+      });
+    } else {
+      toast.error("Failed to delete product", {
+        id: loadingToast,
+      });
+    }
   };
 
   return (
@@ -114,13 +136,10 @@ export default function AllProductsPage() {
                         Edit
                       </Button>
                     </Link>
-                    <Button
-                      variant="outline"
-                      className="text-red-600 hover:text-red-700"
-                      size="sm"
-                    >
-                      <Delete />
-                    </Button>
+                    <PopConfirm
+                      name={"product"}
+                      onConfirm={() => handleDeleteProduct(product._id)}
+                    />
                   </div>
                 </TableCell>
               </TableRow>
