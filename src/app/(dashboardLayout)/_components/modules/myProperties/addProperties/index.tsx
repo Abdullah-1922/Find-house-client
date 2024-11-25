@@ -39,8 +39,8 @@ const propertySchema = z.object({
     .string({ required_error: "Property title is required" })
     .min(1, "Property title is required"),
   category: z
-    .string({ required_error: "Property title is required" })
-    .min(1, "Property title is required"),
+    .string({ required_error: "Property category is required" })
+    .min(1, "Property category is required"),
   description: z
     .string({ required_error: "Property description is required" })
     .min(1, "Property description is required"),
