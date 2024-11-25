@@ -28,6 +28,8 @@ export async function middleware(request: NextRequest) {
     ],
     admin: [
       '/profile',
+      '/my-properties',
+      '/favorite-properties',
       '/admin-dashboard/all-properties',
       '/admin-dashboard/all-products',
       '/admin-dashboard/all-users',

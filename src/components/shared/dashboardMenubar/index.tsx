@@ -32,7 +32,6 @@ interface NavItem {
 type Role = 'user' | 'agent' | 'admin';
 
 const commonNavItems: NavItem[] = [
-  { title: 'Profile', href: '/profile', icon: User2 },
   { title: 'My Properties', href: '/my-properties', icon: Building2 },
   { title: 'Favorite Properties', href: '/favorite-properties', icon: Heart },
   { title: 'Payments', href: '/payment', icon: CreditCard },
@@ -43,9 +42,11 @@ const commonNavItems: NavItem[] = [
 const roleBasedNavItems = {
   user: [
     { title: 'Dashboard', href: '/user-dashboard', icon: LayoutDashboard },
+    { title: 'Profile', href: '/profile', icon: User2 },
   ],
   agent: [
     { title: 'Dashboard', href: '/agent-dashboard', icon: LayoutDashboard },
+    { title: 'Profile', href: '/profile', icon: User2 },
     { title: 'Add Property', href: '/add-property', icon: Plus },
     {
       title: 'Sold Properties',
@@ -55,6 +56,7 @@ const roleBasedNavItems = {
   ],
   admin: [
     { title: 'Dashboard', href: '/admin-dashboard', icon: LayoutDashboard },
+    { title: 'Profile', href: '/profile', icon: User2 },
     { title: 'Add Product', href: '/admin-dashboard/add-product', icon: Plus },
     { title: 'Add Property', href: '/add-property', icon: Plus },
     {
@@ -140,7 +142,7 @@ export default function DashboardSidebar() {
           </Link>
         </div>
         <ScrollArea className="h-screen">
-          <div className="flex flex-col items-center gap-2 p-4 border-b border-white/10 mt-5">
+          <div className="flex flex-col items-center gap-2 p-4 border-b border-white/10">
             <div className="h-16 w-16 rounded-full border-4 border-green-400 overflow-hidden">
               <Image
                 width={1000}
