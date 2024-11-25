@@ -105,7 +105,7 @@ export default function AllProductsPage() {
                 </TableCell>
                 <TableCell className="py-5">
                   <div className="flex gap-3 items-center justify-end">
-                    <Link href={`/edit-product/${product._id}`}>
+                    <Link href={`/admin-dashboard/edit-product/${product._id}`}>
                       <Button
                         variant="outline"
                         className="text-green-600 hover:text-green-700"
