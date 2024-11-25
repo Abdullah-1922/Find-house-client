@@ -7,6 +7,8 @@ export interface TUser {
   auth: TAuth;
   email?: string;
   image: string;
+  phone?: string;
+  location?: string;
   role: string;
   paymentHistory: any[];
   property: any[];
