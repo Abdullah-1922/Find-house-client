@@ -85,6 +85,7 @@ export type TProperty = {
   type: PropertyType;
   rooms: number;
   price: number;
+  video: string;
   area: number;
   images: string[];
   location: ILocation;

@@ -125,8 +125,13 @@ const Navbar = () => {
             <div className="flex justify-center items-center gap-5">
               <SignInModal />
               {user && <UserProfileDropdown />}
-
-              <Link href={'/profile'}>
+              <Link
+                href={`${
+                  (user?.role === 'user' && 'user-dashboard') ||
+                  (user?.role === 'admin' && 'admin-dashboard') ||
+                  (user?.role === 'agent' && 'agent-dashboard')
+                }`}
+              >
                 <Button className="text-white py-3 px-5 bg-gray-800 hover:bg-gray-900 rounded font-bold">
                   Dashboard
                 </Button>

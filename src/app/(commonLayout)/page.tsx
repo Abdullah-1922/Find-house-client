@@ -6,7 +6,7 @@ import OurPartners from '@/components/Home/OurPartners/OurPartners';
 import PopularPlaces from '@/components/Home/PopularPlaces/PopularPlaces';
 import RecentProperties from '@/components/Home/RecentProperties/RecentProperties';
 import WhyChooseUs from '@/components/Home/WhyChooseUs/WhyChooseUs';
-import ResentPropertySlider from './home-map/_components/resentPropertySlider';
+import ResentPropertySlider from './_components/module/homeMap/resentPropertySlider';
 
 export default function Home() {
   return (

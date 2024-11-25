@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import { FieldValues, useForm } from "react-hook-form";
+'use client';
+import { FieldValues, useForm } from 'react-hook-form';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -12,49 +12,60 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
-import Image from "next/image";
-import cloud from "../../../../../../../public/assets/icon/314828_cloud_upload_icon.svg";
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Select } from '@/components/ui/select';
+import Image from 'next/image';
+import cloud from '../../../../../../../public/assets/icon/314828_cloud_upload_icon.svg';
 import {
   useGetSinglePropertyQuery,
   useUpdatePropertyMutation,
-} from "@/redux/api/features/property/propertyApi";
-import { Loader } from "lucide-react";
-import { toast, Toaster } from "sonner";
+} from '@/redux/api/features/property/propertyApi';
+import { Loader } from 'lucide-react';
+import { toast, Toaster } from 'sonner';
 import {
   ChangeEvent,
   Dispatch,
   SetStateAction,
   useEffect,
   useState,
-} from "react";
-import PreviewImage from "@/components/ui/previewImage";
-import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
-import PreviewVideo from "@/components/ui/previewVideo";
-import Spinner from "@/components/ui/spinner";
-import { TProperty } from "@/types";
-import Nodata from "@/components/ui/noData";
+} from 'react';
+import PreviewImage from '@/components/ui/previewImage';
+import { uploadToCloudinary } from '@/utils/uploadToCloudinary';
+import PreviewVideo from '@/components/ui/previewVideo';
+import Spinner from '@/components/ui/spinner';
+import { TProperty } from '@/types';
+import Nodata from '@/components/ui/noData';
+type TFeatures =
+  | 'Air Conditioning'
+  | 'Swimming Pool'
+  | 'Central Heating'
+  | 'Laundry Room'
+  | 'Gym'
+  | 'Alarm'
+  | 'Window Covering'
+  | 'Refrigerator'
+  | 'Microwave'
+  | 'TV Cable & WIFI';
 
 const features = [
-  "Air Conditioning",
-  "Swimming Pool",
-  "Central Heating",
-  "Laundry Room",
-  "Gym",
-  "Alarm",
-  "Window Covering",
-  "Refrigerator",
-  "TV Cable & WiFi",
-  "Microwave",
+  'Air Conditioning',
+  'Swimming Pool',
+  'Central Heating',
+  'Laundry Room',
+  'Gym',
+  'Alarm',
+  'Window Covering',
+  'Refrigerator',
+  'TV Cable & WiFi',
+  'Microwave',
 ] as const;
 
 export default function EditProperty({ propertyId }: { propertyId: string }) {
@@ -111,7 +122,7 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
   // upload media
   const handleUpload = async (
     event: ChangeEvent<HTMLInputElement>,
-    resourceType: "image" | "video",
+    resourceType: 'image' | 'video',
     setLoading: Dispatch<SetStateAction<boolean>>,
     setUrl: Dispatch<SetStateAction<string[]>>
   ) => {
@@ -126,8 +137,8 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
       // @ts-ignore
       setUrl((prev) => [...prev, secureUrl]);
 
-      if (resourceType === "video") {
-        toast.success("Video uploaded successfully!");
+      if (resourceType === 'video') {
+        toast.success('Video uploaded successfully!');
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -152,7 +163,7 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
       ...resValues
     } = values;
     const formdata = {
-      author: "673704d3db3cdc44c18d7b6b",
+      author: '673704d3db3cdc44c18d7b6b',
       images,
       floorPlanImage: [...floorPlanImage],
       videoUrl,
@@ -172,10 +183,10 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
         bathrooms: Number(bathrooms),
       },
       contactInfo: {
-        name: "user name",
-        userName: "johndoe123",
-        phone: "+1 123 456 7890",
-        email: "johndoe@example.com",
+        name: 'user name',
+        userName: 'johndoe123',
+        phone: '+1 123 456 7890',
+        email: 'johndoe@example.com',
       },
       ...resValues,
     };
@@ -184,14 +195,14 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
     formdata.videoUrl = videoUrl;
     const res = await updateProperty({ body: formdata, id: propertyId });
 
-    const loadingToast = toast.loading("property updating...");
+    const loadingToast = toast.loading('property updating...');
     if (res?.data?.success) {
       refetch();
-      toast.success("Property updated Successfully", {
+      toast.success('Property updated Successfully', {
         id: loadingToast,
       });
     } else {
-      toast.error("Failed to update property", {
+      toast.error('Failed to update property', {
         id: loadingToast,
       });
     }
@@ -349,7 +360,7 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
                           <SelectContent>
                             {[1, 2, 3, 4, 5].map((num) => (
                               <SelectItem key={num} value={num.toString()}>
-                                {num} {num === 1 ? "Room" : "Rooms"}
+                                {num} {num === 1 ? 'Room' : 'Rooms'}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -414,7 +425,7 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
                   </label>
                   <input
                     onChange={(e) =>
-                      handleUpload(e, "image", setImageUploading, setImages)
+                      handleUpload(e, 'image', setImageUploading, setImages)
                     }
                     type="file"
                     id="dropzone-file"
@@ -469,7 +480,7 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
                     onChange={(e) =>
                       handleUpload(
                         e,
-                        "image",
+                        'image',
                         setFloorImageUploading,
                         setFloorImages
                       )
@@ -528,7 +539,7 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
                 </label>
                 <input
                   onChange={(e) =>
-                    handleUpload(e, "video", setVideoUploading, setVideoUrl)
+                    handleUpload(e, 'video', setVideoUploading, setVideoUrl)
                   }
                   type="file"
                   id="dropzone-video"
@@ -700,7 +711,7 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
                         <SelectContent>
                           {[1, 2, 3, 4, 5].map((num) => (
                             <SelectItem key={num} value={num.toString()}>
-                              {num} {num === 1 ? "Room" : "Rooms"}
+                              {num} {num === 1 ? 'Room' : 'Rooms'}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -727,7 +738,7 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
                         <SelectContent>
                           {[1, 2, 3, 4].map((num) => (
                             <SelectItem key={num} value={num.toString()}>
-                              {num} {num === 1 ? "Bathroom" : "Bathrooms"}
+                              {num} {num === 1 ? 'Bathroom' : 'Bathrooms'}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -756,7 +767,9 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
                       <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                         <FormControl>
                           <Checkbox
-                            checked={field.value?.includes(feature)}
+                            checked={field.value?.includes(
+                              feature as TFeatures
+                            )}
                             onCheckedChange={(checked) => {
                               const value = field.value || [];
                               return checked
@@ -855,12 +868,12 @@ export default function EditProperty({ propertyId }: { propertyId: string }) {
           {isLoading ? (
             <div>
               <div className="flex items-center gap-2">
-                <span>Updating...</span>{" "}
+                <span>Updating...</span>{' '}
                 <Loader className="mr-2 h-4 w-4 animate-spin" />
               </div>
             </div>
           ) : (
-            "Update Property"
+            'Update Property'
           )}
         </Button>
       </form>

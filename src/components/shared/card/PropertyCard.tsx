@@ -36,8 +36,6 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
 }) => {
   const [hovered, setHovered] = useState(false);
 
-  console.log(isGridView);
-
   return (
     <motion.div
       onHoverStart={() => setHovered(true)}
@@ -78,9 +76,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
 
           <Image
             src={property?.images?.[0]}
-            alt={property?.title}
+            alt={'property_image'}
             fill
-            className="object-cover"
+            className="object-cover w-full h-[300px]"
           />
 
           {hovered && (
@@ -140,7 +138,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
               </h3>
               <p className="text-muted-foreground flex items-center gap-1 text-xs">
                 <MapPin className="h-4 w-4" />
-                {property?.location.city}, {property?.location.state}
+                {property?.location?.city}, {property?.location?.state}
               </p>
             </div>
             <div
@@ -195,10 +193,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                   }`}
                 >
                   <AvatarImage
-                    src={property?.ownedBy.image}
-                    alt={property?.ownedBy.image}
+                    src={property?.ownedBy?.image}
+                    alt={property?.ownedBy?.image}
                   />
-                  <AvatarFallback>{property?.ownedBy.image}</AvatarFallback>
+                  <AvatarFallback>{property?.ownedBy?.image}</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
                   <span
@@ -206,7 +204,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                       isGridView ? '' : 'text-xs md:text-sm'
                     }`}
                   >
-                    {property?.ownedBy.firstName}
+                    {property?.ownedBy?.firstName}
                   </span>
                 </div>
               </div>
