@@ -192,7 +192,7 @@ export default function AddProperties() {
       ...resValues,
     };
     const res = await addProperty(formdata);
-    console.log("res", res);
+
     const loadingToast = toast.loading("property adding...");
     if (res?.data?.success) {
       toast.success("Property Added Successfully", {
