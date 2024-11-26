@@ -77,6 +77,25 @@ const propertyApi = baseApi.injectEndpoints({
                 { type: "SingleProperty", id },
             ],
         }),
+        createSchedule: builder.mutation({
+            query: (bodyData) => {
+                return {
+                    url: `/schedule`,
+                    method: "POST",
+                    body: bodyData,
+                };
+            },
+            invalidatesTags: ["Schedules"],
+        }),
+        getAllSChedules: builder.query({
+            query: (query?: string) => {
+                return {
+                    url: `/schedule?${query}`,
+                    method: "GET",
+                };
+            },
+            providesTags: ["Schedules"],
+        }),
 
     }),
 });
@@ -89,4 +108,6 @@ export const {
     useDeletePropertyMutation,
     useCreatePropertyCommentMutation,
     useGetPropertyCommentQuery,
+    useCreateScheduleMutation,
+    useGetAllSChedulesQuery
 } = propertyApi;

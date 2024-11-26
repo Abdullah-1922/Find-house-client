@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +20,11 @@ import { toast, Toaster } from "sonner";
 import Cookies from "js-cookie";
 import { useUser } from "@/hooks/user.hook";
 
-export default function SignInModal() {
+export default function SignInModal({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({
     email: "admin@gmail.com",
@@ -98,16 +101,20 @@ export default function SignInModal() {
     <div className="z-[9999]">
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button
-            className={`${
-              pathname === "/home-video"
-                ? "text-white hover:text-white hover:bg-gray-50/20"
-                : "text-black"
-            }`}
-            variant="ghost"
-          >
-            Sign In
-          </Button>
+          {children ? (
+            children
+          ) : (
+            <Button
+              className={`${
+                pathname === "/home-video"
+                  ? "text-white hover:text-white hover:bg-gray-50/20"
+                  : "text-black"
+              }`}
+              variant="ghost"
+            >
+              Sign In
+            </Button>
+          )}
         </DialogTrigger>
         <DialogContent className="md:max-w-[425px]">
           <DialogHeader>

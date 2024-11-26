@@ -14,7 +14,7 @@ import ProperLocation from "./propertyLocation";
 import PopularTags from "./PopularTags";
 import ResentPropertySlider from "@/app/(commonLayout)/_components/module/homeMap/resentPropertySlider";
 import { useGetSinglePropertyQuery } from "@/redux/api/features/property/propertyApi";
-import { TProperty, TUser } from "@/types";
+import { TProperty } from "@/types";
 import Spinner from "@/components/ui/spinner";
 
 export default function Property({ propertyId }: { propertyId: string }) {
@@ -58,7 +58,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
     alt: "image",
   }));
 
-  const { firstName, secondName, email, image } = property.author;
+  const { firstName, secondName, email, image, _id: agetId } = property.author;
 
   const agent = {
     name: `${firstName} ${secondName}`,
@@ -93,7 +93,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
           {/* Sidebar Forms */}
           <div className="flex flex-col gap-5 w-[50%] space-y-5">
             {/* Schedule Tour */}
-            <CalenderSchedule />
+            <CalenderSchedule propertyId={propertyId} agentId={agetId} />
             <AgentInformation agent={agent} />
             <ResentProperties />
             <FeaturedProperties />
