@@ -1,6 +1,6 @@
-"use client";
-import Image from "next/image";
-import { Delete } from "lucide-react";
+'use client';
+import Image from 'next/image';
+import { Delete } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -8,17 +8,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { format } from "date-fns";
-import { useState } from "react";
-import Spinner from "@/components/ui/spinner";
-import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
+import { useState } from 'react';
+import Spinner from '@/components/ui/spinner';
+import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
 import {
   useGetAllUsersQuery,
   useUpdateUserRoleMutation,
-} from "@/redux/api/features/users/user";
-import { TUser } from "@/types";
+} from '@/redux/api/features/users/userApi';
+import { TUser } from '@/types';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,8 +27,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { toast } from "sonner";
+} from '@/components/ui/dropdown-menu';
+import { toast } from 'sonner';
 
 interface User {
   id: number;
@@ -62,28 +62,28 @@ export default function UserTable() {
   // handle pagination
   const meta = data?.meta;
   const totalPages = meta?.totalPage;
-  console.log("meta", meta);
+  console.log('meta', meta);
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    console.log("Selected Page:", page);
+    console.log('Selected Page:', page);
   };
 
   // handle update user role
   const handleUpdateUserRole = async (
     id: string,
-    role: "user" | "agent" | "admin"
+    role: 'user' | 'agent' | 'admin'
   ) => {
     const res = await updateRole({ id, role });
-    console.log("res", res);
-    const loadingToast = toast.loading("User role updating...");
+    console.log('res', res);
+    const loadingToast = toast.loading('User role updating...');
     if (res?.data?.success) {
-      toast.success("User role updated Successfully", {
+      toast.success('User role updated Successfully', {
         id: loadingToast,
       });
     } else {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      toast.error(res?.error?.data.message || "Failed to  updated user role", {
+      toast.error(res?.error?.data.message || 'Failed to  updated user role', {
         id: loadingToast,
       });
     }
@@ -103,7 +103,7 @@ export default function UserTable() {
           {users?.map((user: User, index: number) => (
             <TableRow
               key={user.id}
-              className={`${index % 2 === 0 ? "bg-muted/50" : ""}`}
+              className={`${index % 2 === 0 ? 'bg-muted/50' : ''}`}
             >
               <TableCell colSpan={2} className="py-5">
                 <div className="flex items-start gap-4">
@@ -117,7 +117,7 @@ export default function UserTable() {
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src =
-                          "https://code-theme.com/html/findhouses/images/feature-properties/fp-1.jpg";
+                          'https://code-theme.com/html/findhouses/images/feature-properties/fp-1.jpg';
                       }}
                     />
                   </div>
@@ -130,7 +130,7 @@ export default function UserTable() {
                 </div>
               </TableCell>
               <TableCell className="py-5">
-                {format(user.registrationDate, "dd MMM, yyyy")}
+                {format(user.registrationDate, 'dd MMM, yyyy')}
               </TableCell>
               <TableCell className="capitalize">{user.role}</TableCell>
               <TableCell className="py-5">
@@ -145,7 +145,7 @@ export default function UserTable() {
                       <DropdownMenuGroup>
                         <DropdownMenuItem
                           onClick={() =>
-                            handleUpdateUserRole(user.id.toString(), "user")
+                            handleUpdateUserRole(user.id.toString(), 'user')
                           }
                           className="cursor-pointer"
                         >
@@ -153,7 +153,7 @@ export default function UserTable() {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() =>
-                            handleUpdateUserRole(user.id.toString(), "agent")
+                            handleUpdateUserRole(user.id.toString(), 'agent')
                           }
                           className="cursor-pointer"
                         >
@@ -161,7 +161,7 @@ export default function UserTable() {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() =>
-                            handleUpdateUserRole(user.id.toString(), "admin")
+                            handleUpdateUserRole(user.id.toString(), 'admin')
                           }
                           className="cursor-pointer"
                         >

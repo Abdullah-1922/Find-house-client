@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useGetMeQuery } from '@/redux/api/features/users/user';
+import { useGetMeQuery } from '@/redux/api/features/users/userApi';
 import { DecodedJWT, TUser } from '@/types';
 import { decodeJWT } from '@/utils/verifyToken';
 import Cookies from 'js-cookie';
