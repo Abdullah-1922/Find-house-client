@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -12,39 +12,39 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
-import Image from "next/image";
-import cloud from "../../../../../public/assets/icon/314828_cloud_upload_icon.svg";
-import { Loader } from "lucide-react";
-import { toast, Toaster } from "sonner";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import PreviewImage from "@/components/ui/previewImage";
-import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
-import { useCreateProductMutation } from "@/redux/api/features/product/productApi";
-import { TProduct } from "@/types";
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Select } from '@/components/ui/select';
+import Image from 'next/image';
+import cloud from '../../../../../public/assets/icon/314828_cloud_upload_icon.svg';
+import { Loader } from 'lucide-react';
+import { toast, Toaster } from 'sonner';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import PreviewImage from '@/components/ui/previewImage';
+import { uploadToCloudinary } from '@/utils/uploadToCloudinary';
+import { useCreateProductMutation } from '@/redux/api/features/product/productApi';
+import { TProduct } from '@/types';
 
 const productSchema = z.object({
   name: z
-    .string({ required_error: "Product name is required" })
-    .min(1, "Product name is required"),
+    .string({ required_error: 'Product name is required' })
+    .min(1, 'Product name is required'),
   category: z
-    .string({ required_error: "Product category is required" })
-    .min(1, "Product category is required"),
+    .string({ required_error: 'Product category is required' })
+    .min(1, 'Product category is required'),
   description: z
-    .string({ required_error: "Product description is required" })
-    .min(1, "Product description is required"),
+    .string({ required_error: 'Product description is required' })
+    .min(1, 'Product description is required'),
   price: z
-    .string({ required_error: "Price is required" })
-    .min(1, "Price is required"),
+    .string({ required_error: 'Price is required' })
+    .min(1, 'Price is required'),
 });
 
 export default function AddProductPage() {
@@ -59,7 +59,7 @@ export default function AddProductPage() {
   // upload media
   const handleUpload = async (
     event: ChangeEvent<HTMLInputElement>,
-    resourceType: "image" | "video",
+    resourceType: 'image' | 'video',
     setLoading: Dispatch<SetStateAction<boolean>>,
     setUrl: Dispatch<SetStateAction<string[]>>
   ) => {
@@ -84,16 +84,16 @@ export default function AddProductPage() {
     setImagesError(images.length === 0);
     values.images = images;
     values.price = Number(values.price);
-    values.admin = "6736e6af4793f0064f83d670";
+    values.admin = '6736e6af4793f0064f83d670';
     const res = await addProduct(values);
-    console.log("res", res);
-    const loadingToast = toast.loading("Product adding...");
+    console.log('res', res);
+    const loadingToast = toast.loading('Product adding...');
     if (res?.data?.success) {
-      toast.success("Product Added Successfully", {
+      toast.success('Product Added Successfully', {
         id: loadingToast,
       });
     } else {
-      toast.error("Failed to add product", {
+      toast.error('Failed to add product', {
         id: loadingToast,
       });
     }
@@ -196,7 +196,7 @@ export default function AddProductPage() {
 
               <div className="w-full mt-6">
                 <Card className="pt-6">
-                  <p className={`mb-2 pl-6 ${imagesError && "text-red-600"}`}>
+                  <p className={`mb-2 pl-6 ${imagesError && 'text-red-600'}`}>
                     Upload Images
                   </p>
                   <CardContent>
@@ -217,7 +217,7 @@ export default function AddProductPage() {
                     </label>
                     <input
                       onChange={(e) =>
-                        handleUpload(e, "image", setImageUploading, setImages)
+                        handleUpload(e, 'image', setImageUploading, setImages)
                       }
                       type="file"
                       id="dropzone-file"
@@ -264,16 +264,15 @@ export default function AddProductPage() {
           {isLoading ? (
             <div>
               <div className="flex items-center gap-2">
-                <span>Adding...</span>{" "}
+                <span>Adding...</span>{' '}
                 <Loader className="mr-2 h-4 w-4 animate-spin" />
               </div>
             </div>
           ) : (
-            "Add Product"
+            'Add Product'
           )}
         </Button>
       </form>
-      <Toaster position="top-center" />
     </Form>
   );
 }

@@ -1,6 +1,6 @@
-import React from "react";
-import UserTable from "./userTable";
-import { Toaster } from "sonner";
+import React from 'react';
+import UserTable from './userTable';
+import { Toaster } from 'sonner';
 
 export default function AllUsersPage() {
   return (

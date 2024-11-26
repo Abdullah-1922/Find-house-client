@@ -1,7 +1,7 @@
-import DashboardSidebar from "@/components/shared/dashboardMenubar";
-import DashboardNavbar from "@/components/shared/dashboardMenubar/dashboardNavbar";
-import React, { ReactNode } from "react";
-import { Toaster } from "sonner";
+import DashboardSidebar from '@/components/shared/dashboardMenubar';
+import DashboardNavbar from '@/components/shared/dashboardMenubar/dashboardNavbar';
+import React, { ReactNode } from 'react';
+import { Toaster } from 'sonner';
 
 interface TLayoutProps {
   children: ReactNode;
