@@ -1,8 +1,8 @@
-import { Card, CardContent } from '@/components/ui/card';
-import Image from 'next/image';
-import React from 'react';
+import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
+import React from "react";
 
-export default function FloorPlan() {
+export default function FloorPlan({ image }: { image: string }) {
   return (
     <Card className="w-full">
       <CardContent className="p-6">
@@ -13,9 +13,7 @@ export default function FloorPlan() {
         <div className="space-y-6">
           {/* Property Details Section */}
           <Image
-            src={
-              'https://code-theme.com/html/findhouses/images/bg/floor-plan-1.png'
-            }
+            src={image}
             alt="floorImage"
             width={1200}
             height={1200}

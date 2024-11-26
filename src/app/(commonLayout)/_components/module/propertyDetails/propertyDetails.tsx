@@ -2,8 +2,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Check } from "lucide-react";
 
 interface PropertyDetailsProps {
-  details?: {
-    id: string;
+  details: {
+    _id: string;
     type: string;
     status: string;
     price: number;
@@ -17,28 +17,8 @@ interface PropertyDetailsProps {
 }
 
 export default function PropertyDetails({
-  details = {
-    id: "V254680",
-    type: "House",
-    status: "For Sale",
-    price: 230000,
-    rooms: 6,
-    bedrooms: 7,
-    bath: 4,
-    garages: 2,
-    age: "0-10",
-  },
-  amenities = [
-    "Air Cond",
-    "Balcony",
-    "Internet",
-    "Dishwasher",
-    "Bedding",
-    "Cable TV",
-    "Parking",
-    "Pool",
-    "Fridge",
-  ],
+  details,
+  amenities,
 }: PropertyDetailsProps) {
   return (
     <Card className="w-full">
@@ -55,7 +35,7 @@ export default function PropertyDetails({
                 <div className="text-sm text-muted-foreground">
                   Property ID:
                 </div>
-                <div className="font-medium">{details.id}</div>
+                <div className="font-medium">{details._id}</div>
               </div>
               <div className="space-y-1">
                 <div className="text-sm text-muted-foreground">
@@ -109,7 +89,7 @@ export default function PropertyDetails({
               <div className="h-0.5 w-12 bg-gray-800 mt-1" />
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {amenities.map((amenity, index) => (
+              {amenities?.map((amenity, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <div className="flex items-center justify-center w-5 h-5 rounded-sm bg-gray-800/10">
                     <Check className="w-4 h-4 text-gray-800" />

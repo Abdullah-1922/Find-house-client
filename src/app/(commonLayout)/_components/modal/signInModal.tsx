@@ -24,10 +24,10 @@ import { useUser } from '@/hooks/user.hook';
 export default function SignInModal() {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({
-    // email: 'admin@gmail.com',
-    // password: 'Admin123@',
-    email: 'rijwanjannat10@gmail.com',
-    password: 'A123456@',
+    email: 'admin@gmail.com',
+    password: 'Admin123@',
+    // email: "rijwanjannat10@gmail.com",
+    // password: "A123456@",
     remember: false,
   });
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);

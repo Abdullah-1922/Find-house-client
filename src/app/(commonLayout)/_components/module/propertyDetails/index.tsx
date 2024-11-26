@@ -1,21 +1,21 @@
-'use client';
-import React from 'react';
-import PropertyCarousel from './propertyCarousel';
-import CalenderSchedule from '../agencies/CalerderSchedule';
-import PropertyDetails from './propertyDetails';
-import PropertyDescription from './propertyDescription';
-import AgentInformation from './agentInformation';
-import FloorPlan from './floorPlan';
-import PropertyVideo from './propertyVideo';
-import FeaturedProperties from '../agencies/FeatureProperties';
-import ResentProperties from '../agencies/ResentProperties';
-import SpecialOfTheDay from './specialOfTheDay';
-import ProperLocation from './propertyLocation';
-import PopularTags from './PopularTags';
-import ResentPropertySlider from '@/app/(commonLayout)/_components/module/homeMap/resentPropertySlider';
-import { useGetSinglePropertyQuery } from '@/redux/api/features/property/propertyApi';
-import { TProperty } from '@/types';
-import Spinner from '@/components/ui/spinner';
+"use client";
+import React from "react";
+import PropertyCarousel from "./propertyCarousel";
+import CalenderSchedule from "../agencies/CalerderSchedule";
+import PropertyDetails from "./propertyDetails";
+import PropertyDescription from "./propertyDescription";
+import AgentInformation from "./agentInformation";
+import FloorPlan from "./floorPlan";
+import PropertyVideo from "./propertyVideo";
+import FeaturedProperties from "../agencies/FeatureProperties";
+import ResentProperties from "../agencies/ResentProperties";
+import SpecialOfTheDay from "./specialOfTheDay";
+import ProperLocation from "./propertyLocation";
+import PopularTags from "./PopularTags";
+import ResentPropertySlider from "@/app/(commonLayout)/_components/module/homeMap/resentPropertySlider";
+import { useGetSinglePropertyQuery } from "@/redux/api/features/property/propertyApi";
+import { TProperty, TUser } from "@/types";
+import Spinner from "@/components/ui/spinner";
 
 export default function Property({ propertyId }: { propertyId: string }) {
   const { data, isLoading } = useGetSinglePropertyQuery(propertyId);
@@ -24,7 +24,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
   }
   const property = data?.data as TProperty;
   const {
-    id,
+    _id,
     title,
     description,
     features,
@@ -39,9 +39,10 @@ export default function Property({ propertyId }: { propertyId: string }) {
     videoUrl,
     images,
     contactInfo,
+    floorPlanImage,
   } = property;
   const propertyDetails = {
-    id,
+    _id,
     type,
     status,
     price,
@@ -54,17 +55,18 @@ export default function Property({ propertyId }: { propertyId: string }) {
 
   const slideImages = images.map((image) => ({
     src: image,
-    alt: 'image',
+    alt: "image",
   }));
 
+  const { firstName, secondName, email, image } = property.author;
+
   const agent = {
-    name: contactInfo.name,
+    name: `${firstName} ${secondName}`,
     title: contactInfo.userName,
-    address: location.address,
+    address: `${location.city},  ${location.country}`,
     phone: contactInfo.phone as string,
-    email: contactInfo.email as string,
-    image:
-      'https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg',
+    email,
+    image,
   };
   return (
     <div>
@@ -81,7 +83,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
               location={`${location.address}, ${location.city},  ${location.country}`}
             />
             <PropertyDetails details={propertyDetails} amenities={features} />
-            <FloorPlan />
+            <FloorPlan image={floorPlanImage[0]} />
             <PropertyVideo thumbnail={images[0]} videoUrl={videoUrl} />
             <ProperLocation
               Longitude={Number(location.longitude)}
