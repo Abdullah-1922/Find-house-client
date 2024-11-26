@@ -21,7 +21,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tolltip';
-import { useEffect } from 'react';
 import { useUser } from '@/hooks/user.hook';
 
 export default function UserProfileDropdown() {
@@ -39,7 +38,11 @@ export default function UserProfileDropdown() {
                 className="relative h-[45px] w-40 space-x-2 rounded-full border hover:border-gray-300 hover:bg-gray-50/50  bg-gray-50/40"
               >
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={user?.image} alt="User profile image" />
+                  <AvatarImage
+                    className="object-cover"
+                    src={user?.image}
+                    alt="User profile image"
+                  />
                   <AvatarFallback>{user?.firstName.slice(0, 1)}</AvatarFallback>
                 </Avatar>
                 <p
