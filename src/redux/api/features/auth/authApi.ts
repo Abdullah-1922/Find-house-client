@@ -5,7 +5,6 @@ const blogApi = baseApi.injectEndpoints({
     // signup by email
     signup: builder.mutation({
       query: (userData) => {
-        console.log(userData);
         return {
           url: `/auth/signup/email`,
           method: 'POST',
@@ -16,7 +15,6 @@ const blogApi = baseApi.injectEndpoints({
     // Login by email
     login: builder.mutation({
       query: (userData) => {
-        console.log(userData);
         return {
           url: `/auth/login/email`,
           method: 'POST',
@@ -24,6 +22,20 @@ const blogApi = baseApi.injectEndpoints({
         };
       },
     }),
+    // change password
+    changePassword: builder.mutation({
+      query: (userData) => {
+        return {
+          url: `/auth/change-password`,
+          method: 'POST',
+          body: userData,
+        };
+      },
+    }),
   }),
 });
-export const { useSignupMutation, useLoginMutation } = blogApi;
+export const {
+  useSignupMutation,
+  useLoginMutation,
+  useChangePasswordMutation,
+} = blogApi;

@@ -31,7 +31,6 @@ const userApi = baseApi.injectEndpoints({
     }),
     updateUser: builder.mutation({
       query: (data) => {
-        console.log('Data being sent to backend:', data);
         return {
           url: `/users/${data.id}`,
           method: 'PUT',

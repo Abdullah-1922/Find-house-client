@@ -16,7 +16,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import SocialLogin from '../module/signup/socialLogin';
-import { useLoginMutation } from '@/redux/api/features/auth/auth';
+import { useLoginMutation } from '@/redux/api/features/auth/authApi';
 import { toast, Toaster } from 'sonner';
 import Cookies from 'js-cookie';
 import { useUser } from '@/hooks/user.hook';
@@ -24,10 +24,10 @@ import { useUser } from '@/hooks/user.hook';
 export default function SignInModal() {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({
-    email: 'admin@gmail.com',
-    password: 'Admin123@',
-    // email: "rijwanjannat10@gmail.com",
-    // password: "A123456@",
+    // email: 'admin@gmail.com',
+    // password: 'Admin123@',
+    email: 'rijwanjannat10@gmail.com',
+    password: 'A123456@',
     remember: false,
   });
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);

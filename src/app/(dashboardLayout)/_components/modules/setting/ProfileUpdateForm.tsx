@@ -123,7 +123,8 @@ export function ProfileUpdateForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className="flex justify-end">
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-bold">Update Your Profile</h1>
           <Button
             type="submit"
             variant="default"
@@ -139,7 +140,9 @@ export function ProfileUpdateForm() {
             name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">First Name</FormLabel>
+                <FormLabel className="font-semibold text-sm">
+                  First Name
+                </FormLabel>
                 <FormControl>
                   <Input
                     className="w-full h-10"
@@ -156,7 +159,9 @@ export function ProfileUpdateForm() {
             name="secondName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">Second Name</FormLabel>
+                <FormLabel className="font-semibold text-sm">
+                  Second Name
+                </FormLabel>
                 <FormControl>
                   <Input className="w-full h-10" placeholder="Doe" {...field} />
                 </FormControl>
@@ -171,7 +176,7 @@ export function ProfileUpdateForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">Email</FormLabel>
+                <FormLabel className="font-semibold text-sm">Email</FormLabel>
                 <FormControl>
                   <Input
                     className="w-full h-10"
@@ -189,7 +194,7 @@ export function ProfileUpdateForm() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">Phone</FormLabel>
+                <FormLabel className="font-semibold text-sm">Phone</FormLabel>
                 <FormControl>
                   <Input
                     className="w-full h-10"
@@ -208,7 +213,9 @@ export function ProfileUpdateForm() {
             name="location"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">Location</FormLabel>
+                <FormLabel className="font-semibold text-sm">
+                  Location
+                </FormLabel>
                 <FormControl>
                   <Input
                     className="w-full h-10"
@@ -225,7 +232,9 @@ export function ProfileUpdateForm() {
             name="profileImage"
             render={() => (
               <FormItem>
-                <FormLabel className="font-semibold">Profile Image</FormLabel>
+                <FormLabel className="font-semibold text-sm">
+                  Profile Image
+                </FormLabel>
                 <div className="space-y-2">
                   <label
                     htmlFor="profileImageUpload"
@@ -270,7 +279,6 @@ export function ProfileUpdateForm() {
           />
         </div>
       </form>
-      <Toaster />
     </Form>
   );
 }
