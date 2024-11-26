@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { TUser } from '../user/user.type';
-
 export type PropertyStatus = 'active' | 'non-active';
 
 export type PropertyCategory = 'sell' | 'rent';

@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import BestSeller from './bestSeller';
-import LightGallery from 'lightgallery/react';
-import 'lightgallery/css/lightgallery.css';
-import 'lightgallery/css/lg-zoom.css';
-import 'lightgallery/css/lg-thumbnail.css';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { useGetSingleProductQuery } from '@/redux/api/features/product/productApi';
-import { TProduct } from '@/types';
-import { ProductSearch } from './productSearch';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { ProductReviews } from './productReview';
+import { Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import BestSeller from "./bestSeller";
+import LightGallery from "lightgallery/react";
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { useGetSingleProductQuery } from "@/redux/api/features/product/productApi";
+import { TProduct } from "@/types";
+import { ProductSearch } from "./productSearch";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ProductReviews } from "./productReview";
 
 export default function ProductDetails({ productId }: { productId: string }) {
   const { data: productData } = useGetSingleProductQuery(productId);
@@ -100,8 +100,8 @@ export default function ProductDetails({ productId }: { productId: string }) {
                         key={i}
                         className={`w-4 h-4 ${
                           i < singleProduct.rating
-                            ? 'text-yellow-400'
-                            : 'text-gray-700'
+                            ? "text-yellow-400"
+                            : "text-gray-700"
                         }`}
                       />
                     ))}

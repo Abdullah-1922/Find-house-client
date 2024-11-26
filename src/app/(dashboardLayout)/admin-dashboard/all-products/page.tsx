@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Delete, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -10,44 +10,58 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useGetAllPropertiesQuery } from "@/redux/api/features/property/propertyApi";
-import { TProduct, TProperty } from "@/types";
+import { TProduct } from "@/types";
 import { format } from "date-fns";
 import { useState } from "react";
 import Spinner from "@/components/ui/spinner";
 import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
 import Link from "next/link";
-import { useGetAllProductsQuery } from "@/redux/api/features/product/productApi";
-
-interface Property {
-  id: number;
-  name: string;
-  address: string;
-  rating: number;
-  reviews: number;
-  dateAdded: string;
-  views: number;
-  imageUrl: string;
-}
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+} from "@/redux/api/features/product/productApi";
+import { PopConfirm } from "@/components/ui/pop-confirm";
+import { toast } from "sonner";
+import Nodata from "@/components/ui/noData";
 
 export default function AllProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [deleteProduct] = useDeleteProductMutation();
   const limit = 5;
-  const { data, isFetching } = useGetAllProductsQuery(
+
+  const { data, isLoading } = useGetAllProductsQuery(
     `limit=${limit}&page=${currentPage}`
   );
   const productData = data?.data;
 
-  if (isFetching) return <Spinner className="h-[400px]" />;
-
   // handle pagination
   const meta = data?.meta;
   const totalPages = meta?.totalPage;
-  console.log("meta", meta);
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     console.log("Selected Page:", page);
   };
+
+  // handle delete product
+  const handleDeleteProduct = async (id: string) => {
+    const loadingToast = toast.loading("Product deleting...");
+    const res = await deleteProduct(id);
+
+    if (res?.data?.success) {
+      toast.success("Product Deleted Successfully", {
+        id: loadingToast,
+      });
+    } else {
+      toast.error("Failed to delete product", {
+        id: loadingToast,
+      });
+    }
+  };
+
+  if (isLoading) return <Spinner className="h-[600px]" />;
+  if (productData.length === 0) {
+    return <Nodata />;
+  }
 
   return (
     <div className="space-y-6 bg-white rounded-md border p-5">
@@ -117,7 +131,7 @@ export default function AllProductsPage() {
                 </TableCell>
                 <TableCell className="py-5">
                   <div className="flex gap-3 items-center justify-end">
-                    <Link href={`/edit-property/${product._id}`}>
+                    <Link href={`/admin-dashboard/edit-product/${product._id}`}>
                       <Button
                         variant="outline"
                         className="text-green-600 hover:text-green-700"
@@ -126,13 +140,10 @@ export default function AllProductsPage() {
                         Edit
                       </Button>
                     </Link>
-                    <Button
-                      variant="outline"
-                      className="text-red-600 hover:text-red-700"
-                      size="sm"
-                    >
-                      <Delete />
-                    </Button>
+                    <PopConfirm
+                      name={"product"}
+                      onConfirm={() => handleDeleteProduct(product._id)}
+                    />
                   </div>
                 </TableCell>
               </TableRow>

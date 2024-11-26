@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Delete, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -11,13 +11,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useGetAllPropertiesQuery } from "@/redux/api/features/property/propertyApi";
+import {
+  useDeletePropertyMutation,
+  useGetAllPropertiesQuery,
+} from "@/redux/api/features/property/propertyApi";
 import { TProperty } from "@/types";
 import { format } from "date-fns";
 import { useState } from "react";
 import Spinner from "@/components/ui/spinner";
 import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
 import Link from "next/link";
+import { toast } from "sonner";
+import { PopConfirm } from "@/components/ui/pop-confirm";
+import Nodata from "@/components/ui/noData";
 
 interface Property {
   id: number;
@@ -31,6 +37,7 @@ interface Property {
 }
 
 export default function PropertiesTable() {
+  const [deleteProperty] = useDeletePropertyMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
   const { data, isFetching } = useGetAllPropertiesQuery(
@@ -58,6 +65,26 @@ export default function PropertiesTable() {
     setCurrentPage(page);
     console.log("Selected Page:", page);
   };
+
+  // handle delete property
+  const handleDeleteProperty = async (id: string) => {
+    const loadingToast = toast.loading("Property deleting...");
+    const res = await deleteProperty(id);
+
+    if (res?.data?.success) {
+      toast.success("Property Deleted Successfully", {
+        id: loadingToast,
+      });
+    } else {
+      toast.error("Failed to delete property", {
+        id: loadingToast,
+      });
+    }
+  };
+
+  if (properties.length === 0) {
+    return <Nodata />;
+  }
 
   return (
     <div className="w-full">
@@ -132,13 +159,12 @@ export default function PropertiesTable() {
                       Edit
                     </Button>
                   </Link>
-                  <Button
-                    variant="outline"
-                    className="text-red-600 hover:text-red-700"
-                    size="sm"
-                  >
-                    <Delete />
-                  </Button>
+                  <PopConfirm
+                    name={"property"}
+                    onConfirm={() =>
+                      handleDeleteProperty(property.id.toString())
+                    }
+                  />
                 </div>
               </TableCell>
             </TableRow>

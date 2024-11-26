@@ -31,7 +31,6 @@ const propertyApi = baseApi.injectEndpoints({
         }),
         createProperty: builder.mutation({
             query: (body) => {
-                console.log('body', body);
                 return {
                     url: "/property",
                     method: "POST",
