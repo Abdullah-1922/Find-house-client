@@ -1,10 +1,10 @@
-import Image from "next/image";
-import icon from "@/../public/assets/icon/no data.png";
+import Image from 'next/image';
+import icon from '@/../public/assets/icon/no data.png';
 
 const Nodata = ({ className }: { className?: string }) => {
   return (
     <div
-      className={`h-[400px] flex items-center justify-center text-center ${className}`}
+      className={`h-screen md:h-[70vh] flex items-center justify-center w-full ${className}`}
     >
       <div>
         <Image

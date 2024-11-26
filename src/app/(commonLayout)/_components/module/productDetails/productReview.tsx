@@ -31,11 +31,17 @@ import {
 import { useUser } from '@/hooks/user.hook';
 import { useState } from 'react';
 
-export function ProductReviews({ productId }: { productId: string }) {
+export function ProductReviews({
+  productId,
+  allProductReviews,
+  refetch,
+}: {
+  productId: string;
+  allProductReviews: TProductReview[];
+  refetch: any;
+}) {
   const [rating, setRating] = useState(0);
   const { user } = useUser();
-  const { data: productReviewData } = useGetAllProductReviewsQuery(productId);
-  const allProductReviews = productReviewData?.data as TProductReview[];
 
   // For editing and deleting reviews
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -62,6 +68,7 @@ export function ProductReviews({ productId }: { productId: string }) {
       };
       await createProductReviewFn(reviewData).unwrap();
       setEditedComment('');
+      refetch();
       setRating(0);
       console.log('Review created successfully');
     } catch (error) {
@@ -80,6 +87,7 @@ export function ProductReviews({ productId }: { productId: string }) {
         setIsEditOpen(false);
         setEditedComment('');
         setRating(0);
+        refetch();
         setSelectedReviewId(null);
         console.log('Review updated successfully');
       } catch (error) {
@@ -94,6 +102,7 @@ export function ProductReviews({ productId }: { productId: string }) {
       try {
         await deleteProductReviewFn(selectedReviewId).unwrap();
         setIsDeleteOpen(false);
+        refetch();
         setSelectedReviewId(null);
         console.log('Review deleted successfully');
       } catch (error) {
