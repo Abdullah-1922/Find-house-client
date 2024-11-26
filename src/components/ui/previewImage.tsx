@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import { Loader, Trash2 } from 'lucide-react';
+import { Loader, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { toast } from 'sonner';
@@ -42,10 +42,10 @@ const PreviewImage = ({
         />
       </a>
       {!loading && image && (
-        <Trash2
+        <X
           onClick={handleDelete}
-          className="bg-red-600 p-2 rounded-md text-white absolute top-3 right-3 cursor-pointer"
-          size={35}
+          className="bg-gray-800 hover:bg-gray-900 p-2 rounded-full text-white absolute top-3 right-3 cursor-pointer"
+          size={30}
         />
       )}
       {loading && (

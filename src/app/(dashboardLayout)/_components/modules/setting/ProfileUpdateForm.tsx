@@ -134,149 +134,156 @@ export function ProfileUpdateForm() {
             {isLoading ? 'Saving...' : 'Save'}
           </Button>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-semibold text-sm">
-                  First Name
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    className="w-full h-10"
-                    placeholder="John"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="secondName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-semibold text-sm">
-                  Second Name
-                </FormLabel>
-                <FormControl>
-                  <Input className="w-full h-10" placeholder="Doe" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-semibold text-sm">Email</FormLabel>
-                <FormControl>
-                  <Input
-                    className="w-full h-10"
-                    type="email"
-                    placeholder="john.doe@example.com"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-semibold text-sm">Phone</FormLabel>
-                <FormControl>
-                  <Input
-                    className="w-full h-10"
-                    placeholder="+1 (555) 123-4567"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
-            control={form.control}
-            name="location"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-semibold text-sm">
-                  Location
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    className="w-full h-10"
-                    placeholder="New York, NY"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="profileImage"
-            render={() => (
-              <FormItem>
-                <FormLabel className="font-semibold text-sm">
-                  Profile Image
-                </FormLabel>
-                <div className="space-y-2">
-                  <label
-                    htmlFor="profileImageUpload"
-                    className="border border-gray-400 block border-dashed rounded-lg h-10 text-center mx-auto cursor-pointer"
-                  >
-                    <input
-                      type="file"
-                      id="profileImageUpload"
-                      accept="image/*"
-                      onChange={(e) =>
-                        handleProfileImageUpload(
-                          e,
-                          setProfileImage,
-                          setUploading
-                        )
-                      }
-                      className="w-full hidden"
+
+        <div className="flex flex-col lg:flex-row w-full gap-5">
+          <div className="flex flex-col gap-6 w-full">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold text-sm">
+                    First Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-full h-10"
+                      placeholder="John"
+                      {...field}
                     />
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      Click Here To Upload
-                    </p>
-                  </label>
-                  {uploading && (
-                    <div className="max-h-[300px] min-h-[120px] w-[200px] animate-pulse rounded-lg bg-black/50 flex items-center justify-center">
-                      <Loader
-                        className="animate-spin text-white/90"
-                        size={30}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="secondName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold text-sm">
+                    Second Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-full h-10"
+                      placeholder="Doe"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold text-sm">
+                    Location
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-full h-10"
+                      placeholder="New York, NY"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex items-center justify-center w-full">
+            <FormField
+              control={form.control}
+              name="profileImage"
+              render={() => (
+                <FormItem>
+                  <FormLabel className="font-semibold text-sm">
+                    Profile Image
+                  </FormLabel>
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="profileImageUpload"
+                      className="border border-gray-400 block border-dashed rounded-lg h-10 text-center mx-auto cursor-pointer"
+                    >
+                      <input
+                        type="file"
+                        id="profileImageUpload"
+                        accept="image/*"
+                        onChange={(e) =>
+                          handleProfileImageUpload(
+                            e,
+                            setProfileImage,
+                            setUploading
+                          )
+                        }
+                        className="w-full md:w-8/12 hidden"
                       />
-                    </div>
-                  )}
-                </div>
-                <div className="flex gap-4 pt-5 flex-wrap max-h-[300px] min-h-[120px] object-cover">
-                  {profileImage && (
-                    <PreviewImage
-                      image={profileImage}
-                      setImages={() => setProfileImage('')}
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Click Here To Upload
+                      </p>
+                    </label>
+                    {uploading && (
+                      <div className="max-h-[300px] min-h-[120px] w-[200px] animate-pulse rounded-lg bg-black/50 flex items-center justify-center">
+                        <Loader
+                          className="animate-spin text-white/90"
+                          size={30}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex gap-4 pt-5 flex-wrap max-h-[300px] min-h-[120px] object-cover">
+                    {profileImage && (
+                      <PreviewImage
+                        image={profileImage}
+                        setImages={() => setProfileImage('')}
+                      />
+                    )}
+                  </div>
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-6 w-full">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold text-sm">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-full h-10"
+                      type="email"
+                      placeholder="john.doe@example.com"
+                      {...field}
                     />
-                  )}
-                </div>
-              </FormItem>
-            )}
-          />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold text-sm">Phone</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="w-full h-10"
+                      placeholder="+1 (555) 123-4567"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
       </form>
     </Form>

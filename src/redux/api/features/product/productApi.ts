@@ -71,6 +71,43 @@ const productApi = baseApi.injectEndpoints({
         { type: 'SingleProduct', id },
       ],
     }),
+    addFavoriteProducts: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/product/add-favorite`,
+          method: 'PATCH',
+          body: data,
+        };
+      },
+      invalidatesTags: (result, error, { id }) => [
+        { type: 'MyFavoriteProduct', id },
+        'Product',
+      ],
+    }),
+    removeFavoriteProducts: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/product/remove-favorite`,
+          method: 'PATCH',
+          body: data,
+        };
+      },
+      invalidatesTags: (result, error, { id }) => [
+        { type: 'MyFavoriteProduct', id },
+        'Product',
+      ],
+    }),
+    getMyFavoriteProducts: builder.query({
+      query: (userId) => {
+        return {
+          url: `/product/add-bookmark-product/${userId}`,
+          method: 'GET',
+        };
+      },
+      providesTags: (result, error, userId) => [
+        { type: 'MyFavoriteProduct', id: userId },
+      ],
+    }),
   }),
 });
 
@@ -80,4 +117,7 @@ export const {
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useAddFavoriteProductsMutation,
+  useRemoveFavoriteProductsMutation,
+  useGetMyFavoriteProductsQuery,
 } = productApi;
