@@ -15,7 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eye, EyeOff } from 'lucide-react';
-import { useSignupMutation } from '@/redux/api/features/auth/auth';
+import { useSignupMutation } from '@/redux/api/features/auth/authApi';
 import { toast, Toaster } from 'sonner';
 import Cookies from 'js-cookie';
 import SocialLogin from './socialLogin';
@@ -184,7 +184,6 @@ export default function SignUpForm() {
           </Button>
         </form>
       </CardContent>
-      <Toaster />
     </Card>
   );
 }

@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import Link from 'next/link';
 import {
   Bed,
   Car,
@@ -24,6 +23,9 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import NextLink from 'next/link';
 import { TProperty } from '@/types';
+import { useAddFavoritePropertyMutation } from '@/redux/api/features/property/propertyApi';
+import { useUser } from '@/hooks/user.hook';
+import { toast } from 'sonner';
 
 interface PropertyCardProps {
   property: TProperty;
@@ -35,6 +37,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   isGridView,
 }) => {
   const [hovered, setHovered] = useState(false);
+  const { user } = useUser();
+
+  const [addFavoriteFn] = useAddFavoritePropertyMutation();
 
   return (
     <motion.div
@@ -124,6 +129,32 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                 </Button>
                 <Button variant="outline" size="icon" className="rounded-full">
                   <ImageIcon className="h-4 w-4" />
+                </Button>
+                <Button
+                  onClick={async () => {
+                    if (!user?._id || !property?._id) {
+                      return toast.error('User or property ID is missing');
+                    }
+
+                    try {
+                      await addFavoriteFn({
+                        userId: user._id,
+                        propertyId: property._id,
+                      });
+                      toast.success(
+                        'Added to favorite properties successfully'
+                      );
+                    } catch (error) {
+                      toast.error(
+                        'Failed to add favorite property. Please try again.'
+                      );
+                    }
+                  }}
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full z-10"
+                >
+                  <Heart className="h-4 w-4" />
                 </Button>
               </motion.div>
             </div>

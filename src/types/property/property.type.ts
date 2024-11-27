@@ -91,3 +91,16 @@ export type TProperty = {
   contactInfo: IContactInfo;
   [key: string]: any;
 };
+
+export type TSchedule = {
+  _id: string
+  user: UserProperty
+  agent: UserProperty
+  property: TProperty
+  date: string
+  time: string
+  isAccepted: boolean
+  createdAt: string
+  updatedAt: string
+  isApproved: boolean
+}

@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,16 +16,12 @@ import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SocialLogin from "../module/signup/socialLogin";
-import { useLoginMutation } from "@/redux/api/features/auth/auth";
+import { useLoginMutation } from "@/redux/api/features/auth/authApi";
 import { toast, Toaster } from "sonner";
 import Cookies from "js-cookie";
 import { useUser } from "@/hooks/user.hook";
 
-export default function SignInModal({
-  children,
-}: {
-  children?: React.ReactNode;
-}) {
+export default function SignInModal() {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({
     email: "admin@gmail.com",
@@ -101,20 +98,16 @@ export default function SignInModal({
     <div className="z-[9999]">
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          {children ? (
-            children
-          ) : (
-            <Button
-              className={`${
-                pathname === "/home-video"
-                  ? "text-white hover:text-white hover:bg-gray-50/20"
-                  : "text-black"
-              }`}
-              variant="ghost"
-            >
-              Sign In
-            </Button>
-          )}
+          <Button
+            className={`${
+              pathname === "/home-video"
+                ? "text-white hover:text-white hover:bg-gray-50/20"
+                : "text-black"
+            }`}
+            variant="ghost"
+          >
+            Sign In
+          </Button>
         </DialogTrigger>
         <DialogContent className="md:max-w-[425px]">
           <DialogHeader>

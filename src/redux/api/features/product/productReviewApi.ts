@@ -6,23 +6,21 @@ const productReviewApi = baseApi.injectEndpoints({
     getAllProductReviews: builder.query({
       query: (productId) => {
         return {
-          url: `/product-review/${productId}`,
+          url: `/product-review/${productId}?sort=-createdAt`,
           method: 'GET',
         };
       },
       providesTags: ['ProductReview'],
     }),
 
-    getSingleProductReview: builder.query({
+    getProductReview: builder.query({
       query: (id) => {
         return {
           url: `/product-review/${id}`,
           method: 'GET',
         };
       },
-      providesTags: (result, error, id) => [
-        { type: 'SingleProductReview', id },
-      ],
+      providesTags: ['ProductReview'],
     }),
     createProductReview: builder.mutation({
       query: (data) => {
@@ -42,10 +40,7 @@ const productReviewApi = baseApi.injectEndpoints({
           body: data?.data,
         };
       },
-      invalidatesTags: (result, error, { id }) => [
-        'ProductReview',
-        { type: 'SingleProductReview', id },
-      ],
+      invalidatesTags: ['ProductReview'],
     }),
     deleteProductReview: builder.mutation({
       query: (id: string) => {
@@ -54,17 +49,14 @@ const productReviewApi = baseApi.injectEndpoints({
           method: 'DELETE',
         };
       },
-      invalidatesTags: (result, error, id) => [
-        'ProductReview',
-        { type: 'SingleProductReview', id },
-      ],
+      invalidatesTags: ['ProductReview'],
     }),
   }),
 });
 
 export const {
   useGetAllProductReviewsQuery,
-  useGetSingleProductReviewQuery,
+  useGetProductReviewQuery,
   useCreateProductReviewMutation,
   useUpdateProductReviewMutation,
   useDeleteProductReviewMutation,

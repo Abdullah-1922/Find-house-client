@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { Star } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -11,53 +10,79 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import {
-  useDeletePropertyMutation,
-  useGetAllPropertiesQuery,
   useGetAllSChedulesQuery,
+  useMakeAcceptedMutation,
+  useMakeApproveMutation,
 } from "@/redux/api/features/property/propertyApi";
-import { TProperty } from "@/types";
-import { format } from "date-fns";
+import { TSchedule } from "@/types";
+import { format, parse } from "date-fns";
 import { useState } from "react";
 import Spinner from "@/components/ui/spinner";
 import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
-import Link from "next/link";
-import { toast } from "sonner";
-import { PopConfirm } from "@/components/ui/pop-confirm";
 import Nodata from "@/components/ui/noData";
+import { useUser } from "@/hooks/user.hook";
+import { toast } from "sonner";
 
-interface Property {
-  id: number;
-  name: string;
-  address: string;
-  rating: number;
-  reviews: number;
+interface Schedule {
+  id: string;
+  candidate: string;
+  candidateEmail: string;
+  candidateImg: string;
+  agent: string;
+  date: string;
+  time: string;
   dateAdded: string;
-  views: number;
-  imageUrl: string;
+  status: string;
+  statusText: string;
 }
 
 const SchedulePage = () => {
-  const [deleteProperty] = useDeletePropertyMutation();
+  const { user } = useUser();
+  const [makeApprove] = useMakeApproveMutation();
+  const [makeAccepted] = useMakeAcceptedMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
-  const { data, isFetching } = useGetAllPropertiesQuery(
-    `limit=${limit}&page=${currentPage}`
+  const { data, isLoading } = useGetAllSChedulesQuery(
+    `limit=${limit}&page=${currentPage}${
+      user?.role === "agent" && `&agent=${user?._id}&isApproved=${true}`
+    }`,
+    { skip: user == undefined }
   );
-  const { data: schedules } = useGetAllSChedulesQuery(
-    `limit=${limit}&page=${currentPage}`
-  );
-  const scheduleData = schedules?.data;
-  console.log("scheduleData", scheduleData);
-  const properties = data?.data?.map((property: TProperty) => ({
-    id: property._id,
-    name: property.title,
-    address: property.location.address,
-    rating: property.rating,
-    reviews: property.feedback.length,
-    dateAdded: property.createdAt,
-    views: property.views,
-    imageUrl: property.images[0],
+  console.log("user", user?.role);
+
+  const scheduleData = data?.data;
+
+  const schedules = scheduleData?.map((schedule: TSchedule) => ({
+    id: schedule._id,
+    candidate: `${schedule.user.firstName} ${schedule.user.secondName}`,
+    candidateEmail: schedule.user.email,
+    candidateImg: schedule.user.image,
+    agent: `${schedule.agent.firstName} ${schedule.agent.secondName}`,
+    status:
+      schedule.isApproved && !schedule.isAccepted ? (
+        <p className="px-2 py-1 rounded-md border border-yellow-500 text-yellow-500 inline-block text-sm">
+          Approved
+        </p>
+      ) : schedule.isAccepted ? (
+        <p className="px-2 py-1 rounded-md border border-green-500 text-green-500 inline-block text-sm">
+          Accepted
+        </p>
+      ) : (
+        <p className="px-2 py-1 rounded-md border border-gray-400 text-gray-400 inline-block text-sm">
+          Pending
+        </p>
+      ),
+    statusText:
+      schedule.isApproved && !schedule.isAccepted
+        ? "approved"
+        : schedule.isAccepted
+        ? "accepted"
+        : "pending",
+    date: schedule.date,
+    time: parse(schedule.time, "HH:mm", new Date()),
+    dateAdded: schedule.createdAt,
   }));
+  console.log("properties", schedules);
 
   // handle pagination
   const meta = data?.meta;
@@ -67,24 +92,27 @@ const SchedulePage = () => {
     setCurrentPage(page);
   };
 
-  // handle delete property
-  const handleDeleteProperty = async (id: string) => {
-    const loadingToast = toast.loading("Property deleting...");
-    const res = await deleteProperty(id);
-
-    if (res?.data?.success) {
-      toast.success("Property Deleted Successfully", {
-        id: loadingToast,
-      });
-    } else {
-      toast.error("Failed to delete property", {
-        id: loadingToast,
-      });
+  const handleApprove = async (id: string) => {
+    try {
+      const res = await makeApprove({ id, isApproved: true });
+      console.log("res", res);
+      toast.success("Schedule approved successfully");
+    } catch {
+      toast.error("Failed to approve schedule");
+    }
+  };
+  const handleAccept = async (id: string) => {
+    try {
+      const res = await makeAccepted({ id, isAccepted: true });
+      console.log("res", res);
+      toast.success("Schedule accepted successfully");
+    } catch {
+      toast.error("Failed to accept schedule");
     }
   };
 
-  if (isFetching) return <Spinner className="h-[600px]" />;
-  if (properties.length === 0) {
+  if (isLoading) return <Spinner className="h-[600px]" />;
+  if (schedules?.length === 0) {
     return <Nodata />;
   }
 
@@ -98,24 +126,26 @@ const SchedulePage = () => {
           <Table>
             <TableHeader className="bg-gray-100">
               <TableRow>
-                <TableHead colSpan={2}>Property</TableHead>
-                <TableHead>Date Added</TableHead>
-                <TableHead>Views</TableHead>
+                <TableHead colSpan={2}>Candidate</TableHead>
+                <TableHead>Date Requested</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Time</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {properties?.map((property: Property, index: number) => (
+              {schedules?.map((schedule: Schedule, index: number) => (
                 <TableRow
-                  key={property.id}
+                  key={schedule.id}
                   className={`${index % 2 === 0 ? "bg-muted/50" : ""}`}
                 >
                   <TableCell colSpan={2} className="py-5">
                     <div className="flex items-start gap-4">
                       <div className="relative h-[70px] w-24 overflow-hidden rounded-lg">
                         <Image
-                          src={property.imageUrl}
-                          alt={property.name}
+                          src={schedule.candidateImg}
+                          alt={schedule.candidate}
                           fill
                           className="object-cover"
                           sizes="80px"
@@ -128,50 +158,47 @@ const SchedulePage = () => {
                       </div>
                       <div className="space-y-1">
                         <h3 className="font-medium leading-none">
-                          {property.name}
+                          {schedule.candidate}
                         </h3>
                         <p className="text-sm text-muted-foreground whitespace-nowrap">
-                          {property.address}
+                          {schedule.candidateEmail}
                         </p>
-                        <div className="flex items-center whitespace-nowrap gap-1">
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`h-4 w-4 ${
-                                i < property.rating
-                                  ? "fill-yellow-400 text-yellow-400"
-                                  : "fill-muted text-muted"
-                              }`}
-                            />
-                          ))}
-                          <span className="text-sm text-muted-foreground mt-1">
-                            ({property.reviews} Reviews)
-                          </span>
-                        </div>
                       </div>
                     </div>
                   </TableCell>
                   <TableCell className="py-5">
-                    {format(property.dateAdded, "dd MMM, yyyy")}
+                    {format(schedule.dateAdded, "dd MMM, yyyy")}
                   </TableCell>
-                  <TableCell className="py-5">{property.views}</TableCell>
+                  <TableCell className="py-5">
+                    {format(schedule.date, "dd MMM, yyyy")}
+                  </TableCell>
+                  <TableCell className="py-5">{schedule.status}</TableCell>
+                  <TableCell className="py-5">
+                    {format(schedule.time, "hh:mm a")}
+                  </TableCell>
                   <TableCell className="py-5">
                     <div className="flex gap-3 items-center justify-end">
-                      <Link href={`/edit-property/${property.id}`}>
+                      {user?.role === "admin" ? (
+                        schedule.statusText === "approved" ? null : (
+                          <Button
+                            onClick={() => handleApprove(schedule.id)}
+                            variant="outline"
+                            className="text-yellow-600 hover:text-yellow-600"
+                            size="sm"
+                          >
+                            Approve
+                          </Button>
+                        )
+                      ) : schedule.statusText === "accepted" ? null : (
                         <Button
+                          onClick={() => handleAccept(schedule.id)}
                           variant="outline"
-                          className="text-green-600 hover:text-green-700"
+                          className="text-green-600 hover:text-green-600"
                           size="sm"
                         >
-                          Edit
+                          Accept
                         </Button>
-                      </Link>
-                      <PopConfirm
-                        name={"property"}
-                        onConfirm={() =>
-                          handleDeleteProperty(property.id.toString())
-                        }
-                      />
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
