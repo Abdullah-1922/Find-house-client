@@ -6,11 +6,16 @@ import Cookies from 'js-cookie';
 
 const token = Cookies.get('accessToken');
 
+const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
+if (!process.env.NEXT_PUBLIC_API_URL) {
+  console.error('BASE_URL is not defined.');
+}
+
 // Define a service using a base URL and expected endpoints
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:5001/api/v2`,
+    baseUrl: baseUrl,
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
       if (token) {

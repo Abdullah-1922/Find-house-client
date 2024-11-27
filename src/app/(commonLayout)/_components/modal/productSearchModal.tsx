@@ -32,7 +32,7 @@ export function ProductSearchModal({
         <ScrollArea className="mt-4 max-h-[60vh]">
           {results && results.length > 0 ? (
             <ul className="space-y-2">
-              {results.map((product) => (
+              {results?.map((product) => (
                 <li key={product._id} className="py-2">
                   <Link
                     href={`/products/${product._id}`}
