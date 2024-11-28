@@ -52,10 +52,13 @@ export default function AllAgents() {
     `agent?limit=${ITEMS_PER_PAGE}&page=${currentPage}`
   );
 
+  const totalPages = meta?.totalPage || 0;
+
+
   // handle pagination
   const meta = agentData?.meta;
+  const totalPages = meta?.totalPage;
 
-  const totalPages = meta?.totalPage || 0;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
