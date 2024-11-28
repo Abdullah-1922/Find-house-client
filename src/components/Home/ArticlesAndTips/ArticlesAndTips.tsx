@@ -1,18 +1,10 @@
-
-import { TBlog } from "@/types/blog/blog.type";
-import BlogCard from "@/components/shared/card/BlogCard";
+import { TBlog } from '@/types/blog/blog.type';
+import BlogCard from '@/components/shared/card/BlogCard';
+import { useGetAllBlogsQuery } from '@/redux/api/features/blog/blogApi';
 
 const ArticlesAndTips = async () => {
-  let articles = [];
-
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/blog`,{cache: "no-cache"} );
-    const data = await response.json();
-    articles = data.data;
-  
-  } catch (error) {
-    console.log(error);
-  }
+  const { data: blogData, isLoading } = useGetAllBlogsQuery(undefined);
+  const allBlogs = blogData?.data;
 
   return (
     <div className="my-16">
@@ -22,8 +14,8 @@ const ArticlesAndTips = async () => {
       </div>
       <div className="flex justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
-          {articles.map((article:TBlog) => (
-           <BlogCard key={article._id} blog={article} />
+          {allBlogs.map((article: TBlog) => (
+            <BlogCard key={article._id} blog={article} />
           ))}
         </div>
       </div>

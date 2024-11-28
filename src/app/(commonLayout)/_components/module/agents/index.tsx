@@ -52,11 +52,10 @@ export default function AllAgents() {
     `agent?limit=${ITEMS_PER_PAGE}&page=${currentPage}`
   );
 
-  console.log(agentData);
-
   // handle pagination
   const meta = agentData?.meta;
-  const totalPages = meta?.totalPage;
+
+  const totalPages = meta?.totalPage || 0;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -180,7 +179,7 @@ export default function AllAgents() {
           )}
 
           {/* Pagination */}
-          {meta?.totalPage! > 1 && (
+          {totalPages > 1 && (
             <DynamicPagination
               currentPage={currentPage}
               totalPages={totalPages}

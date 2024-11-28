@@ -56,12 +56,14 @@ export default function UserTable({
       if (res.success) {
         toast.success('User role updated successfully', { id: loadingToast });
       }
-    } catch (error: any) {
-      toast.error(error?.data?.message || 'Failed to update user role', {
-        id: loadingToast,
-      });
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : 'Failed to update user role';
+      toast.error(message, { id: loadingToast });
     }
   };
+
+  const totalPages = meta?.totalPage ?? 0;
 
   return (
     <div className="w-full">
@@ -153,10 +155,10 @@ export default function UserTable({
 
       {users?.length === 0 ? <Nodata /> : ''}
 
-      {meta?.totalPage! > 1 && (
+      {totalPages > 1 && (
         <DynamicPagination
           currentPage={currentPage}
-          totalPages={meta?.totalPage!}
+          totalPages={totalPages}
           onPageChange={onPageChange}
         />
       )}

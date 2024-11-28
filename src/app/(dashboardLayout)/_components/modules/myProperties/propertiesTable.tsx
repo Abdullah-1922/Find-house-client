@@ -24,6 +24,8 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { PopConfirm } from "@/components/ui/pop-confirm";
 import Nodata from "@/components/ui/noData";
+import { useUser } from "@/hooks/user.hook";
+import { usePathname } from "next/navigation";
 
 interface Property {
   id: number;
@@ -37,12 +39,19 @@ interface Property {
 }
 
 export default function PropertiesTable() {
+  const { user } = useUser();
+  const params = usePathname();
   const [deleteProperty] = useDeletePropertyMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
-  const { data, isFetching } = useGetAllPropertiesQuery(
-    `limit=${limit}&page=${currentPage}`
-  );
+  let queryString = `limit=${limit}&page=${currentPage}`;
+  if (params.includes("my-properties")) {
+    queryString += `&author=${user?._id}`;
+  }
+
+  const { data, isFetching } = useGetAllPropertiesQuery(queryString, {
+    skip: user == undefined,
+  });
 
   if (isFetching) return <Spinner className="h-[400px]" />;
 
@@ -82,7 +91,7 @@ export default function PropertiesTable() {
     }
   };
 
-  if (properties.length === 0) {
+  if (properties?.length === 0) {
     return <Nodata />;
   }
 
