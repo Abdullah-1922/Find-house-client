@@ -22,7 +22,7 @@ export default function ProfileDetail() {
           <CardTitle className="mb-4">Profile</CardTitle>
           <hr />
         </CardHeader>
-        <CardContent className="flex gap-5 flex-col md:flex-row justify-between">
+        <CardContent className="flex gap-2 md:p-5 flex-col md:flex-row justify-between">
           <Spinner />
         </CardContent>
       </Card>
@@ -44,8 +44,8 @@ export default function ProfileDetail() {
         <CardTitle className="mb-4">Profile</CardTitle>
         <hr />
       </CardHeader>
-      <CardContent className="flex gap-5 flex-col md:flex-row justify-between">
-        <div className="flex flex-col items-start w-full gap-5">
+      <CardContent className="flex gap-2 md:p-5 flex-col md:flex-row justify-between">
+        <div className="flex flex-col items-start w-full gap-2 md:p-5">
           <div className="flex items-center justify-between gap-3 w-full">
             <div className="flex items-center space-x-4">
               <Avatar className="h-20 w-20">

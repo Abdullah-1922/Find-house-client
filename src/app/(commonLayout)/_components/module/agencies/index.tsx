@@ -173,8 +173,8 @@ export default function OurAgencies() {
         <h1 className="mb-8 text-3xl font-bold">Our Agencies</h1>
       </div>
 
-      <div className="flex gap-5 w-full">
-        <div className="flex flex-col gap-5 w-full">
+      <div className="flex gap-2 md:p-5 w-full">
+        <div className="flex flex-col gap-2 md:p-5 w-full">
           {/* Filters */}
           <div className="mb-6 flex flex-row items-center justify-between gap-4">
             <p className="text-muted-foreground">
@@ -324,7 +324,7 @@ export default function OurAgencies() {
           </Pagination>
         </div>
         {/* Sidebar Forms */}
-        <div className="flex flex-col gap-5 w-[50%]">
+        <div className="flex flex-col gap-2 md:p-5 w-[50%]">
           {/* Schedule Tour */}
           <CalenderSchedule agentId={''} propertyId={''} />
           {/* Request Inquiry */}

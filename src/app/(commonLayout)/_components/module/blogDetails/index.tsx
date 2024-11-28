@@ -55,7 +55,7 @@ export default function Blogs({ blogId }: { blogId: string }) {
         </div>
       ) : (
         <div className="max-w-7xl mx-auto px-2 lg:px-4">
-          <div className="flex gap-5 w-full my-8">
+          <div className="flex gap-2 md:p-5 w-full my-8">
             <div className="w-[70%]">
               <div className=" border rounded-md bg-white">
                 {/* Blog content */}
@@ -98,7 +98,7 @@ export default function Blogs({ blogId }: { blogId: string }) {
             </div>
 
             {/* Sidebar */}
-            <div className="flex flex-col gap-5 w-[30%] border rounded-md p-3 bg-white">
+            <div className="flex flex-col gap-2 md:p-5 w-[30%] border rounded-md p-3 bg-white">
               <div>
                 <h2 className="text-lg font-bold text-gray-900 mb-3">Search</h2>
                 <div className="flex items-center w-full h-10 relative">

@@ -65,7 +65,7 @@ const RecentProperties = () => {
                       }.jpg`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60" />
-                    <div className="absolute bottom-0 left-0 p-5 text-white">
+                    <div className="absolute bottom-0 left-0 p-2 md:p-5 text-white">
                       <h3 className="text-2xl font-bold">{property.title}</h3>
                       <p className="text-xl font-semibold">{property.price}</p>
                       <div className="mt-2 flex items-center gap-2 text-sm">

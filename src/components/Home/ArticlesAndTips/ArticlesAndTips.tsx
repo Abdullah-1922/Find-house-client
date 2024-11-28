@@ -1,9 +1,11 @@
+'use client';
+
 import { TBlog } from '@/types/blog/blog.type';
 import BlogCard from '@/components/shared/card/BlogCard';
 import { useGetAllBlogsQuery } from '@/redux/api/features/blog/blogApi';
 
-const ArticlesAndTips = async () => {
-  const { data: blogData, isLoading } = useGetAllBlogsQuery(undefined);
+const ArticlesAndTips = () => {
+  const { data: blogData, isLoading } = useGetAllBlogsQuery('?sort=-createdAt');
   const allBlogs = blogData?.data;
 
   return (
@@ -14,8 +16,8 @@ const ArticlesAndTips = async () => {
       </div>
       <div className="flex justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
-          {allBlogs.map((article: TBlog) => (
-            <BlogCard key={article._id} blog={article} />
+          {allBlogs?.map((article: TBlog) => (
+            <BlogCard key={article?._id} blog={article} />
           ))}
         </div>
       </div>

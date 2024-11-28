@@ -135,7 +135,7 @@ export function ProfileUpdateForm() {
           </Button>
         </div>
 
-        <div className="flex flex-col lg:flex-row w-full gap-5">
+        <div className="flex flex-col lg:flex-row w-full gap-2 md:p-5">
           <div className="flex flex-col gap-6 w-full">
             <FormField
               control={form.control}

@@ -17,12 +17,12 @@ const productApi = baseApi.injectEndpoints({
       providesTags: (result) => {
         return result
           ? [
-            { type: 'Product', id: 'LIST' },
-            ...result.data.map((product: TProduct) => ({
-              type: 'Product',
-              id: product._id,
-            })),
-          ]
+              { type: 'Product', id: 'LIST' },
+              ...result.data.map((product: TProduct) => ({
+                type: 'Product',
+                id: product._id,
+              })),
+            ]
           : [{ type: 'Product', id: 'LIST' }];
       },
     }),
@@ -97,6 +97,7 @@ const productApi = baseApi.injectEndpoints({
         'Product',
       ],
     }),
+
     getMyFavoriteProducts: builder.query({
       query: (userId) => {
         return {
@@ -108,15 +109,42 @@ const productApi = baseApi.injectEndpoints({
         { type: 'Product', id: userId },
       ],
     }),
-    createPayment: builder.mutation({
+
+    createOnlinePayment: builder.mutation({
       query: (bodyData) => {
+        console.log('bodyData=>', bodyData);
         return {
-          url: `/payments`,
+          url: `/payments/online`,
           method: 'POST',
           body: bodyData,
         };
       },
       invalidatesTags: (result, error, userId) => [
+        { type: 'Payments', id: userId },
+      ],
+    }),
+
+    createCashOnDeliveryPayment: builder.mutation({
+      query: (bodyData) => {
+        console.log('bodyData=>', bodyData);
+        return {
+          url: `/payments/cash-on-delivery`,
+          method: 'POST',
+          body: bodyData,
+        };
+      },
+      invalidatesTags: (result, error, userId) => [
+        { type: 'Payments', id: userId },
+      ],
+    }),
+    getMyProductPaymentsData: builder.query({
+      query: (id) => {
+        return {
+          url: `/payments/${id}`,
+          method: 'GET',
+        };
+      },
+      providesTags: (result, error, userId) => [
         { type: 'Payments', id: userId },
       ],
     }),
@@ -132,5 +160,7 @@ export const {
   useAddFavoriteProductsMutation,
   useRemoveFavoriteProductsMutation,
   useGetMyFavoriteProductsQuery,
-  useCreatePaymentMutation
+  useCreateOnlinePaymentMutation,
+  useCreateCashOnDeliveryPaymentMutation,
+  useGetMyProductPaymentsDataQuery,
 } = productApi;

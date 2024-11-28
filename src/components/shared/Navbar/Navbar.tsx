@@ -103,7 +103,7 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-            <div className="flex justify-center items-center gap-5">
+            <div className="flex justify-center items-center gap-2 md:p-5">
               <SignInModal />
               {user && <UserProfileDropdown />}
               <Link
@@ -111,7 +111,7 @@ const Navbar = () => {
                   user
                     ? `/${
                         user.role === 'user'
-                          ? `/user-dashboard`
+                          ? `user-dashboard`
                           : user.role === 'admin'
                           ? 'admin-dashboard'
                           : user.role === 'agent'

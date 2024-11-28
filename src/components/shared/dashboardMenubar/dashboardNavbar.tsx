@@ -9,7 +9,7 @@ const DashboardNavbar = () => {
     <>
       {/* Desktop View */}
       <div className="fixed top-0 lg:flex hidden z-[999] w-full text-gray-900">
-        <div className="menu-bar flex flex-row justify-between items-center bg-gray-800 gap-5 w-full mr-64 py-3 px-3">
+        <div className="menu-bar flex flex-row justify-between items-center bg-gray-800 gap-2 md:p-5 w-full mr-64 py-3 px-3">
           <div className="flex items-center gap-10">
             <ul className="px-2 space-x-4">
               <li>
