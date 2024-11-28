@@ -22,19 +22,20 @@ export default function ListGridProperties() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
-  const { data, isFetching } = useGetAllPropertiesQuery(
+  const { data } = useGetAllPropertiesQuery(
     `limit=${limit}&page=${currentPage}`
   );
 
   // handle pagination
   const meta = data?.meta;
-  const totalPages = meta?.totalPage;
+  const totalPages = meta?.totalPage || 0;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
   const properties = data?.data as TProperty[];
+
   return (
     <div className="max-w-7xl mx-auto px-2 md:px-4">
       <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -105,8 +106,8 @@ export default function ListGridProperties() {
             isGridView={isGridView}
           />
         ))}
+        {totalPages > 1 && (
 
-        {meta?.totalPage! > 1 && (
           <DynamicPagination
             currentPage={currentPage}
             totalPages={totalPages}
