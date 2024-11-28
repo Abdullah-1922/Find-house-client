@@ -1,17 +1,17 @@
-import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import Spinner from "@/components/ui/spinner";
-import { useGetAllPropertiesQuery } from "@/redux/api/features/property/propertyApi";
-import { TProperty } from "@/types";
-import Link from "next/link";
+} from '@/components/ui/carousel';
+import Spinner from '@/components/ui/spinner';
+import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
+import { TProperty } from '@/types';
+import Link from 'next/link';
 
 export default function FeaturedProperties() {
   const { data, isLoading } = useGetAllPropertiesQuery(`sort=views&limit=3`);
@@ -25,7 +25,7 @@ export default function FeaturedProperties() {
       <CardContent>
         <Carousel className="w-full">
           <CarouselContent>
-            {properties.map((property: TProperty) => (
+            {properties?.map((property: TProperty) => (
               <CarouselItem key={property.id}>
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
                   <Image

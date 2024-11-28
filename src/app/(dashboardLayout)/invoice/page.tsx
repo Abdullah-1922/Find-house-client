@@ -1,6 +1,9 @@
-import Container from '@/components/ui/container';
 import React from 'react';
-import Invoice from '../_components/modules/invoice';
+import Container from '@/components/ui/container';
+import dynamic from 'next/dynamic';
+const Invoice = dynamic(() => import('../_components/modules/invoice'), {
+  ssr: false,
+});
 
 export default function InvoicePage() {
   const demoData = {
@@ -21,7 +24,7 @@ export default function InvoicePage() {
   };
   return (
     <Container>
-      <Invoice {...demoData} />
+      {demoData ? <Invoice {...demoData} /> : <div>No Invoice Data</div>}
     </Container>
   );
 }

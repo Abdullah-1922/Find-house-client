@@ -23,6 +23,7 @@ import { toast } from 'sonner';
 import { useUser } from '@/hooks/user.hook';
 import { useState } from 'react';
 import { useGetAllProductReviewsQuery } from '@/redux/api/features/product/productReviewApi';
+import Spinner from '@/components/ui/spinner';
 
 export default function ProductDetails({ productId }: { productId: string }) {
   const { user } = useUser();
@@ -48,7 +49,7 @@ export default function ProductDetails({ productId }: { productId: string }) {
   );
 
   if (!singleProduct) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   const handleThumbnailClick = (image: string) => {

@@ -11,17 +11,20 @@ import Link from 'next/link';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Image from 'next/image';
 import { TProduct } from '@/types';
+import Spinner from '@/components/ui/spinner';
 
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
   results: TProduct[] | null;
+  isLoading: boolean;
 }
 
 export function ProductSearchModal({
   isOpen,
   onClose,
   results,
+  isLoading,
 }: SearchModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -32,7 +35,7 @@ export function ProductSearchModal({
         <ScrollArea className="mt-4 max-h-[60vh]">
           {results && results.length > 0 ? (
             <ul className="space-y-2">
-              {results.map((product) => (
+              {results?.map((product) => (
                 <li key={product._id} className="py-2">
                   <Link
                     href={`/products/${product._id}`}
@@ -63,6 +66,8 @@ export function ProductSearchModal({
           ) : (
             <p className="text-center text-gray-500">No results found.</p>
           )}
+
+          {isLoading && <Spinner className="size-10" />}
         </ScrollArea>
       </DialogContent>
     </Dialog>

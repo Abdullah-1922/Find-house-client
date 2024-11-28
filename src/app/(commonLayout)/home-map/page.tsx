@@ -1,12 +1,41 @@
-import IndustryLocation from '../_components/module/homeMap/IndustryLocation';
-import ResentPropertySlider from '../_components/module/homeMap/resentPropertySlider';
-import PropertyServices from '../_components/module/homeMap/propertyServicesParallax';
-import FeaturedProperties from '../_components/module/homeMap/featuredProperties';
-import MeetOurAgents from '../_components/module/homeMap/meetOurAgents';
-import LatestNews from '../_components/module/homeMap/latestNews';
-import HappyCustomers from '../_components/module/homeMap/happyCustomers';
-import DetailsParallax from '../_components/module/homeMap/detailsParallax';
-import PopularPlaces from '@/components/Home/PopularPlaces/PopularPlaces';
+import dynamic from 'next/dynamic';
+
+const IndustryLocation = dynamic(
+  () => import('../_components/module/homeMap/IndustryLocation'),
+  { ssr: false }
+);
+const ResentPropertySlider = dynamic(
+  () => import('../_components/module/homeMap/resentPropertySlider'),
+  { ssr: false }
+);
+const PropertyServices = dynamic(
+  () => import('../_components/module/homeMap/propertyServicesParallax'),
+  { ssr: false }
+);
+const FeaturedProperties = dynamic(
+  () => import('../_components/module/homeMap/featuredProperties'),
+  { ssr: false }
+);
+const MeetOurAgents = dynamic(
+  () => import('../_components/module/homeMap/meetOurAgents'),
+  { ssr: false }
+);
+const LatestNews = dynamic(
+  () => import('../_components/module/homeMap/latestNews'),
+  { ssr: false }
+);
+const HappyCustomers = dynamic(
+  () => import('../_components/module/homeMap/happyCustomers'),
+  { ssr: false }
+);
+const DetailsParallax = dynamic(
+  () => import('../_components/module/homeMap/detailsParallax'),
+  { ssr: false }
+);
+const PopularPlaces = dynamic(
+  () => import('@/components/Home/PopularPlaces/PopularPlaces'),
+  { ssr: false }
+);
 
 const HomeMap = () => {
   return (

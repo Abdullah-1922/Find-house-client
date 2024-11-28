@@ -48,7 +48,6 @@ const Invoice: React.FC<InvoiceProps> = ({
   const subTotal = price + vatAmount;
   const discountAmount = subTotal * (discountPercentage / 100);
   const grandTotal = subTotal - discountAmount;
-  const logo = 'https://code-theme.com/html/findhouses/images/logo.svg';
 
   const handlePrint = () => {
     if (invoiceRef.current) {

@@ -229,7 +229,7 @@ export default function OurAgencies() {
               isGridView ? 'md:grid-cols-2' : 'grid-cols-1'
             }`}
           >
-            {paginatedAgencies.map((agency) => (
+            {paginatedAgencies?.map((agency) => (
               <Card
                 key={agency.id}
                 className={`${isGridView ? 'flex flex-col' : 'flex flex-row'}`}
@@ -326,7 +326,7 @@ export default function OurAgencies() {
         {/* Sidebar Forms */}
         <div className="flex flex-col gap-5 w-[50%]">
           {/* Schedule Tour */}
-          <CalenderSchedule />
+          <CalenderSchedule agentId={''} propertyId={''} />
           {/* Request Inquiry */}
           <RequestInquiry />
           {/* Resent Properties */}

@@ -1,8 +1,7 @@
-import { getCurrentUser } from '@/utils/getCurrentUser';
 import Blogs from '../_components/module/blogs/Blogs';
 import Banner from '../_components/shared/banner';
 
-const BlogsPage = async () => {
+const BlogsPage = () => {
   return (
     <div>
       <Banner pageName="Blogs" />

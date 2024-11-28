@@ -32,7 +32,7 @@ export function BlogSearchModal({
         <ScrollArea className="mt-4 max-h-[60vh]">
           {results && results.length > 0 ? (
             <ul className="space-y-2">
-              {results.map((blog) => (
+              {results?.map((blog) => (
                 <li key={blog._id} className="py-2">
                   <Link
                     href={`/blog/${blog._id}`}

@@ -1,5 +1,5 @@
-"use client";
-import Image from "next/image";
+'use client';
+import Image from 'next/image';
 import {
   Table,
   TableBody,
@@ -7,21 +7,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
 import {
   useGetAllSChedulesQuery,
   useMakeAcceptedMutation,
   useMakeApproveMutation,
-} from "@/redux/api/features/property/propertyApi";
-import { TSchedule } from "@/types";
-import { format, parse } from "date-fns";
-import { useState } from "react";
-import Spinner from "@/components/ui/spinner";
-import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
-import Nodata from "@/components/ui/noData";
-import { useUser } from "@/hooks/user.hook";
-import { toast } from "sonner";
+} from '@/redux/api/features/property/propertyApi';
+import { TSchedule } from '@/types';
+import { format, parse } from 'date-fns';
+import { useState } from 'react';
+import Spinner from '@/components/ui/spinner';
+import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
+import Nodata from '@/components/ui/noData';
+import { useUser } from '@/hooks/user.hook';
+import { toast } from 'sonner';
 
 interface Schedule {
   id: string;
@@ -42,13 +42,15 @@ const SchedulePage = () => {
   const [makeAccepted] = useMakeAcceptedMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
-  const { data, isLoading } = useGetAllSChedulesQuery(
-    `limit=${limit}&page=${currentPage}${
-      user?.role === "agent" && `&agent=${user?._id}&isApproved=${true}`
-    }`,
-    { skip: user == undefined }
-  );
-  console.log("user", user?.role);
+
+  let queryString = `limit=${limit}&page=${currentPage}`;
+  if (user?.role === 'agent') {
+    queryString += `&agent=${user?._id}&isApproved=true`;
+  }
+
+  const { data, isLoading } = useGetAllSChedulesQuery(queryString, {
+    skip: user == undefined,
+  });
 
   const scheduleData = data?.data;
 
@@ -74,15 +76,14 @@ const SchedulePage = () => {
       ),
     statusText:
       schedule.isApproved && !schedule.isAccepted
-        ? "approved"
+        ? 'approved'
         : schedule.isAccepted
-        ? "accepted"
-        : "pending",
+        ? 'accepted'
+        : 'pending',
     date: schedule.date,
-    time: parse(schedule.time, "HH:mm", new Date()),
+    time: parse(schedule.time, 'HH:mm', new Date()),
     dateAdded: schedule.createdAt,
   }));
-  console.log("properties", schedules);
 
   // handle pagination
   const meta = data?.meta;
@@ -95,19 +96,19 @@ const SchedulePage = () => {
   const handleApprove = async (id: string) => {
     try {
       const res = await makeApprove({ id, isApproved: true });
-      console.log("res", res);
-      toast.success("Schedule approved successfully");
+      console.log('res', res);
+      toast.success('Schedule approved successfully');
     } catch {
-      toast.error("Failed to approve schedule");
+      toast.error('Failed to approve schedule');
     }
   };
   const handleAccept = async (id: string) => {
     try {
       const res = await makeAccepted({ id, isAccepted: true });
-      console.log("res", res);
-      toast.success("Schedule accepted successfully");
+      console.log('res', res);
+      toast.success('Schedule accepted successfully');
     } catch {
-      toast.error("Failed to accept schedule");
+      toast.error('Failed to accept schedule');
     }
   };
 
@@ -138,7 +139,7 @@ const SchedulePage = () => {
               {schedules?.map((schedule: Schedule, index: number) => (
                 <TableRow
                   key={schedule.id}
-                  className={`${index % 2 === 0 ? "bg-muted/50" : ""}`}
+                  className={`${index % 2 === 0 ? 'bg-muted/50' : ''}`}
                 >
                   <TableCell colSpan={2} className="py-5">
                     <div className="flex items-start gap-4">
@@ -152,7 +153,7 @@ const SchedulePage = () => {
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.src =
-                              "https://code-theme.com/html/findhouses/images/feature-properties/fp-1.jpg";
+                              'https://code-theme.com/html/findhouses/images/feature-properties/fp-1.jpg';
                           }}
                         />
                       </div>
@@ -167,19 +168,19 @@ const SchedulePage = () => {
                     </div>
                   </TableCell>
                   <TableCell className="py-5">
-                    {format(schedule.dateAdded, "dd MMM, yyyy")}
+                    {format(schedule.dateAdded, 'dd MMM, yyyy')}
                   </TableCell>
                   <TableCell className="py-5">
-                    {format(schedule.date, "dd MMM, yyyy")}
+                    {format(schedule.date, 'dd MMM, yyyy')}
                   </TableCell>
                   <TableCell className="py-5">{schedule.status}</TableCell>
                   <TableCell className="py-5">
-                    {format(schedule.time, "hh:mm a")}
+                    {format(schedule.time, 'hh:mm a')}
                   </TableCell>
                   <TableCell className="py-5">
                     <div className="flex gap-3 items-center justify-end">
-                      {user?.role === "admin" ? (
-                        schedule.statusText === "approved" ? null : (
+                      {user?.role === 'admin' ? (
+                        schedule.statusText === 'approved' ? null : (
                           <Button
                             onClick={() => handleApprove(schedule.id)}
                             variant="outline"
@@ -189,7 +190,7 @@ const SchedulePage = () => {
                             Approve
                           </Button>
                         )
-                      ) : schedule.statusText === "accepted" ? null : (
+                      ) : schedule.statusText === 'accepted' ? null : (
                         <Button
                           onClick={() => handleAccept(schedule.id)}
                           variant="outline"
@@ -205,6 +206,8 @@ const SchedulePage = () => {
               ))}
             </TableBody>
           </Table>
+
+          {isLoading && <Spinner />}
 
           <DynamicPagination
             currentPage={currentPage}

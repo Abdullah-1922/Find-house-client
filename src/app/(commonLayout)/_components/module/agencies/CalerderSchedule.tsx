@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Calendar as CalendarIcon,
   ChevronLeft,
@@ -8,38 +8,37 @@ import {
   Loader,
   Minus,
   Plus,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useCreateScheduleMutation } from "@/redux/api/features/property/propertyApi";
-import { useUser } from "@/hooks/user.hook";
-import SignInModal from "../../modal/signInModal";
-import { toast } from "sonner";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useCreateScheduleMutation } from '@/redux/api/features/property/propertyApi';
+import { useUser } from '@/hooks/user.hook';
+import { toast } from 'sonner';
 
 const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
 ];
 
 export default function CalenderSchedule({
@@ -53,7 +52,7 @@ export default function CalenderSchedule({
   const [date, setDate] = useState(new Date());
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(1);
-  const [time, setTime] = useState("18:45");
+  const [time, setTime] = useState('18:45');
   const month = months[date.getMonth()];
   const day = days[date.getDay()];
   const dayNum = date.getDate();
@@ -78,9 +77,9 @@ export default function CalenderSchedule({
 
     try {
       await createSchedule(formData).unwrap();
-      toast.success("Schedule created successfully");
+      toast.success('Schedule created successfully');
     } catch (error) {
-      toast.error("Failed to create schedule");
+      toast.error('Failed to create schedule');
     }
   };
 
@@ -123,8 +122,8 @@ export default function CalenderSchedule({
                 type="date"
                 defaultValue={`${year}-${String(date.getMonth() + 1).padStart(
                   2,
-                  "0"
-                )}-${String(dayNum).padStart(2, "0")}`}
+                  '0'
+                )}-${String(dayNum).padStart(2, '0')}`}
                 className="w-full"
                 onChange={(e) => setDate(new Date(e.target.value))}
               />
@@ -198,15 +197,13 @@ export default function CalenderSchedule({
                 <span>Submitting...</span>
               </p>
             ) : (
-              "Submit Request"
+              'Submit Request'
             )}
           </Button>
         ) : (
-          <SignInModal>
-            <Button className="w-full bg-gray-800 hover:bg-gray-900">
-              Submit Request
-            </Button>
-          </SignInModal>
+          <Button className="w-full bg-gray-800 hover:bg-gray-900">
+            Submit Request
+          </Button>
         )}
       </CardContent>
     </Card>

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Phone, Mail } from "lucide-react";
-import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { MapPin, Phone, Mail } from 'lucide-react';
+import Image from 'next/image';
 
 interface AgentInformationProps {
   agent: {
@@ -13,7 +13,7 @@ interface AgentInformationProps {
     title: string;
     address: string;
     phone: string;
-    email: string;
+    email: string | undefined;
     image: string;
   };
 }

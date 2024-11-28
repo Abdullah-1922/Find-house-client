@@ -133,12 +133,10 @@ const AllProducts = () => {
                             userId: user._id,
                             productId: product._id,
                           });
-                          toast.success(
-                            'Added to favorite product successfully'
-                          );
+                          toast.success('Product bookmarked successfully');
                         } catch (error) {
                           toast.error(
-                            'Failed to add favorite product. Please try again.'
+                            'Failed to product bookmarked. Please try again.'
                           );
                         }
                       }}
