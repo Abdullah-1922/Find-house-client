@@ -106,8 +106,8 @@ export default function ListGridProperties() {
             isGridView={isGridView}
           />
         ))}
-
         {totalPages > 1 && (
+
           <DynamicPagination
             currentPage={currentPage}
             totalPages={totalPages}
