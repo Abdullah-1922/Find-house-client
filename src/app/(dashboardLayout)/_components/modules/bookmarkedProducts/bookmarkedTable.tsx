@@ -21,6 +21,7 @@ import { toast } from 'sonner';
 import { Delete } from 'lucide-react';
 import Spinner from '@/components/ui/spinner';
 import Nodata from '@/components/ui/noData';
+import { formatDate } from 'date-fns';
 
 export default function BookmarkedTable() {
   const { user } = useUser();
@@ -89,8 +90,7 @@ export default function BookmarkedTable() {
 
                   {/* Date */}
                   <TableCell className="py-5 whitespace-nowrap">
-                    {product?.category?.charAt(0).toUpperCase() +
-                      product?.category?.slice(1)}
+                    {formatDate(product.createdAt, 'dd MMM, yyyy')}
                   </TableCell>
 
                   {/* Category */}

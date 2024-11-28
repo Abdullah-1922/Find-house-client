@@ -1,17 +1,11 @@
+import Container from '@/components/ui/container';
 import React from 'react';
-import UserTable from './userTable';
-import { Toaster } from 'sonner';
+import AllUsers from '../../_components/modules/allUsers';
 
-export default function AllUsersPage() {
+export default function AllUserPage() {
   return (
-    <div>
-      <div className="space-y-6 bg-white rounded-md border p-5">
-        <h2 className="text-lg md:text-xl font-semibold tracking-tight text-gray-700">
-          All Users
-        </h2>
-        <UserTable />
-      </div>
-      <Toaster position="top-center" />
-    </div>
+    <Container>
+      <AllUsers />
+    </Container>
   );
 }

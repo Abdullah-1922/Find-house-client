@@ -14,6 +14,7 @@ import { LayoutGrid, List } from 'lucide-react';
 import PropertyCard from '@/components/shared/card/PropertyCard';
 import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
 import { TProperty } from '@/types';
+import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
 
 export default function ListGridProperties() {
   const [sortBy, setSortBy] = useState('Top Selling');
@@ -24,6 +25,14 @@ export default function ListGridProperties() {
   const { data, isFetching } = useGetAllPropertiesQuery(
     `limit=${limit}&page=${currentPage}`
   );
+
+  // handle pagination
+  const meta = data?.meta;
+  const totalPages = meta?.totalPage;
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   const properties = data?.data as TProperty[];
   return (
@@ -89,13 +98,21 @@ export default function ListGridProperties() {
             }
         `}
       >
-        {properties.map((property) => (
+        {properties?.map((property) => (
           <PropertyCard
             key={property.id}
             property={property}
             isGridView={isGridView}
           />
         ))}
+
+        {meta?.totalPage! > 1 && (
+          <DynamicPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );

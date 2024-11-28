@@ -112,11 +112,6 @@ const SchedulePage = () => {
     }
   };
 
-  if (isLoading) return <Spinner className="h-[600px]" />;
-  if (schedules?.length === 0) {
-    return <Nodata />;
-  }
-
   return (
     <div>
       <div className="space-y-6 bg-white rounded-md border p-5">
@@ -206,7 +201,7 @@ const SchedulePage = () => {
               ))}
             </TableBody>
           </Table>
-
+          {schedules?.length === 0 ? <Nodata /> : ''}
           {isLoading && <Spinner />}
 
           <DynamicPagination

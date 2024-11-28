@@ -52,6 +52,7 @@ export default function ProfileDetail() {
                 <AvatarImage
                   src={image || '/default-avatar.png'}
                   alt={`${firstName} ${secondName}`}
+                  className="object-cover"
                 />
                 <AvatarFallback>
                   {firstName?.[0] || ''}

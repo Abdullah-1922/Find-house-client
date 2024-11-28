@@ -80,7 +80,7 @@ const productApi = baseApi.injectEndpoints({
         };
       },
       invalidatesTags: (result, error, { id }) => [
-        { type: 'MyFavoriteProduct', id },
+        { type: 'SingleProduct', id },
         'Product',
       ],
     }),
@@ -93,7 +93,7 @@ const productApi = baseApi.injectEndpoints({
         };
       },
       invalidatesTags: (result, error, { id }) => [
-        { type: 'MyFavoriteProduct', id },
+        { type: 'SingleProduct', id },
         'Product',
       ],
     }),
@@ -105,7 +105,7 @@ const productApi = baseApi.injectEndpoints({
         };
       },
       providesTags: (result, error, userId) => [
-        { type: 'MyFavoriteProduct', id: userId },
+        { type: 'Product', id: userId },
       ],
     }),
   }),
