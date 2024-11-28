@@ -1,4 +1,4 @@
-import UserDashboard from '@/app/(dashboardLayout)/_components/modules/userDashboard';
+import UserDashboard from '@/app/(dashboardLayout)/_components/modules/dashboard/userDashboard';
 import Container from '@/components/ui/container';
 import React from 'react';
 

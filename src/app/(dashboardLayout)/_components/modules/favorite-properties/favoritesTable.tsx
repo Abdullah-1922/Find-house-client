@@ -20,7 +20,6 @@ import {
 import Link from 'next/link';
 import { toast } from 'sonner';
 import Nodata from '@/components/ui/noData';
-import FeaturedProperties from '@/app/(commonLayout)/_components/module/agencies/FeatureProperties';
 import Spinner from '@/components/ui/spinner';
 
 export default function FavoritesTable() {

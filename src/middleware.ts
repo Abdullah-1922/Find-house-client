@@ -13,16 +13,19 @@ export async function middleware(request: NextRequest) {
     admin: string[];
   } = {
     user: [
+      '/user-dashboard',
       '/profile',
       '/my-properties',
       '/favorite-properties',
-      '/user-dashboard',
+      '/bookmarked-products',
     ],
     agent: [
+      '/agent-dashboard',
       '/profile',
       '/my-properties',
       '/favorite-properties',
       '/agent-dashboard/properties-sold',
+      '/bookmarked-products',
     ],
     admin: [
       '/profile',
@@ -33,6 +36,7 @@ export async function middleware(request: NextRequest) {
       '/admin-dashboard/all-users',
       '/admin-dashboard/all-orders',
       '/admin-dashboard/add-product',
+      '/bookmarked-products',
     ],
   };
 
