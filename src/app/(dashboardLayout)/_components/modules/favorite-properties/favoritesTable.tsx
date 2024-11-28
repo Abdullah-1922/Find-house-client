@@ -21,10 +21,13 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 import Nodata from '@/components/ui/noData';
 import FeaturedProperties from '@/app/(commonLayout)/_components/module/agencies/FeatureProperties';
+import Spinner from '@/components/ui/spinner';
 
 export default function FavoritesTable() {
   const { user } = useUser();
-  const { data: favoriteData } = useGetMyFavoritePropertiesQuery(user?._id);
+  const { data: favoriteData, isLoading } = useGetMyFavoritePropertiesQuery(
+    user?._id
+  );
 
   const [removeFavoriteFn] = useRemoveFavoritePropertyMutation();
 
@@ -141,7 +144,8 @@ export default function FavoritesTable() {
           ))}
         </TableBody>
       </Table>
-      {FeaturedProperties?.length === 0 && <Nodata />}
+      {isLoading && <Spinner />}
+      {favoriteProperties?.length === 0 && <Nodata />}
     </div>
   );
 }

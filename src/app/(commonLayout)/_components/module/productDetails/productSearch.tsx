@@ -11,7 +11,7 @@ export function ProductSearch() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [query, setQuery] = useState('');
 
-  const { data: searchResults } = useGetAllProductsQuery(query, {
+  const { data: searchResults, isLoading } = useGetAllProductsQuery(query, {
     skip: !query,
   });
 
@@ -44,6 +44,7 @@ export function ProductSearch() {
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         results={searchResults?.data || []}
+        isLoading={isLoading}
       />
     </div>
   );

@@ -326,7 +326,7 @@ export default function OurAgencies() {
         {/* Sidebar Forms */}
         <div className="flex flex-col gap-5 w-[50%]">
           {/* Schedule Tour */}
-          <CalenderSchedule />
+          <CalenderSchedule agentId={''} propertyId={''} />
           {/* Request Inquiry */}
           <RequestInquiry />
           {/* Resent Properties */}

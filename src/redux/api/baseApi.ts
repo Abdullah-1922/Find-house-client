@@ -33,9 +33,9 @@ export const baseApi = createApi({
     'SingleProduct',
     'ProductReview',
     'SingleProductReview',
-    'Users',
-    'myFavoriteProperties',
-    'MyFavoriteProduct',
+    "Users",
+    "Schedules",
+    "myFavoriteProperties"
   ],
 
   endpoints: () => ({}),

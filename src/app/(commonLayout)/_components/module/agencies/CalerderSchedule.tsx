@@ -5,6 +5,7 @@ import {
   Calendar as CalendarIcon,
   ChevronLeft,
   ChevronRight,
+  Loader,
   Minus,
   Plus,
 } from 'lucide-react';
@@ -12,6 +13,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useCreateScheduleMutation } from '@/redux/api/features/property/propertyApi';
+import { useUser } from '@/hooks/user.hook';
+import { toast } from 'sonner';
 
 const months = [
   'Jan',
@@ -37,15 +41,23 @@ const days = [
   'Saturday',
 ];
 
-export default function CalenderSchedule() {
+export default function CalenderSchedule({
+  agentId,
+  propertyId,
+}: {
+  agentId: string;
+  propertyId: string;
+}) {
+  const { user } = useUser();
   const [date, setDate] = useState(new Date());
-  const [adults, setAdults] = useState(0);
-  const [children, setChildren] = useState(0);
-
+  const [adults, setAdults] = useState(1);
+  const [children, setChildren] = useState(1);
+  const [time, setTime] = useState('18:45');
   const month = months[date.getMonth()];
   const day = days[date.getDay()];
   const dayNum = date.getDate();
   const year = date.getFullYear();
+  const [createSchedule, { isLoading }] = useCreateScheduleMutation();
 
   const nextMonth = () => {
     setDate(new Date(date.setMonth(date.getMonth() + 1)));
@@ -53,6 +65,22 @@ export default function CalenderSchedule() {
 
   const prevMonth = () => {
     setDate(new Date(date.setMonth(date.getMonth() - 1)));
+  };
+  const handleCreateSchedule = async () => {
+    const formData = {
+      user: user?._id,
+      agent: agentId,
+      property: propertyId,
+      date: date.toISOString(),
+      time: time,
+    };
+
+    try {
+      await createSchedule(formData).unwrap();
+      toast.success('Schedule created successfully');
+    } catch (error) {
+      toast.error('Failed to create schedule');
+    }
   };
 
   return (
@@ -101,7 +129,12 @@ export default function CalenderSchedule() {
               />
             </div>
             <div>
-              <Input type="time" defaultValue="18:45" className="w-full" />
+              <Input
+                onChange={(e) => setTime(e.target.value)}
+                type="time"
+                defaultValue="18:45"
+                className="w-full"
+              />
             </div>
           </div>
         </div>
@@ -153,10 +186,25 @@ export default function CalenderSchedule() {
             </div>
           </div>
         </div>
-
-        <Button className="w-full bg-gray-800 hover:bg-gray-900">
-          Submit Request
-        </Button>
+        {user ? (
+          <Button
+            onClick={handleCreateSchedule}
+            className="w-full bg-gray-800 hover:bg-gray-900"
+          >
+            {isLoading ? (
+              <p className="flex items-center gap-2">
+                <Loader className="animate-spin" />
+                <span>Submitting...</span>
+              </p>
+            ) : (
+              'Submit Request'
+            )}
+          </Button>
+        ) : (
+          <Button className="w-full bg-gray-800 hover:bg-gray-900">
+            Submit Request
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

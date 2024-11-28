@@ -1,7 +1,7 @@
-import Footer from '@/components/shared/Footer/Footer';
-import Navbar from '@/components/shared/Navbar/Navbar';
-import { ReactNode } from 'react';
-import { Toaster } from 'sonner';
+import Footer from "@/components/shared/Footer/Footer";
+import Navbar from "@/components/shared/Navbar/Navbar";
+import { ReactNode } from "react";
+import { Toaster } from "sonner";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
@@ -9,7 +9,7 @@ const layout = ({ children }: { children: ReactNode }) => {
       <Navbar />
       <div className="pt-20">{children}</div>
       <Footer />
-      <Toaster position="top-center" />
+      <Toaster duration={2000} position="bottom-right" />
     </div>
   );
 };
