@@ -11,13 +11,11 @@ import {
   Car,
   Expand,
   Heart,
-  ImageIcon,
   Link as IconLink,
   MapPin,
   Share2,
   ShowerHead,
   Square,
-  Video,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -124,12 +122,6 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                     <IconLink className="h-4 w-4" />
                   </Button>
                 </NextLink>
-                <Button variant="outline" size="icon" className="rounded-full">
-                  <Video className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="icon" className="rounded-full">
-                  <ImageIcon className="h-4 w-4" />
-                </Button>
                 <Button
                   onClick={async () => {
                     if (!user?._id || !property?._id) {
