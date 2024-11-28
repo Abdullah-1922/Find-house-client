@@ -35,7 +35,9 @@ export const baseApi = createApi({
     'SingleProductReview',
     "Users",
     "Schedules",
-    "myFavoriteProperties"
+    "myFavoriteProperties",
+    "MyFavoriteProduct",
+    "Payments"
   ],
 
   endpoints: () => ({}),

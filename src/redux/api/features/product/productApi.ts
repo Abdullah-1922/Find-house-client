@@ -17,12 +17,12 @@ const productApi = baseApi.injectEndpoints({
       providesTags: (result) => {
         return result
           ? [
-              { type: 'Product', id: 'LIST' },
-              ...result.data.map((product: TProduct) => ({
-                type: 'Product',
-                id: product._id,
-              })),
-            ]
+            { type: 'Product', id: 'LIST' },
+            ...result.data.map((product: TProduct) => ({
+              type: 'Product',
+              id: product._id,
+            })),
+          ]
           : [{ type: 'Product', id: 'LIST' }];
       },
     }),
@@ -108,6 +108,18 @@ const productApi = baseApi.injectEndpoints({
         { type: 'Product', id: userId },
       ],
     }),
+    createPayment: builder.mutation({
+      query: (bodyData) => {
+        return {
+          url: `/payments`,
+          method: 'POST',
+          body: bodyData,
+        };
+      },
+      invalidatesTags: (result, error, userId) => [
+        { type: 'Payments', id: userId },
+      ],
+    }),
   }),
 });
 
@@ -120,4 +132,5 @@ export const {
   useAddFavoriteProductsMutation,
   useRemoveFavoriteProductsMutation,
   useGetMyFavoriteProductsQuery,
+  useCreatePaymentMutation
 } = productApi;

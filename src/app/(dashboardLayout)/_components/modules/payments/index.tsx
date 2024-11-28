@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Image from 'next/image';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import * as React from "react";
+import Image from "next/image";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -15,29 +15,32 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useCreatePaymentMutation } from "@/redux/api/features/product/productApi";
+import { toast } from "sonner";
+import { useUser } from "@/hooks/user.hook";
 
 const formSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(10, 'Phone number must be at least 10 digits'),
-  city: z.string().min(2, 'City must be at least 2 characters'),
-  state: z.string().min(2, 'State must be at least 2 characters'),
-  country: z.string().min(2, 'Country must be at least 2 characters'),
-  address: z.string().min(5, 'Address must be at least 5 characters'),
-  zip: z.string().min(5, 'ZIP code must be at least 5 characters'),
-  paymentMethod: z.enum(['paypal', 'card']),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(10, "Phone number must be at least 10 digits"),
+  city: z.string().min(2, "City must be at least 2 characters"),
+  state: z.string().min(2, "State must be at least 2 characters"),
+  country: z.string().min(2, "Country must be at least 2 characters"),
+  address: z.string().min(5, "Address must be at least 5 characters"),
+  zip: z.string({ required_error: "Zip code is required" }),
+  paymentMethod: z.enum(["paypal", "card"]),
 });
 
 const bookingSummary = {
   reservation: {
-    date: '18 Jun 2018',
-    time: '9pm 10pm',
-    from: '10 Jan 2019',
+    date: "18 Jun 2018",
+    time: "9pm 10pm",
+    from: "10 Jan 2019",
   },
   pricing: {
     dining: 150,
@@ -48,15 +51,36 @@ const bookingSummary = {
 };
 
 export default function Payments() {
+  const { user } = useUser();
+  const [createPayment, { isLoading }] = useCreatePaymentMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      paymentMethod: 'paypal',
+      paymentMethod: "paypal",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const formData = {
+      customerId: user._id,
+      currency: "BDT",
+      amount: 123,
+      gatewayName: "Bkash",
+      status: "completed",
+      ...values,
+    };
+    const res = await createPayment(formData);
+    console.log("res", res);
+    const loadingToast = toast.loading("Payment adding...");
+    if (res?.data?.success) {
+      toast.success("Payment Successful", {
+        id: loadingToast,
+      });
+    } else {
+      toast.error("Failed Payment", {
+        id: loadingToast,
+      });
+    }
   }
 
   return (
@@ -87,7 +111,7 @@ export default function Payments() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
+                className="space-y-6 h-full"
               >
                 <div className="grid gap-4 md:grid-cols-2">
                   <FormField
@@ -203,6 +227,13 @@ export default function Payments() {
                     )}
                   />
                 </div>
+                <Button
+                  className="w-full bg-gray-800 hover:bg-gray-900"
+                  size="lg"
+                  type="submit"
+                >
+                  {isLoading ? "Adding Payment..." : "Pay Now"}
+                </Button>
               </form>
             </Form>
           </CardContent>
@@ -348,14 +379,6 @@ export default function Payments() {
               </div>
             </CardContent>
           </Card>
-
-          <Button
-            className="w-full bg-gray-800 hover:bg-gray-900"
-            size="lg"
-            type="submit"
-          >
-            Confirm Booking
-          </Button>
         </div>
       </div>
     </div>
