@@ -52,13 +52,9 @@ export default function AllAgents() {
     `agent?limit=${ITEMS_PER_PAGE}&page=${currentPage}`
   );
 
-  const totalPages = meta?.totalPage || 0;
-
-
   // handle pagination
   const meta = agentData?.meta;
-  const totalPages = meta?.totalPage;
-
+  const totalPages = meta?.totalPage || 0;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -81,8 +77,8 @@ export default function AllAgents() {
         <h1 className="mb-8 text-3xl font-bold">All Agents</h1>
       </div>
 
-      <div className="flex gap-5 w-full">
-        <div className="flex flex-col gap-5 w-full">
+      <div className="flex gap-2 md:p-5 w-full">
+        <div className="flex flex-col gap-2 md:p-5 w-full">
           {/* Filters */}
           <div className="mb-6 flex flex-row items-center justify-between gap-4">
             <p className="text-muted-foreground">
@@ -191,7 +187,7 @@ export default function AllAgents() {
           )}
         </div>
         {/* Sidebar Forms */}
-        <div className="flex flex-col gap-5 w-[50%]">
+        <div className="flex flex-col gap-2 md:p-5 w-[50%]">
           <RequestInquiry />
           <ResentProperties />
           <FeaturedProperties />

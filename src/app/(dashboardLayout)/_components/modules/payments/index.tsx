@@ -1,13 +1,12 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Image from "next/image";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import * as React from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -15,76 +14,121 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useCreatePaymentMutation } from "@/redux/api/features/product/productApi";
-import { toast } from "sonner";
-import { useUser } from "@/hooks/user.hook";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { toast } from 'sonner';
+import { useUser } from '@/hooks/user.hook';
+import {
+  useCreateCashOnDeliveryPaymentMutation,
+  useCreateOnlinePaymentMutation,
+  useGetMyFavoriteProductsQuery,
+} from '@/redux/api/features/product/productApi';
+import { TProduct } from '@/types';
+import PaymentHistory from './paymentHistory';
 
 const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Phone number must be at least 10 digits"),
-  city: z.string().min(2, "City must be at least 2 characters"),
-  state: z.string().min(2, "State must be at least 2 characters"),
-  country: z.string().min(2, "Country must be at least 2 characters"),
-  address: z.string().min(5, "Address must be at least 5 characters"),
-  zip: z.string({ required_error: "Zip code is required" }),
-  paymentMethod: z.enum(["paypal", "card"]),
+  name: z
+    .string({ required_error: 'Name is required' })
+    .min(2, 'Name must be at least 2 characters'),
+  email: z
+    .string({ required_error: 'Email is required' })
+    .email('Invalid email address'),
+  phone: z
+    .string({ required_error: 'Phone number is required' })
+    .min(10, 'Phone number must be at least 10 digits'),
+  city: z
+    .string({ required_error: 'City is required' })
+    .min(2, 'City must be at least 2 characters'),
+  state: z
+    .string({ required_error: 'State is required' })
+    .min(2, 'State must be at least 2 characters'),
+  country: z
+    .string({ required_error: 'Country is required' })
+    .min(2, 'Country must be at least 2 characters'),
+  address: z
+    .string({ required_error: 'Address is required' })
+    .min(5, 'Address must be at least 5 characters'),
+  zip: z.string({ required_error: 'Zip code is required' }),
 });
 
-const bookingSummary = {
-  reservation: {
-    date: "18 Jun 2018",
-    time: "9pm 10pm",
-    from: "10 Jan 2019",
-  },
-  pricing: {
-    dining: 150,
-    reservation: 60,
-    tax: 53,
-    totalCost: 263,
-  },
-};
+const paymentGateway = {
+  CashOnDelivery: 'Cash On Delivery',
+  OnlinePayment: 'Online Payment',
+} as const;
 
 export default function Payments() {
+  const [method, setMethod] = React.useState<string>('amarpay');
   const { user } = useUser();
-  const [createPayment, { isLoading }] = useCreatePaymentMutation();
+
+  console.log(method);
+
+  const { data } = useGetMyFavoriteProductsQuery(user?._id);
+  const addToCardData = data?.data as TProduct[];
+
+  const [createOnlinePaymentFn, { isLoading: isOnlinePaymentLoading }] =
+    useCreateOnlinePaymentMutation();
+  const [
+    createCashOnDeliveryPaymentFn,
+    { isLoading: isCashOnDeliveryPaymentLoading },
+  ] = useCreateCashOnDeliveryPaymentMutation();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      paymentMethod: "paypal",
-    },
   });
+
+  const totalAmount = addToCardData?.reduce(
+    (sum, product) => sum + product.price,
+    0
+  );
+  const tax = totalAmount * 0.05; // Assuming 5% tax
+  const totalCost = totalAmount + tax;
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const formData = {
       customerId: user._id,
-      currency: "BDT",
-      amount: 123,
-      gatewayName: "Bkash",
-      status: "completed",
+      products: [...addToCardData?.map((item) => item?._id)],
+      currency: 'BDT',
+      amount: totalCost,
+      gatewayName:
+        method === 'cashOnDelivery'
+          ? paymentGateway.CashOnDelivery
+          : paymentGateway.OnlinePayment,
+      status: method === 'cashOnDelivery' ? 'Pending' : 'Paid',
       ...values,
     };
-    const res = await createPayment(formData);
-    console.log("res", res);
-    const loadingToast = toast.loading("Payment adding...");
-    if (res?.data?.success) {
-      toast.success("Payment Successful", {
-        id: loadingToast,
-      });
-    } else {
-      toast.error("Failed Payment", {
+
+    console.log(formData);
+    const loadingToast = toast.loading('Processing payment...');
+
+    try {
+      let res;
+      if (method === 'cashOnDelivery') {
+        res = await createCashOnDeliveryPaymentFn(formData).unwrap();
+      } else {
+        res = await createOnlinePaymentFn(formData).unwrap();
+      }
+
+      if (res.success) {
+        if (method === 'amarpay' && res?.data?.paymentResponse?.payment_url) {
+          window.location.href = res.data.paymentResponse.payment_url;
+        } else {
+          toast.success('Order placed successfully', { id: loadingToast });
+        }
+      } else {
+        toast.error('Payment processing failed', { id: loadingToast });
+      }
+    } catch (error) {
+      toast.error('An error occurred while processing the payment', {
         id: loadingToast,
       });
     }
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="space-y-6">
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
@@ -231,8 +275,13 @@ export default function Payments() {
                   className="w-full bg-gray-800 hover:bg-gray-900"
                   size="lg"
                   type="submit"
+                  disabled={
+                    isOnlinePaymentLoading || isCashOnDeliveryPaymentLoading
+                  }
                 >
-                  {isLoading ? "Adding Payment..." : "Pay Now"}
+                  {isOnlinePaymentLoading || isCashOnDeliveryPaymentLoading
+                    ? 'Processing...'
+                    : 'Place Order'}
                 </Button>
               </form>
             </Form>
@@ -262,33 +311,25 @@ export default function Payments() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <RadioGroup defaultValue="paypal" className="grid gap-4">
+              <RadioGroup defaultValue={method} className="grid gap-4">
                 <div className="flex items-center justify-between rounded-lg border p-4">
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="paypal" id="paypal" />
-                    <Label htmlFor="paypal">PayPal</Label>
+                    <RadioGroupItem
+                      onClick={() => setMethod('amarpay')}
+                      value="amarpay"
+                      id="amarpay"
+                    />
+                    <Label>Amarpay</Label>
                   </div>
-                  <Image
-                    src="https://code-theme.com/html/findhouses/images/paypal.png"
-                    alt="PayPal"
-                    className="h-8"
-                    width={80}
-                    height={32}
-                  />
                 </div>
                 <div className="flex items-center justify-between rounded-lg border p-4">
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="card" id="card" />
-                    <Label htmlFor="card">Credit / Debit Card</Label>
-                  </div>
-                  <div className="flex gap-2">
-                    <Image
-                      src="https://code-theme.com/html/findhouses/images/credit.png"
-                      alt="Mastercard"
-                      className="h-6 "
-                      width={100}
-                      height={32}
+                    <RadioGroupItem
+                      onClick={() => setMethod('cashOnDelivery')}
+                      value="cashOnDelivery"
+                      id="cashOnDelivery"
                     />
+                    <Label>Cash on Delivery</Label>
                   </div>
                 </div>
               </RadioGroup>
@@ -313,33 +354,23 @@ export default function Payments() {
                   <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z" />
                   <path d="M7 7h.01" />
                 </svg>
-                Booking Summary
+                Order Summary
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-medium">Reservation Details</h4>
+                  <h4 className="font-medium">Products</h4>
                   <Table>
                     <TableBody>
-                      <TableRow>
-                        <TableCell>Date</TableCell>
-                        <TableCell className="text-right">
-                          {bookingSummary.reservation.date}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Time</TableCell>
-                        <TableCell className="text-right">
-                          {bookingSummary.reservation.time}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>From</TableCell>
-                        <TableCell className="text-right">
-                          {bookingSummary.reservation.from}
-                        </TableCell>
-                      </TableRow>
+                      {addToCardData?.map((product: TProduct) => (
+                        <TableRow key={product._id}>
+                          <TableCell>{product.name}</TableCell>
+                          <TableCell className="text-right">
+                            ৳ {product.price.toFixed(2) || 0}
+                          </TableCell>
+                        </TableRow>
+                      ))}
                     </TableBody>
                   </Table>
                 </div>
@@ -348,21 +379,15 @@ export default function Payments() {
                   <Table>
                     <TableBody>
                       <TableRow>
-                        <TableCell>Dining</TableCell>
+                        <TableCell>Subtotal</TableCell>
                         <TableCell className="text-right">
-                          ${bookingSummary.pricing.dining}
+                          ৳ {totalAmount?.toFixed(2) || 0}
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Reservation</TableCell>
+                        <TableCell>Tax (5%)</TableCell>
                         <TableCell className="text-right">
-                          ${bookingSummary.pricing.reservation}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Tax</TableCell>
-                        <TableCell className="text-right">
-                          ${bookingSummary.pricing.tax}
+                          ৳ {tax?.toFixed(2) || 0}
                         </TableCell>
                       </TableRow>
                       <TableRow>
@@ -370,7 +395,7 @@ export default function Payments() {
                           Total Cost
                         </TableCell>
                         <TableCell className="text-right font-medium">
-                          ${bookingSummary.pricing.totalCost}
+                          ৳ {totalCost?.toFixed(2) || 0}
                         </TableCell>
                       </TableRow>
                     </TableBody>
@@ -381,6 +406,8 @@ export default function Payments() {
           </Card>
         </div>
       </div>
+
+      <PaymentHistory />
     </div>
   );
 }

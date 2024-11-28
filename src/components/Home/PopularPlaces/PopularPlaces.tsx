@@ -52,7 +52,7 @@ const PopularPlaces = () => {
   return (
     <div className="max-w-7xl mx-auto px-2 md:px-4">
       <SectionTitle header="Most Popular" title="Places" />
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2 md:p-5">
         {locations.map((location, index) => (
           <div
             key={index}
@@ -69,7 +69,7 @@ const PopularPlaces = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent transition-opacity duration-300 group-hover:opacity-80"></div>
                 {location.isFeatured && (
-                  <div className="absolute top-5 -left-5 bg-black/80 text-white text-xs font-semibold px-6 -rotate-45 py-1 rounded">
+                  <div className="absolute top-2 md:p-5 -left-5 bg-black/80 text-white text-xs font-semibold px-6 -rotate-45 py-1 rounded">
                     Featured
                   </div>
                 )}

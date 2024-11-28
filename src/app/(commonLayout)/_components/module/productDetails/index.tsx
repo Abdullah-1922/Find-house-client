@@ -58,11 +58,11 @@ export default function ProductDetails({ productId }: { productId: string }) {
 
   return (
     <div className="max-w-7xl mx-auto px-2 md:px-4 py-8">
-      <div className="flex flex-col lg:flex-row gap-5">
+      <div className="flex flex-col lg:flex-row gap-2 md:p-5">
         {/* Product Images and Details Section */}
         <div className="w-[70%] space-y-6">
           <div className="border rounded-md p-3 bg-white">
-            <div className="flex flex-col md:flex-row gap-5">
+            <div className="flex flex-col md:flex-row gap-2 md:p-5">
               {/* Product Images */}
               <div className="space-y-4 w-full md:w-[7/12">
                 <LightGallery elementClassNames="lightgallery">
@@ -179,7 +179,7 @@ export default function ProductDetails({ productId }: { productId: string }) {
         </div>
 
         {/* Sidebar */}
-        <div className="flex flex-col gap-5 w-[30%] border rounded-md p-3 bg-white">
+        <div className="flex flex-col gap-2 md:p-5 w-[30%] border rounded-md p-3 bg-white">
           <ProductSearch />
           <BestSeller />
         </div>

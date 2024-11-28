@@ -1,9 +1,9 @@
-import Image from "next/image";
-import NavbarLogo from "../../../../../public/assets/logo/logo-white-1.svg";
-import "./Sidebar.css";
+import Image from 'next/image';
+import NavbarLogo from '../../../../../public/assets/logo/logo-white-1.svg';
+import './Sidebar.css';
 
 interface CustomCSSProperties extends React.CSSProperties {
-  "--i"?: string; // Allow custom property --i
+  '--i'?: string; // Allow custom property --i
 }
 
 const Sidebar: React.FC = () => {
@@ -29,13 +29,13 @@ const Sidebar: React.FC = () => {
             <ul>
               <li
                 className="nav-link"
-                style={{ "--i": ".6s" } as CustomCSSProperties}
+                style={{ '--i': '.6s' } as CustomCSSProperties}
               >
                 <a href="#">Home</a>
               </li>
               <li
                 className="nav-link"
-                style={{ "--i": ".85s" } as CustomCSSProperties}
+                style={{ '--i': '.85s' } as CustomCSSProperties}
               >
                 <a href="#">
                   Listing<i className="fas fa-caret-down"></i>
@@ -50,7 +50,7 @@ const Sidebar: React.FC = () => {
                     </li>
                     <li
                       className="dropdown-sidebar-link"
-                      style={{ "--i": "1s" } as CustomCSSProperties}
+                      style={{ '--i': '1s' } as CustomCSSProperties}
                     >
                       <a href="#">All Agents</a>
                     </li>
@@ -59,7 +59,7 @@ const Sidebar: React.FC = () => {
               </li>
               <li
                 className="nav-link"
-                style={{ "--i": "1.1s" } as CustomCSSProperties}
+                style={{ '--i': '1.1s' } as CustomCSSProperties}
               >
                 <a href="#">
                   Pages<i className="fas fa-caret-down"></i>
@@ -68,7 +68,7 @@ const Sidebar: React.FC = () => {
                   <ul>
                     <li
                       className="dropdown-sidebar-link"
-                      style={{ "--i": "1.1s" } as CustomCSSProperties}
+                      style={{ '--i': '1.1s' } as CustomCSSProperties}
                     >
                       <a href="#">
                         Shop<i className="fas fa-caret-down"></i>
@@ -86,19 +86,19 @@ const Sidebar: React.FC = () => {
                     </li>
                     <li
                       className="dropdown-sidebar-link"
-                      style={{ "--i": "1s" } as CustomCSSProperties}
+                      style={{ '--i': '1s' } as CustomCSSProperties}
                     >
                       <a href="#">About Us</a>
                     </li>
                     <li
                       className="dropdown-sidebar-link"
-                      style={{ "--i": "1s" } as CustomCSSProperties}
+                      style={{ '--i': '1s' } as CustomCSSProperties}
                     >
                       <a href="#">Faq</a>
                     </li>
                     <li
                       className="dropdown-sidebar-link"
-                      style={{ "--i": "1s" } as CustomCSSProperties}
+                      style={{ '--i': '1s' } as CustomCSSProperties}
                     >
                       <a href="#">Coming Soon</a>
                     </li>
@@ -107,20 +107,20 @@ const Sidebar: React.FC = () => {
               </li>
               <li
                 className="nav-link"
-                style={{ "--i": "1.35s" } as CustomCSSProperties}
+                style={{ '--i': '1.35s' } as CustomCSSProperties}
               >
                 <a href="#">Blogs</a>
               </li>
               <li
                 className="nav-link"
-                style={{ "--i": "1.35s" } as CustomCSSProperties}
+                style={{ '--i': '1.35s' } as CustomCSSProperties}
               >
                 <a href="#">Contact</a>
               </li>
             </ul>
           </div>
 
-          <div className="flex flex-wrap justify-center items-center gap-5">
+          <div className="flex flex-wrap justify-center items-center gap-2 md:p-5">
             <div className="flex justify-center gap-x-2 items-center">
               <i className="fas fa-globe-americas text-white"></i>
               <h2 className="font-bold border-r border-white pr-5 text-white">

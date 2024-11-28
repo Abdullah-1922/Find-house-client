@@ -145,7 +145,7 @@ export default function SignUpForm() {
               {...register('password')}
             />
             <div
-              className="absolute inset-y-0 top-5 flex items-center cursor-pointer"
+              className="absolute inset-y-0 top-2 md:p-5 flex items-center cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -164,7 +164,7 @@ export default function SignUpForm() {
               {...register('confirmPassword')}
             />
             <div
-              className="absolute inset-y-0 top-5 flex items-center cursor-pointer"
+              className="absolute inset-y-0 top-2 md:p-5 flex items-center cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}

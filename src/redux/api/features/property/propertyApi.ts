@@ -5,116 +5,125 @@ const propertyApi = baseApi.injectEndpoints({
     getAllProperties: builder.query({
       query: (query) => {
         return {
-          url: query ? `/property/?${query}` : "/property",
-          method: "GET",
+          url: query ? `/property/?${query}` : '/property',
+          method: 'GET',
         };
       },
-      providesTags: ["Property"],
+      providesTags: ['Property'],
+    }),
+    getMyAllProperties: builder.query({
+      query: (query) => {
+        return {
+          url: `/property/my-properties/${query}`,
+          method: 'GET',
+        };
+      },
+      providesTags: ['Property'],
     }),
     getSingleProperty: builder.query({
       query: (id) => {
         return {
           url: `/property/${id}`,
-          method: "GET",
+          method: 'GET',
         };
       },
-      providesTags: (result, error, id) => [{ type: "SingleProperty", id }],
+      providesTags: (result, error, id) => [{ type: 'SingleProperty', id }],
     }),
     getPropertyComment: builder.query({
       query: ({ id, query }) => {
         return {
           url: `/comment/${id}/?${query}`,
-          method: "GET",
+          method: 'GET',
         };
       },
-      providesTags: (result, error, id) => [{ type: "SingleProperty", id }],
+      providesTags: (result, error, id) => [{ type: 'SingleProperty', id }],
     }),
     createProperty: builder.mutation({
       query: (body) => {
         return {
-          url: "/property",
-          method: "POST",
+          url: '/property',
+          method: 'POST',
           body,
         };
       },
-      invalidatesTags: ["Property"],
+      invalidatesTags: ['Property'],
     }),
     updateProperty: builder.mutation({
       query: ({ body, id }) => {
         return {
           url: `/property/${id}`,
-          method: "PATCH",
+          method: 'PATCH',
           body,
         };
       },
       invalidatesTags: (result, error, { id }) => [
-        "Property",
-        { type: "SingleProperty", id },
+        'Property',
+        { type: 'SingleProperty', id },
       ],
     }),
     createPropertyComment: builder.mutation({
       query: ({ body }) => {
         return {
           url: `/property-comment`,
-          method: "POST",
+          method: 'POST',
           body,
         };
       },
       invalidatesTags: (result, error, { id }) => [
-        "Property",
-        { type: "SingleProperty", id },
+        'Property',
+        { type: 'SingleProperty', id },
       ],
     }),
     deleteProperty: builder.mutation({
       query: (id: string) => {
         return {
           url: `/property/${id}`,
-          method: "DELETE",
+          method: 'DELETE',
         };
       },
       invalidatesTags: (result, error, id) => [
-        "Property",
-        { type: "SingleProperty", id },
+        'Property',
+        { type: 'SingleProperty', id },
       ],
     }),
     createSchedule: builder.mutation({
       query: (bodyData) => {
         return {
           url: `/schedule`,
-          method: "POST",
+          method: 'POST',
           body: bodyData,
         };
       },
-      invalidatesTags: ["Schedules"],
+      invalidatesTags: ['Schedules'],
     }),
     getAllSChedules: builder.query({
       query: (query?: string) => {
         return {
           url: `/schedule?${query}`,
-          method: "GET",
+          method: 'GET',
         };
       },
-      providesTags: ["Schedules"],
+      providesTags: ['Schedules'],
     }),
     makeApprove: builder.mutation({
       query: ({ id, isApproved }) => {
         return {
           url: `/schedule/${id}/is-approved`,
-          method: "PATCH",
+          method: 'PATCH',
           body: { isApproved },
         };
       },
-      invalidatesTags: ["Schedules"],
+      invalidatesTags: ['Schedules'],
     }),
     makeAccepted: builder.mutation({
       query: ({ id, isAccepted }) => {
         return {
           url: `/schedule/${id}/is-accepted`,
-          method: "PATCH",
+          method: 'PATCH',
           body: { isAccepted },
         };
       },
-      invalidatesTags: ["Schedules"],
+      invalidatesTags: ['Schedules'],
     }),
     addFavoriteProperty: builder.mutation({
       query: (data) => {
@@ -158,6 +167,7 @@ const propertyApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllPropertiesQuery,
+  useGetMyAllPropertiesQuery,
   useGetSinglePropertyQuery,
   useCreatePropertyMutation,
   useUpdatePropertyMutation,
@@ -170,5 +180,5 @@ export const {
   useGetMyFavoritePropertiesQuery,
   useRemoveFavoritePropertyMutation,
   useMakeApproveMutation,
-  useMakeAcceptedMutation
+  useMakeAcceptedMutation,
 } = propertyApi;

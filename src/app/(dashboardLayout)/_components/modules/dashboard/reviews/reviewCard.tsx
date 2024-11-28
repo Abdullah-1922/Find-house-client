@@ -20,7 +20,7 @@ const ReviewCard: React.FC<Review> = ({
   rating,
 }) => {
   return (
-    <Card className="bg-white p-4 rounded-lg mb-4 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-5">
+    <Card className="bg-white p-4 rounded-lg mb-4 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-2 md:p-5">
       <div>
         <div className="flex items-center mb-2">
           <Image

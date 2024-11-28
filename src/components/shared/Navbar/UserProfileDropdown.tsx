@@ -62,7 +62,7 @@ export default function UserProfileDropdown() {
               </Button>
             </TooltipTrigger>
           </DropdownMenuTrigger>
-          <TooltipContent className="bg-gray-800">
+          <TooltipContent className="bg-gray-800 z-[999999]">
             <p>
               {user?.firstName} {user?.secondName}
             </p>
