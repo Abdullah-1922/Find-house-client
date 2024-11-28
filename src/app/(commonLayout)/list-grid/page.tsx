@@ -1,13 +1,6 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-
-const ListGridProperties = dynamic(
-  () => import('../_components/module/listGridProperties'),
-  {
-    ssr: false,
-  }
-);
+import ListGridProperties from '../_components/module/listGridProperties';
 
 const ListGridPage = () => {
   return (

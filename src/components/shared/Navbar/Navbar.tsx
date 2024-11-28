@@ -31,22 +31,9 @@ const Navbar = () => {
               </Link>
               <ul className="px-2 space-x-4">
                 <li>
-                  <Link href="#">
-                    Home <i className="fas fa-caret-down"></i>
+                  <Link href="/">
+                    Home <i className="fas"></i>
                   </Link>
-                  <div className="dropdown-menu mt-0.5">
-                    <ul>
-                      <li>
-                        <Link href="/">Home</Link>
-                      </li>
-                      <li>
-                        <Link href="/home-map">Home Map</Link>
-                      </li>
-                      <li>
-                        <Link href="/home-video">Home Video</Link>
-                      </li>
-                    </ul>
-                  </div>
                 </li>
                 <li>
                   <Link href="#">
@@ -58,13 +45,7 @@ const Navbar = () => {
                         <Link href="/list-grid">Listing Grid</Link>
                       </li>
                       <li>
-                        <Link href="#">Listing List</Link>
-                      </li>
-                      <li>
                         <Link href="/all-agents">All Agents</Link>
-                      </li>
-                      <li>
-                        <Link href="/agencies">All Agencies</Link>
                       </li>
                     </ul>
                   </div>

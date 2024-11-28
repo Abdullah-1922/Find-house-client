@@ -43,7 +43,9 @@ export default function UserProfileDropdown() {
                     src={user?.image}
                     alt="User profile image"
                   />
-                  <AvatarFallback>{user?.firstName.slice(0, 1)}</AvatarFallback>
+                  <AvatarFallback>
+                    {user?.firstName?.slice(0, 1)}
+                  </AvatarFallback>
                 </Avatar>
                 <p
                   className={`text-sm font-normal ${

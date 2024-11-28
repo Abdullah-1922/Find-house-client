@@ -42,6 +42,15 @@ const userApi = baseApi.injectEndpoints({
         'Users',
       ],
     }),
+    getRoleBasedUser: builder.query({
+      query: (query) => {
+        return {
+          url: query ? `/users/role-based-user/${query}` : '/users',
+          method: 'GET',
+        };
+      },
+      providesTags: ['Users'],
+    }),
   }),
 });
 export const {
@@ -49,4 +58,5 @@ export const {
   useGetAllUsersQuery,
   useUpdateUserRoleMutation,
   useUpdateUserMutation,
+  useGetRoleBasedUserQuery,
 } = userApi;

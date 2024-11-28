@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image';
 import { Delete } from 'lucide-react';
 import {
@@ -11,13 +10,9 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
-import { useState } from 'react';
 import Spinner from '@/components/ui/spinner';
 import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
-import {
-  useGetAllUsersQuery,
-  useUpdateUserRoleMutation,
-} from '@/redux/api/features/users/userApi';
+import { useUpdateUserRoleMutation } from '@/redux/api/features/users/userApi';
 import { TUser } from '@/types';
 import {
   DropdownMenu,
@@ -29,65 +24,45 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { toast } from 'sonner';
+import Nodata from '@/components/ui/noData';
 
-interface User {
-  id: number;
-  name: string;
-  image: string;
-  email: string;
-  role: number;
-  registrationDate: string;
+interface UserTableProps {
+  users: TUser[];
+  meta?: { totalPage: number };
+  currentPage: number;
+  onPageChange: (page: number) => void;
 }
 
-export default function UserTable() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const limit = 5;
-  const { data, isFetching } = useGetAllUsersQuery(
-    `limit=${limit}&page=${currentPage}`
-  );
-
+export default function UserTable({
+  users,
+  meta,
+  currentPage,
+  onPageChange,
+}: UserTableProps) {
   const [updateRole, { isLoading }] = useUpdateUserRoleMutation();
 
-  if (isFetching || isLoading) return <Spinner className="h-[400px]" />;
-
-  const users = data?.data?.map((user: TUser) => ({
-    id: user._id,
-    name: `${user.firstName} ${user.secondName}`,
-    image: user.image,
-    email: user.email,
-    role: user.role,
-    registrationDate: user.createdAt,
-  }));
-
-  // handle pagination
-  const meta = data?.meta;
-  const totalPages = meta?.totalPage;
-  console.log('meta', meta);
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    console.log('Selected Page:', page);
-  };
+  if (isLoading) return <Spinner className="h-[400px]" />;
 
   // handle update user role
   const handleUpdateUserRole = async (
     id: string,
     role: 'user' | 'agent' | 'admin'
   ) => {
-    const res = await updateRole({ id, role });
-    console.log('res', res);
+    if (!id) return;
+
     const loadingToast = toast.loading('User role updating...');
-    if (res?.data?.success) {
-      toast.success('User role updated Successfully', {
-        id: loadingToast,
-      });
-    } else {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      toast.error(res?.error?.data.message || 'Failed to  updated user role', {
+    try {
+      const res = await updateRole({ id, role }).unwrap();
+      if (res.success) {
+        toast.success('User role updated successfully', { id: loadingToast });
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message || 'Failed to update user role', {
         id: loadingToast,
       });
     }
   };
+
   return (
     <div className="w-full">
       <Table>
@@ -100,37 +75,35 @@ export default function UserTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users?.map((user: User, index: number) => (
+          {users?.map((user, index) => (
             <TableRow
-              key={user.id}
+              key={user._id}
               className={`${index % 2 === 0 ? 'bg-muted/50' : ''}`}
             >
               <TableCell colSpan={2} className="py-5">
                 <div className="flex items-start gap-4">
                   <div className="relative h-[70px] w-24 overflow-hidden rounded-lg">
                     <Image
-                      src={user.image}
-                      alt={user.name}
+                      src={user.image || '/default-avatar.png'}
+                      alt={user.firstName}
                       fill
                       className="object-cover"
-                      sizes="80px"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.src =
-                          'https://code-theme.com/html/findhouses/images/feature-properties/fp-1.jpg';
+                        target.src = '/fallback-image.jpg';
                       }}
                     />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="font-medium leading-none">{user.name}</h3>
-                    <p className="text-sm text-muted-foreground whitespace-nowrap">
+                    <h3 className="font-medium leading-none">{`${user.firstName} ${user.secondName}`}</h3>
+                    <p className="text-sm text-muted-foreground">
                       {user.email}
                     </p>
                   </div>
                 </div>
               </TableCell>
               <TableCell className="py-5">
-                {format(user.registrationDate, 'dd MMM, yyyy')}
+                {format(new Date(user.createdAt), 'dd MMM, yyyy')}
               </TableCell>
               <TableCell className="capitalize">{user.role}</TableCell>
               <TableCell className="py-5">
@@ -139,31 +112,26 @@ export default function UserTable() {
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline">Edit</Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56 p-2">
+                    <DropdownMenuContent className="w-56">
                       <DropdownMenuLabel>Update Role</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
                         <DropdownMenuItem
-                          onClick={() =>
-                            handleUpdateUserRole(user.id.toString(), 'user')
-                          }
-                          className="cursor-pointer"
+                          onClick={() => handleUpdateUserRole(user._id, 'user')}
                         >
                           Make User
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() =>
-                            handleUpdateUserRole(user.id.toString(), 'agent')
+                            handleUpdateUserRole(user._id, 'agent')
                           }
-                          className="cursor-pointer"
                         >
                           Make Agent
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() =>
-                            handleUpdateUserRole(user.id.toString(), 'admin')
+                            handleUpdateUserRole(user._id, 'admin')
                           }
-                          className="cursor-pointer"
                         >
                           Make Admin
                         </DropdownMenuItem>
@@ -173,7 +141,6 @@ export default function UserTable() {
                   <Button
                     variant="outline"
                     className="text-red-600 hover:text-red-700"
-                    size="sm"
                   >
                     <Delete />
                   </Button>
@@ -184,11 +151,15 @@ export default function UserTable() {
         </TableBody>
       </Table>
 
-      <DynamicPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      {users?.length === 0 ? <Nodata /> : ''}
+
+      {meta?.totalPage! > 1 && (
+        <DynamicPagination
+          currentPage={currentPage}
+          totalPages={meta?.totalPage!}
+          onPageChange={onPageChange}
+        />
+      )}
     </div>
   );
 }

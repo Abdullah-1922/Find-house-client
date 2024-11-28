@@ -73,7 +73,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                   : 'bg-amber-500 hover:bg-amber-600 text-white'
               }
             >
-              {property?.category}
+              {property?.category === 'sell' ? 'For Sell' : 'For Rent'}
             </Badge>
           </div>
 
@@ -211,13 +211,14 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
             <CardFooter className="flex items-center justify-between gap-3 border-t p-4">
               <div className={`flex items-center gap-2 md:gap-3`}>
                 <Avatar
-                  className={`size-10 rounded-full ${
+                  className={`size-10 rounded-full object-cover ${
                     isGridView ? '' : 'size-6 md:size-10 '
                   }`}
                 >
                   <AvatarImage
                     src={property?.ownedBy?.image}
                     alt={property?.ownedBy?.image}
+                    className="object-cover"
                   />
                   <AvatarFallback>{property?.ownedBy?.image}</AvatarFallback>
                 </Avatar>
