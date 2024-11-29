@@ -44,7 +44,7 @@ const ReviewCard: React.FC<Review> = ({
           ))}
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      {/* <div className="flex items-center gap-2">
         <Button variant="ghost" size="icon" className="h-8 w-8">
           <Eye className="size-6" />
           <span className="sr-only">View Review</span>
@@ -53,7 +53,7 @@ const ReviewCard: React.FC<Review> = ({
           <Delete className="size-6 text-red-500" />
           <span className="sr-only">Delete Review</span>
         </Button>
-      </div>
+      </div> */}
     </Card>
   );
 };

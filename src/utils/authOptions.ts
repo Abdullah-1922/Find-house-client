@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import TwitterProvider from 'next-auth/providers/twitter';
 import FacebookProvider from 'next-auth/providers/facebook';
 import { NextAuthOptions } from 'next-auth';

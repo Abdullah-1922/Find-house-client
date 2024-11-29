@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TProductReview } from '@/types';
 import { baseApi } from '../../baseApi';
 
@@ -51,7 +52,29 @@ const productReviewApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['ProductReview'],
     }),
+    getAllProductReviewByAdmin: builder.query({
+      query: (query:any) => {
+        return {
+          url: `/product-review?${query}`,
+          method: 'GET',
+        };
+      },
+      providesTags: ['ProductReview'],
+    }),
+    getAllProductReviewByUser: builder.query({
+      query: ({query,userId}) => {
+        return {
+          url: `/product-review/user-review/${userId}${query}`,
+          method: 'GET',
+        };
+      },
+      providesTags: ['ProductReview'],
+    }),
+      
   }),
+   
+
+
 });
 
 export const {
@@ -60,4 +83,6 @@ export const {
   useCreateProductReviewMutation,
   useUpdateProductReviewMutation,
   useDeleteProductReviewMutation,
+  useGetAllProductReviewByAdminQuery,
+  useGetAllProductReviewByUserQuery
 } = productReviewApi;

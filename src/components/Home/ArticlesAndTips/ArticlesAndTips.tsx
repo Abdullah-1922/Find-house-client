@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { TBlog } from '@/types/blog/blog.type';
-import BlogCard from '@/components/shared/card/BlogCard';
-import { useGetAllBlogsQuery } from '@/redux/api/features/blog/blogApi';
+import { TBlog } from "@/types/blog/blog.type";
+import BlogCard from "@/components/shared/card/BlogCard";
+import { useGetAllBlogsQuery } from "@/redux/api/features/blog/blogApi";
 
 const ArticlesAndTips = () => {
-  const { data: blogData, isLoading } = useGetAllBlogsQuery('?sort=-createdAt');
+  const { data: blogData } = useGetAllBlogsQuery("?sort=-createdAt");
   const allBlogs = blogData?.data;
 
   return (
