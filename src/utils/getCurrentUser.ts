@@ -7,8 +7,6 @@ export const getCurrentUser = async () => {
   try {
     const accessToken = cookies().get('accessToken')?.value;
 
-    console.log('accessToken', accessToken);
-
     if (!accessToken) {
       return null;
     }

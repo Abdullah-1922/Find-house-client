@@ -1,4 +1,4 @@
-import { baseApi } from "../../baseApi";
+import { baseApi } from '../../baseApi';
 
 const productOrderApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -7,7 +7,14 @@ const productOrderApi = baseApi.injectEndpoints({
         url: `/payments?${query}`,
         method: 'GET',
       }),
-      providesTags: ["Payments"]
+      providesTags: ['Payments'],
+    }),
+    getOrdersByPaymentGateway: build.query({
+      query: (query) => ({
+        url: `/payments/product-payments/${query}`,
+        method: 'GET',
+      }),
+      providesTags: ['Payments'],
     }),
     updatePaymentStatus: build.mutation({
       query: ({ id, status }) => ({
@@ -15,9 +22,13 @@ const productOrderApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: { status },
       }),
-      invalidatesTags: ["Payments"]
+      invalidatesTags: ['Payments'],
     }),
-  })
-})
+  }),
+});
 
-export const { useGetAllOrderQuery, useUpdatePaymentStatusMutation } = productOrderApi;
+export const {
+  useGetAllOrderQuery,
+  useGetOrdersByPaymentGatewayQuery,
+  useUpdatePaymentStatusMutation,
+} = productOrderApi;

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
 import {
   useGetAllOrderQuery,
+  useGetOrdersByPaymentGatewayQuery,
   useUpdatePaymentStatusMutation,
 } from '@/redux/api/features/product/productOrderApi';
 import { TOrder } from '@/types/products/order.types';
@@ -34,12 +35,11 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 9;
 
-  const { data, isLoading } = useGetAllOrderQuery(
-    `gatewayName=${gatewayName}&limit=${limit}&page=${currentPage}`
+  const { data, isLoading } = useGetOrdersByPaymentGatewayQuery(
+    `${gatewayName}?limit=${limit}&page=${currentPage}`
   );
 
-  console.log(data);
-  const orders = data?.data.result as TOrder[];
+  const orders = data?.data as TOrder[];
   const meta = data?.meta;
   const totalPages = meta?.totalPage;
 
