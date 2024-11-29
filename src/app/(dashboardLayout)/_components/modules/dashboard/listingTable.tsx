@@ -20,6 +20,7 @@ import {
 } from "@/redux/api/features/property/propertyApi";
 import { useEffect, useState } from "react";
 import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
+import Nodata from "@/components/ui/noData";
 
 export default function ListingsTable({
   user,
@@ -63,10 +64,11 @@ export function AdminListingsTable() {
 
   return (
     <div className="space-y-4 bg-white rounded-md border p-2 md:p-5">
-      <h2 className="text-xl font-semibold tracking-tight text-gray-700">
-        Listing
-      </h2>
-      <div className="rounded-lg border bg-white shadow-sm">
+    <h2 className="text-xl font-semibold tracking-tight text-gray-700">
+      Listing
+    </h2>
+    <div className="rounded-lg border bg-white shadow-sm">
+     
         <Table>
           <TableHeader>
             <TableRow>
@@ -78,8 +80,9 @@ export function AdminListingsTable() {
               <TableHead className="w-[80px]">Edit</TableHead>
             </TableRow>
           </TableHeader>
+
           <TableBody>
-            {properties?.length === 0 && <div>No Property added</div>}
+            
             {properties?.length !== 0 &&
               properties?.map((property: TProperty) => (
                 <TableRow className="overflow-x-auto" key={property._id}>
@@ -125,14 +128,19 @@ export function AdminListingsTable() {
               ))}
           </TableBody>
         </Table>
-      </div>
-      {/* Pagination */}
-      <DynamicPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      
+      
     </div>
+    {/* Pagination */}
+    { properties?.length === 0 && <Nodata/>}
+    {
+      totalPages > 1 && <DynamicPagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={handlePageChange}
+    />
+    }  
+  </div>
   );
 }
 export function AgentListingsTable({ user }: { user: TUser }) {
@@ -165,7 +173,7 @@ export function AgentListingsTable({ user }: { user: TUser }) {
         Listing
       </h2>
       <div className="rounded-lg border bg-white shadow-sm">
-        {properties?.length !== 0 ? (
+       
           <Table>
             <TableHeader>
               <TableRow>
@@ -179,6 +187,7 @@ export function AgentListingsTable({ user }: { user: TUser }) {
             </TableHeader>
 
             <TableBody>
+              
               {properties?.length !== 0 &&
                 properties?.map((property: TProperty) => (
                   <TableRow className="overflow-x-auto" key={property._id}>
@@ -224,18 +233,18 @@ export function AgentListingsTable({ user }: { user: TUser }) {
                 ))}
             </TableBody>
           </Table>
-        ) : (
-          <div className="text-center font-bold text-3xl my-5">
-            No Property added
-          </div>
-        )}
+        
+        
       </div>
       {/* Pagination */}
-      <DynamicPagination
+      { properties?.length === 0 && <Nodata/>}
+      {
+        totalPages > 3 && <DynamicPagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
+      }  
     </div>
   );
 }
