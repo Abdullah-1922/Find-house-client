@@ -22,7 +22,7 @@ const BlogCard = ({ blog }: { blog: TBlog }) => {
         height={300}
         className="w-full h-64 object-cover"
       />
-      <div className="p-6">
+      <div className="p-5">
         <h2 className="text-xl font-semibold mb-2">{blog.title}</h2>
         <div className="flex items-center text-sm text-gray-500 mb-4">
           <span>

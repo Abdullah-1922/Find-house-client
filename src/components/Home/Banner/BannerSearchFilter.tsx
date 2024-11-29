@@ -47,7 +47,7 @@ const BannerSearchFilter = () => {
         <div className="relative">
           {/* Search Type Toggle */}
           {/* sily is none  backdrop-blur-sm */}
-          <div className="flex justify-start mb-5 rounded-lg p-1  shadow-sm gap-2 md:p-5">
+          <div className="flex justify-start mb-5 rounded-lg p-1  shadow-sm gap-5">
             <button
               onClick={() => setSearchType('sale')}
               className={cn(

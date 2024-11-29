@@ -5,11 +5,13 @@ import BlogCard from '@/components/shared/card/BlogCard';
 import { useGetAllBlogsQuery } from '@/redux/api/features/blog/blogApi';
 
 const ArticlesAndTips = () => {
-  const { data: blogData, isLoading } = useGetAllBlogsQuery('?sort=-createdAt');
+  const { data: blogData, isLoading } = useGetAllBlogsQuery(undefined);
   const allBlogs = blogData?.data;
 
+  console.log(allBlogs);
+
   return (
-    <div className="my-16">
+    <div className="my-16 px-2 md:px-4">
       <div className=" ">
         <h2 className="text-center text-4xl font-bold">Articles & Tips</h2>
         <p className="text-center">Read the latest news from our blog.</p>

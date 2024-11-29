@@ -4,7 +4,7 @@ const blogCommentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getBlogComments: builder.query({
       query: (blogId) => ({
-        url: `/blog-comment/${blogId}`,
+        url: `/blog-comment/${blogId}?sort=-createdAt`,
         method: 'GET',
       }),
       providesTags: (result, error, blogId) => [

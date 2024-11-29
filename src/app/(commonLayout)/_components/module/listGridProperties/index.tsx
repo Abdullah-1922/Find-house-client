@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 import {
@@ -18,46 +19,75 @@ import DynamicPagination from '@/components/shared/pagination/DynamicPagination'
 
 export default function ListGridProperties() {
   const [sortBy, setSortBy] = useState('Top Selling');
-  const [isGridView, setIsGridView] = useState<boolean | undefined>(true);
-
+  const [isGridView, setIsGridView] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Extract query parameters from the URL
+  const sortParam = searchParams.get('sort') || 'Top Selling';
+  const category = searchParams.get('category');
+  const pageParam = searchParams.get('page');
   const limit = 5;
-  const { data } = useGetAllPropertiesQuery(
-    `limit=${limit}&page=${currentPage}`
-  );
 
-  // handle pagination
-  const meta = data?.meta;
-  const totalPages = meta?.totalPage || 0;
+  // Sync the state with query parameters
+  useEffect(() => {
+    if (sortParam) setSortBy(sortParam);
+    if (pageParam) setCurrentPage(Number(pageParam));
+  }, [sortParam, pageParam]);
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  // Update the query parameters in the URL
+  const updateQueryParams = (key: string, value: string | number) => {
+    const params = new URLSearchParams(searchParams as any);
+    params.set(key, value.toString());
+    router.push(`?${params.toString()}`);
   };
 
+  // Handle sort change and update the URL
+  const handleSortChange = (value: string) => {
+    setSortBy(value);
+    updateQueryParams('sort', value);
+  };
+
+  // Handle page change and update the URL
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    updateQueryParams('page', page);
+  };
+
+  // Construct query for the Redux hook
+  const query = new URLSearchParams({
+    limit: limit.toString(),
+    page: currentPage.toString(),
+    ...(sortParam ? { sort: sortParam } : {}),
+    ...(category ? { category } : {}),
+  }).toString();
+
+  const { data } = useGetAllPropertiesQuery(query);
+
+  const meta = data?.meta;
+  const totalPages = meta?.totalPage || 0;
   const properties = data?.data as TProperty[];
 
   return (
     <div className="max-w-7xl mx-auto px-2 md:px-4">
       <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <p className="text-muted-foreground text-start">
-          {properties?.length} Search results
+          {properties?.length || 0} Search results
         </p>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium">SORT BY:</span>
-            <Select value={sortBy} onValueChange={setSortBy}>
+            <Select value={sortBy} onValueChange={handleSortChange}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Top Selling">Top Selling</SelectItem>
                 <SelectItem value="Most Viewed">Most Viewed</SelectItem>
-                <SelectItem value="Price(low to high)">
-                  Price(low to high)
-                </SelectItem>
-                <SelectItem value="Price(high to low)">
-                  Price(high to low)
-                </SelectItem>
+                <SelectItem value="-price">Price (low to high)</SelectItem>
+                <SelectItem value="price">Price (high to low)</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -91,13 +121,11 @@ export default function ListGridProperties() {
       </div>
 
       <div
-        className={`grid gap-6
-            ${
-              isGridView
-                ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
-                : 'md:grid-cols-1'
-            }
-        `}
+        className={`grid gap-6 ${
+          isGridView
+            ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
+            : 'md:grid-cols-1'
+        }`}
       >
         {properties?.map((property) => (
           <PropertyCard
@@ -107,7 +135,6 @@ export default function ListGridProperties() {
           />
         ))}
         {totalPages > 1 && (
-
           <DynamicPagination
             currentPage={currentPage}
             totalPages={totalPages}

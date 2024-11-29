@@ -13,6 +13,7 @@ import CommentSection from './coomentSection';
 import { useGetBlogCommentsQuery } from '@/redux/api/features/blog/blogCommentApi';
 import { TBlogComment } from '@/types';
 import { BlogSearchModal } from '../../modal/blogSearchModal';
+import Spinner from '@/components/ui/spinner';
 
 export default function Blogs({ blogId }: { blogId: string }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -47,7 +48,7 @@ export default function Blogs({ blogId }: { blogId: string }) {
       {/* Handle loading, error, or data rendering */}
       {singleBlogLoading ? (
         <div className="text-center py-10 text-gray-500 h-[300px] flex items-center justify-center">
-          Loading blog details...
+          <Spinner />
         </div>
       ) : error || !singleBlog?.data ? (
         <div className="text-center py-10 text-red-500">
