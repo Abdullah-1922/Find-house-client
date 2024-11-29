@@ -42,7 +42,7 @@ const commonNavItems: NavItem[] = [
     icon: BookmarkCheck,
   },
   { title: 'Payments', href: '/payment', icon: CreditCard },
-  { title: 'Invoices', href: '/invoice', icon: FileText },
+  { title: 'Invoices', href: '/product-invoice', icon: FileText },
   { title: 'Schedules', href: '/schedules', icon: CalendarCheck },
   { title: 'Setting', href: '/setting', icon: KeyRound },
 ];
