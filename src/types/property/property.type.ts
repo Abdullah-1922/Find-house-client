@@ -89,6 +89,8 @@ export type TProperty = {
   extraInfo: IExtraInfo;
   features: Features[];
   contactInfo: IContactInfo;
+  createdAt: string;
+  updatedAt: string;
   [key: string]: any;
 };
 

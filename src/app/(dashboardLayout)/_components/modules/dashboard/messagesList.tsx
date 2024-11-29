@@ -1,8 +1,15 @@
-import { Delete, Eye } from 'lucide-react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Delete, Eye } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  useGetAllInquiriesQuery,
+  useGetInquiriesByAgentQuery,
+  useGetInquiriesByUserQuery,
+} from "@/redux/api/features/inquiry/inquiryApi";
+import { divIcon } from "leaflet";
 
 interface Message {
   id: string;
@@ -11,54 +18,76 @@ interface Message {
     avatar: string;
     initials: string;
   };
+  receiver: {
+    name: string;
+  };
   content: string;
   timestamp: string;
 }
 
-const messages: Message[] = [
-  {
-    id: '1',
-    sender: {
-      name: 'Mary Smith',
-      avatar: '/placeholder.svg',
-      initials: 'MS',
-    },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore',
-    timestamp: '22 Minutes ago',
-  },
-  {
-    id: '2',
-    sender: {
-      name: 'Karl Tyron',
-      avatar: '/placeholder.svg',
-      initials: 'KT',
-    },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore',
-    timestamp: '23 Minutes ago',
-  },
-  {
-    id: '3',
-    sender: {
-      name: 'Lisa Willis',
-      avatar: '/placeholder.svg',
-      initials: 'LW',
-    },
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore',
-    timestamp: '53 Minutes ago',
-  },
-];
+export default function MessagesList({
+  user,
+  role,
+}: {
+  user: any;
+  role: "user" | "agent" | "admin";
+}) {
+  return (
+    <div>
+      {role === "admin" ? (
+        <AdminMessagesList user={user} />
+      ) : (
+        <AgentMessagesList user={user} />
+      )}
+    </div>
+  );
+}
 
-export default function MessagesList() {
+export function AdminMessagesList({ user }: { user: any }) {
+  const { data } = useGetAllInquiriesQuery("limit=5&page=1");
+  const inquiryData = data?.data?.result;
+  const messages: Message[] = inquiryData?.map((data: any, index: number) => {
+    const senderName = data.fullName;
+    const initials = senderName
+      .split(" ")
+      .map((name: string) => name[0])
+      .join("");
+    const avatar = data.user.image;
+
+    const formattedTimestamp = new Date(data.createdAt).toLocaleString(
+      "en-GB",
+      {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      }
+    );
+
+    return {
+      id: (index + 1).toString(),
+      sender: {
+        name: senderName,
+        avatar: avatar,
+        initials: initials,
+      },
+      receiver: {
+        name: data.agent.firstName,
+      },
+      content: data.message,
+      timestamp: formattedTimestamp,
+    };
+  });
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-xl text-gray-700">Message</CardTitle>
       </CardHeader>
       <CardContent className="grid gap-4">
-        {messages.map((message) => (
+        {messages?.map((message) => (
           <div
             key={message.id}
             className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 rounded-lg border p-4"
@@ -74,7 +103,9 @@ export default function MessagesList() {
               <div className="flex items-start gap-4">
                 <div className="grid flex-1 items-center gap-1">
                   <div className="flex flex-col">
-                    <div className="font-semibold">{message.sender.name}</div>
+                    <div className="font-semibold">
+                      {message.sender.name} to {message.receiver.name}
+                    </div>
                     <div className="text-sm text-muted-foreground">
                       {message.timestamp}
                     </div>
@@ -85,18 +116,181 @@ export default function MessagesList() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-center gap-2 mt-7">
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <Eye className="size-6" />
-                <span className="sr-only">View message</span>
-              </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <Delete className="size-6 text-red-500" />
-                <span className="sr-only">Copy message</span>
-              </Button>
-            </div>
           </div>
         ))}
+      </CardContent>
+    </Card>
+  );
+}
+export function AgentMessagesList({ user }: { user: any }) {
+  console.log(user);
+  const { data } = useGetInquiriesByAgentQuery({
+    agentId: user._id,
+    query: "limit=5&page=1",
+  });
+  const inquiryData = data?.data?.result;
+
+  const messages: Message[] = inquiryData?.map((data: any, index: number) => {
+    const senderName = data.fullName;
+    const initials = senderName
+      .split(" ")
+      .map((name: string) => name[0])
+      .join("");
+    const avatar = data.user.image;
+
+    const formattedTimestamp = new Date(data.createdAt).toLocaleString(
+      "en-GB",
+      {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      }
+    );
+
+    return {
+      id: (index + 1).toString(),
+      sender: {
+        name: senderName,
+        avatar: avatar,
+        initials: initials,
+      },
+      receiver: {
+        name: data.agent.firstName,
+      },
+      content: data.message,
+      timestamp: formattedTimestamp,
+    };
+  });
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-xl text-gray-700">Message</CardTitle>
+      </CardHeader>
+
+      <CardContent className="grid gap-4">
+        {inquiryData?.length === 0 && <div>No message</div>}
+        {inquiryData?.length !== 0 &&
+          messages?.map((message) => (
+            <div
+              key={message.id}
+              className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 rounded-lg border p-4"
+            >
+              <div className="flex flex-col md:flex-row items-start gap-2">
+                <Avatar className="size-16">
+                  <AvatarImage
+                    src={message.sender.avatar}
+                    alt={message.sender.name}
+                  />
+                  <AvatarFallback>{message.sender.initials}</AvatarFallback>
+                </Avatar>
+                <div className="flex items-start gap-4">
+                  <div className="grid flex-1 items-center gap-1">
+                    <div className="flex flex-col">
+                      <div className="font-semibold">
+                        {message.sender.name} to {message.receiver.name}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        {message.timestamp}
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foregrounds">
+                      {message.content}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+      </CardContent>
+    </Card>
+  );
+}
+export function UserMessagesList({ user }: { user: any }) {
+  const { data } = useGetInquiriesByUserQuery({
+    userId: user._id,
+    query: "limit=5&page=1",
+  });
+  const inquiryData = data?.data?.result;
+
+  const messages: Message[] = inquiryData?.map((data: any, index: number) => {
+    const senderName = data.fullName;
+    const initials = senderName
+      .split(" ")
+      .map((name: string) => name[0])
+      .join("");
+    const avatar = data.user.image;
+
+    const formattedTimestamp = new Date(data.createdAt).toLocaleString(
+      "en-GB",
+      {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      }
+    );
+
+    return {
+      id: (index + 1).toString(),
+      sender: {
+        name: senderName,
+        avatar: avatar,
+        initials: initials,
+      },
+      receiver: {
+        name: data.agent.firstName,
+      },
+      content: data.message,
+      timestamp: formattedTimestamp,
+    };
+  });
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-xl text-gray-700">Message</CardTitle>
+      </CardHeader>
+
+      <CardContent className="grid gap-4">
+        {inquiryData?.length === 0 && <div>No message</div>}
+        {inquiryData?.length !== 0 &&
+          messages?.map((message) => (
+            <div
+              key={message.id}
+              className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 rounded-lg border p-4"
+            >
+              <div className="flex flex-col md:flex-row items-start gap-2">
+                <Avatar className="size-16">
+                  <AvatarImage
+                    src={message.sender.avatar}
+                    alt={message.sender.name}
+                  />
+                  <AvatarFallback>{message.sender.initials}</AvatarFallback>
+                </Avatar>
+                <div className="flex items-start gap-4">
+                  <div className="grid flex-1 items-center gap-1">
+                    <div className="flex flex-col">
+                      <div className="font-semibold">
+                        {message.sender.name} to {message.receiver.name}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        {message.timestamp}
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foregrounds">
+                      {message.content}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
       </CardContent>
     </Card>
   );

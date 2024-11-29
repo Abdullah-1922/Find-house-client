@@ -16,9 +16,9 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useCreateInquiryMutation } from "@/redux/api/features/property/InquiryApi";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { useUser } from "@/hooks/user.hook";
+import { useCreateInquiryMutation } from "@/redux/api/features/property/inquiryApi";
 
 interface AgentInformationProps {
   agent: {
