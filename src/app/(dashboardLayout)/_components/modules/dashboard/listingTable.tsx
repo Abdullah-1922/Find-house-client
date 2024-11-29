@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Pencil, Star } from 'lucide-react';
-import { format } from 'date-fns';
+import { Pencil } from "lucide-react";
+import { format } from "date-fns";
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -12,48 +12,55 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
+import { TProperty, TUser } from "@/types";
+import {
+  useGetAllPropertiesQuery,
+  useGetMyAllPropertiesQuery,
+} from "@/redux/api/features/property/propertyApi";
+import { useEffect, useState } from "react";
+import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
 
-interface Listing {
-  id: string;
-  name: string;
-  date: Date;
-  rating: number;
-  status: 'Active' | 'Non-Active';
+export default function ListingsTable({
+  user,
+  role,
+}: {
+  user: TUser;
+  role: "admin" | "agent";
+}) {
+  return (
+    <div>
+      {role === "admin" ? (
+        <AdminListingsTable />
+      ) : (
+        <AgentListingsTable user={user} />
+      )}
+    </div>
+  );
 }
+export function AdminListingsTable() {
+  const [currentPage, setCurrentPage] = useState(1);
 
-const listings: Listing[] = [
-  {
-    id: '1',
-    name: 'Luxury Restaurant',
-    date: new Date('2020-01-23'),
-    rating: 5.0,
-    status: 'Active',
-  },
-  {
-    id: '2',
-    name: 'Gym in Town',
-    date: new Date('2020-02-11'),
-    rating: 4.5,
-    status: 'Active',
-  },
-  {
-    id: '3',
-    name: 'Cafe in Boston',
-    date: new Date('2020-01-09'),
-    rating: 5.0,
-    status: 'Non-Active',
-  },
-  {
-    id: '4',
-    name: 'Car Dealer in New York',
-    date: new Date('2018-02-24'),
-    rating: 4.5,
-    status: 'Active',
-  },
-];
+  const limit = 3;
 
-export default function ListingsTable() {
+  const { data: propertyData } = useGetAllPropertiesQuery(
+    `limit=${limit}&page=${currentPage}`
+  );
+
+  const properties = propertyData?.data as TProperty[];
+
+  const meta = propertyData?.meta;
+  const totalPages = meta?.totalPage;
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    // Whenever the sortBy or page changes, reset to the first page
+    setCurrentPage(1);
+  }, []);
+
   return (
     <div className="space-y-4 bg-white rounded-md border p-2 md:p-5">
       <h2 className="text-xl font-semibold tracking-tight text-gray-700">
@@ -65,53 +72,170 @@ export default function ListingsTable() {
             <TableRow>
               <TableHead>Listing Name</TableHead>
               <TableHead>Date</TableHead>
-              <TableHead>Rating</TableHead>
+              <TableHead>favorite By</TableHead>
+              <TableHead>category</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="w-[80px]">Edit</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {listings.map((listing) => (
-              <TableRow className="overflow-x-auto" key={listing.id}>
-                <TableCell className="font-medium whitespace-nowrap">
-                  {listing.name}
-                </TableCell>
-                <TableCell className="whitespace-nowrap">
-                  {format(listing.date, 'dd MMM yyyy')}
-                </TableCell>
-                <TableCell className="whitespace-nowrap">
-                  <div className="flex items-center gap-1">
-                    <Star className="size-4 fill-yellow-400 text-yellow-400 mb-1" />
-                    <p>{listing.rating.toFixed(1)}</p>
-                  </div>
-                </TableCell>
-                <TableCell className="whitespace-nowrap">
-                  <Badge
-                    variant="outline"
-                    className={
-                      listing.status === 'Active'
-                        ? 'border-green-500 text-green-500'
-                        : 'border-red-500 text-red-500'
-                    }
-                  >
-                    {listing.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="whitespace-nowrap">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 text-muted-foreground"
-                  >
-                    <Pencil className="h-4 w-4" />
-                    <span className="sr-only">Edit {listing.name}</span>
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {properties?.length === 0 && <div>No Property added</div>}
+            {properties?.length !== 0 &&
+              properties?.map((property: TProperty) => (
+                <TableRow className="overflow-x-auto" key={property._id}>
+                  <TableCell className="font-medium whitespace-nowrap">
+                    {property.title}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    {format(property.createdAt, "dd MMM yyyy")}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    <div className="flex items-center gap-1">
+                      {property.favoriteBy?.length} user
+                    </div>
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    <div className="flex items-center gap-1">
+                      {property.category}
+                    </div>
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    <Badge
+                      variant="outline"
+                      className={
+                        property.status === "active"
+                          ? "border-green-500 text-green-500"
+                          : "border-red-500 text-red-500"
+                      }
+                    >
+                      {property.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-muted-foreground"
+                    >
+                      <Pencil className="h-4 w-4" />
+                      <span className="sr-only">Edit {property?.title}</span>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </div>
+      {/* Pagination */}
+      <DynamicPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+    </div>
+  );
+}
+export function AgentListingsTable({ user }: { user: TUser }) {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const limit = 3;
+
+  const { data: propertyData } = useGetMyAllPropertiesQuery({
+    userId: user._id,
+    query: `?limit=${limit}&page=${currentPage}`,
+  });
+
+  const properties = propertyData?.data.result as TProperty[];
+
+  const meta = propertyData?.meta;
+  const totalPages = meta?.totalPage;
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    // Whenever the sortBy or page changes, reset to the first page
+    setCurrentPage(1);
+  }, []);
+  console.log(properties);
+  return (
+    <div className="space-y-4 bg-white rounded-md border p-2 md:p-5">
+      <h2 className="text-xl font-semibold tracking-tight text-gray-700">
+        Listing
+      </h2>
+      <div className="rounded-lg border bg-white shadow-sm">
+        {properties?.length !== 0 ? (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Listing Name</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>favorite By</TableHead>
+                <TableHead>category</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="w-[80px]">Edit</TableHead>
+              </TableRow>
+            </TableHeader>
+
+            <TableBody>
+              {properties?.length !== 0 &&
+                properties?.map((property: TProperty) => (
+                  <TableRow className="overflow-x-auto" key={property._id}>
+                    <TableCell className="font-medium whitespace-nowrap">
+                      {property.title}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {format(property.createdAt, "dd MMM yyyy")}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      <div className="flex items-center gap-1">
+                        {property.favoriteBy?.length} user
+                      </div>
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      <div className="flex items-center gap-1">
+                        {property.category}
+                      </div>
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      <Badge
+                        variant="outline"
+                        className={
+                          property.status === "active"
+                            ? "border-green-500 text-green-500"
+                            : "border-red-500 text-red-500"
+                        }
+                      >
+                        {property.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 text-muted-foreground"
+                      >
+                        <Pencil className="h-4 w-4" />
+                        <span className="sr-only">Edit {property?.title}</span>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <div className="text-center font-bold text-3xl my-5">
+            No Property added
+          </div>
+        )}
+      </div>
+      {/* Pagination */}
+      <DynamicPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }
