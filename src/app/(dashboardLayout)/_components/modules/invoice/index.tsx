@@ -38,7 +38,7 @@ export default function Invoice() {
 
       {allPaymentHistory?.length === 0 && <Nodata />}
 
-      {totalPages > 5 && (
+      {totalPages > 1 && (
         <DynamicPagination
           currentPage={currentPage}
           totalPages={totalPages}

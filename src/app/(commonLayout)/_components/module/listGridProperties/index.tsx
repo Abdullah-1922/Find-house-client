@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-
 import {
   Select,
   SelectContent,
@@ -11,43 +10,46 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { LayoutGrid, List } from 'lucide-react';
+import { LayoutGrid, List, Rotate3D, RotateCw } from 'lucide-react';
 import PropertyCard from '@/components/shared/card/PropertyCard';
 import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
 import { TProperty } from '@/types';
 import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
+import PropertyLoadingCard from '@/components/shared/card/PropertyLoadingCard';
+import Link from 'next/link';
 
 export default function ListGridProperties() {
-  const [sortBy, setSortBy] = useState('Top Selling');
   const [isGridView, setIsGridView] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [price, setPrice] = useState<string>('-price');
 
   const searchParams = useSearchParams();
   const router = useRouter();
 
   // Extract query parameters from the URL
-  const sortParam = searchParams.get('sort') || 'Top Selling';
+  const sortParam = searchParams.get('sort') || price; // Default to sorting by price descending
   const category = searchParams.get('category');
+  const type = searchParams.get('type');
+  const bathrooms = searchParams.get('bathrooms');
+  const features = searchParams.get('features');
+  const location = searchParams.get('location');
+  const minPrice = searchParams.get('minPrice');
+  const maxPrice = searchParams.get('maxPrice');
+  const minArea = searchParams.get('minArea');
+  const maxArea = searchParams.get('maxArea');
   const pageParam = searchParams.get('page');
-  const limit = 5;
+  const limit = 9;
 
   // Sync the state with query parameters
   useEffect(() => {
-    if (sortParam) setSortBy(sortParam);
     if (pageParam) setCurrentPage(Number(pageParam));
-  }, [sortParam, pageParam]);
+  }, [pageParam]);
 
   // Update the query parameters in the URL
   const updateQueryParams = (key: string, value: string | number) => {
     const params = new URLSearchParams(searchParams as any);
     params.set(key, value.toString());
     router.push(`?${params.toString()}`);
-  };
-
-  // Handle sort change and update the URL
-  const handleSortChange = (value: string) => {
-    setSortBy(value);
-    updateQueryParams('sort', value);
   };
 
   // Handle page change and update the URL
@@ -62,9 +64,17 @@ export default function ListGridProperties() {
     page: currentPage.toString(),
     ...(sortParam ? { sort: sortParam } : {}),
     ...(category ? { category } : {}),
+    ...(type ? { type } : {}),
+    ...(bathrooms ? { bathrooms } : {}),
+    ...(features ? { features } : {}),
+    ...(location ? { location } : {}),
+    ...(minPrice ? { minPrice } : {}),
+    ...(maxPrice ? { maxPrice } : {}),
+    ...(minArea ? { minArea } : {}),
+    ...(maxArea ? { maxArea } : {}),
   }).toString();
 
-  const { data } = useGetAllPropertiesQuery(query);
+  const { data, isLoading } = useGetAllPropertiesQuery(query);
 
   const meta = data?.meta;
   const totalPages = meta?.totalPage || 0;
@@ -77,17 +87,27 @@ export default function ListGridProperties() {
           {properties?.length || 0} Search results
         </p>
         <div className="flex items-center gap-4">
+          <Link href={'/list-grid'}>
+            <Button size={'sm'} variant={'outline'}>
+              <RotateCw />
+            </Button>
+          </Link>
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium">SORT BY:</span>
-            <Select value={sortBy} onValueChange={handleSortChange}>
+            <Select
+              value={sortParam}
+              onValueChange={(value) => updateQueryParams('sort', value)}
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Top Selling">Top Selling</SelectItem>
-                <SelectItem value="Most Viewed">Most Viewed</SelectItem>
-                <SelectItem value="-price">Price (low to high)</SelectItem>
-                <SelectItem value="price">Price (high to low)</SelectItem>
+                <SelectItem onClick={() => setPrice('-price')} value="-price">
+                  Price (low to high)
+                </SelectItem>
+                <SelectItem onClick={() => setPrice('-rice')} value="price">
+                  Price (high to low)
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -127,6 +147,11 @@ export default function ListGridProperties() {
             : 'md:grid-cols-1'
         }`}
       >
+        {isLoading &&
+          Array.from({ length: 6 }, (_, index) => (
+            <PropertyLoadingCard key={index} />
+          ))}
+
         {properties?.map((property) => (
           <PropertyCard
             key={property.id}
@@ -134,14 +159,15 @@ export default function ListGridProperties() {
             isGridView={isGridView}
           />
         ))}
-        {totalPages > 1 && (
-          <DynamicPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        )}
       </div>
+
+      {totalPages > 1 && (
+        <DynamicPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 }

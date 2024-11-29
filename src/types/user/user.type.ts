@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TAuth } from '../auth/auth.type';
 
 export type TSocialMediaLinks = {

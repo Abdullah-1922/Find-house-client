@@ -1,4 +1,4 @@
-import BannerSearchFilter from './BannerSearchFilter';
+import PropertySearch from './propertySearch';
 
 const Banner = () => {
   return (
@@ -19,7 +19,7 @@ const Banner = () => {
               We Have Over Million Properties For You
             </p>
           </div>
-          <BannerSearchFilter />
+          <PropertySearch />
         </div>
       </div>
     </div>
