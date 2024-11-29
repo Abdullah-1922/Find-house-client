@@ -56,6 +56,7 @@ const roleBasedNavItems = {
     { title: 'Dashboard', href: '/agent-dashboard', icon: LayoutDashboard },
     { title: 'Profile', href: '/profile', icon: User2 },
     { title: 'Add Property', href: '/add-property', icon: Plus },
+    { title: 'Add Payment', href: '/add-payment', icon: Plus },
     {
       title: 'Sold Properties',
       href: '/agent-dashboard/properties-sold',
@@ -67,6 +68,7 @@ const roleBasedNavItems = {
     { title: 'Profile', href: '/profile', icon: User2 },
     { title: 'Add Product', href: '/admin-dashboard/add-product', icon: Plus },
     { title: 'Add Property', href: '/add-property', icon: Plus },
+    { title: 'Add Payment', href: '/add-payment', icon: Plus },
     {
       title: 'All Properties',
       href: '/admin-dashboard/all-properties',
