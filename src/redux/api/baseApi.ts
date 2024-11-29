@@ -38,6 +38,7 @@ export const baseApi = createApi({
     "myFavoriteProperties",
     "MyFavoriteProduct",
     "Payments",
+    "Stats",
     "Inquiry"
   ],
 

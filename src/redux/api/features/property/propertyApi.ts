@@ -12,9 +12,9 @@ const propertyApi = baseApi.injectEndpoints({
       providesTags: ['Property'],
     }),
     getMyAllProperties: builder.query({
-      query: (query) => {
+      query: ({userId,query}) => {
         return {
-          url: `/property/my-properties/${query}`,
+          url: `/property/my-property/${userId}/${query}`,
           method: 'GET',
         };
       },

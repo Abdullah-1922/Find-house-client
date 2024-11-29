@@ -119,7 +119,7 @@ export default function DashboardSidebar() {
       <div>
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className="absolute right-5 w-[140px] lg:hidden flex items-center px-3 py-2 mt-[97px] text-white rounded-md bg-[#24324A] border-none"
+          className="absolute right-5 w-[140px] lg:hidden flex items-center px-3 py-2 mt-[60px] text-white rounded-md bg-[#24324A] border-none"
         >
           <Dock />
           <p>{isOpen ? 'Close' : 'Open'} Sidebar</p>
