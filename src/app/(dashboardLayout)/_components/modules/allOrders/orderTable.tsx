@@ -29,11 +29,7 @@ import {
 } from '@/components/ui/tolltip';
 import { toast } from 'sonner';
 
-export default function OrderTable({
-  gatewayName,
-}: {
-  gatewayName: 'Online Payment' | 'Cash On Delivery';
-}) {
+export default function OrderTable({ gatewayName }: { gatewayName: string }) {
   const [updateStatus] = useUpdatePaymentStatusMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 9;
@@ -42,6 +38,7 @@ export default function OrderTable({
     `gatewayName=${gatewayName}&limit=${limit}&page=${currentPage}`
   );
 
+  console.log(data);
   const orders = data?.data.result as TOrder[];
   const meta = data?.meta;
   const totalPages = meta?.totalPage;

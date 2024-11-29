@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eye, EyeOff } from 'lucide-react';
 import { useSignupMutation } from '@/redux/api/features/auth/authApi';
-import { toast, Toaster } from 'sonner';
+import { toast } from 'sonner';
 import Cookies from 'js-cookie';
 import SocialLogin from './socialLogin';
 import { useRouter } from 'next/navigation';
@@ -71,7 +71,10 @@ export default function SignUpForm() {
     try {
       const response = await signupFn(payload).unwrap();
 
+      // Store tokens in localStorage and cookies
+      localStorage.setItem('accessToken', response.data.accessToken);
       Cookies.set('accessToken', response.data.accessToken);
+      Cookies.set('refreshToken', response.data.refreshToken);
 
       // Show toast notification
       toast.success('Sign-Up Successful!');
@@ -142,7 +145,7 @@ export default function SignUpForm() {
               {...register('password')}
             />
             <div
-              className="absolute inset-y-0 top-2 md:p-5 flex items-center cursor-pointer"
+              className="absolute inset-y-0 top-5 flex items-center cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -161,7 +164,7 @@ export default function SignUpForm() {
               {...register('confirmPassword')}
             />
             <div
-              className="absolute inset-y-0 top-2 md:p-5 flex items-center cursor-pointer"
+              className="absolute inset-y-0 top-5 flex items-center cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}

@@ -13,6 +13,8 @@ export const useUser = () => {
   useEffect(() => {
     const fetchUserId = () => {
       const token = Cookies.get('accessToken');
+
+      console.log('accessToken', token);
       if (token) {
         const decoded = decodeJWT(token) as DecodedJWT;
         if (decoded?._id) {
