@@ -71,10 +71,7 @@ export default function SignUpForm() {
     try {
       const response = await signupFn(payload).unwrap();
 
-      // Store tokens in localStorage and cookies
-      localStorage.setItem('accessToken', response.data.accessToken);
       Cookies.set('accessToken', response.data.accessToken);
-      Cookies.set('refreshToken', response.data.refreshToken);
 
       // Show toast notification
       toast.success('Sign-Up Successful!');

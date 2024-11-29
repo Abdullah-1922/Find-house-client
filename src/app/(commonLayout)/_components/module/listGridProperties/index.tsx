@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -25,6 +25,10 @@ export default function ListGridProperties() {
 
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  if (!searchParams) {
+    notFound();
+  }
 
   // Extract query parameters from the URL
   const sortParam = searchParams.get('sort') || price; // Default to sorting by price descending

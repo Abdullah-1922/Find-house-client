@@ -42,13 +42,12 @@ export const authOptions: NextAuthOptions = {
         };
         try {
           const response = await axios.post(
-            'http://localhost:5001/api/v2/auth/login/twitter',
+            'https://find-house-server.vercel.app/api/v2/auth/login/twitter',
             userProfile
           );
 
-          if (response.data.data.accessToken || response.data.refreshToken) {
+          if (response.data.data.accessToken) {
             cookies().set('accessToken', response.data.data.accessToken);
-            cookies().set('refreshToken', response.data.data.refreshToken);
           }
           console.log('Twitter login response:', response.data);
         } catch (error) {
@@ -69,14 +68,13 @@ export const authOptions: NextAuthOptions = {
         };
         try {
           const response = await axios.post(
-            'http://localhost:5001/api/v2/auth/login/facebook',
+            'https://find-house-server.vercel.app/api/v2/auth/login/facebook',
             userProfile
           );
-          console.log('Twitter login response:', response.data);
+          console.log('Facebook login response:', response.data);
 
-          if (response.data.data.accessToken || response.data.refreshToken) {
+          if (response.data.data.accessToken) {
             cookies().set('accessToken', response.data.data.accessToken);
-            cookies().set('refreshToken', response.data.data.refreshToken);
           }
         } catch (error) {
           console.error('Error posting to backend:', error);
