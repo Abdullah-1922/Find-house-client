@@ -2,7 +2,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
-import { useGetAllOrderQuery } from "@/redux/api/features/product/productOrderApi";
+import {
+  useGetAllOrderQuery,
+  useUpdatePaymentStatusMutation,
+} from "@/redux/api/features/product/productOrderApi";
 import { TOrder } from "@/types/products/order.types";
 
 import Image from "next/image";
@@ -15,15 +18,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { format } from "date-fns";
-import Link from "next/link";
 import Spinner from "@/components/ui/spinner";
 import Nodata from "@/components/ui/noData";
+import { SquareCheckBig } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tolltip";
+import { toast } from "sonner";
 
 export default function OrderTable({
   gatewayName,
 }: {
   gatewayName: "Online Payment" | "Cash On Delivery";
 }) {
+  const [updateStatus] = useUpdatePaymentStatusMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 9;
 
@@ -37,6 +48,21 @@ export default function OrderTable({
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+  };
+
+  const handleUpdateStatus = async (id: string) => {
+    try {
+      const res = await updateStatus({ id, status: "Paid" }).unwrap();
+      console.log("res", res);
+      if (res?.data?.success) {
+        toast.success(
+          res?.data?.message || "Payment status updated successfully"
+        );
+      }
+    } catch (err: any) {
+      console.log("err", err);
+      toast.error(err?.data?.message || "Failed to update payment status");
+    }
   };
 
   if (isLoading) return <Spinner />;
@@ -106,19 +132,24 @@ export default function OrderTable({
               <TableCell className="py-5">{order.transactionId}</TableCell>
               <TableCell className="py-5">
                 <div className="flex gap-3 items-center justify-end">
-                  <Link href={`/edit-property/${order._id}`}>
-                    <Button
-                      variant="outline"
-                      className="text-green-600 hover:text-green-700"
-                      size="sm"
-                    >
-                      Edit
-                    </Button>
-                  </Link>
-                  {/* <PopConfirm
-                    name={"property"}
-                    onConfirm={() => handleDeleteProperty(order.id.toString())}
-                  /> */}
+                  {order.status !== "Paid" && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <SquareCheckBig
+                            onClick={() => {
+                              handleUpdateStatus(order._id);
+                            }}
+                            className="cursor-pointer p-2 rounded-md bg-green-600 text-white"
+                            size={35}
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Mark as Paid</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
                 </div>
               </TableCell>
             </TableRow>

@@ -8,8 +8,16 @@ const productOrderApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
       providesTags: ["Payments"]
-    })
+    }),
+    updatePaymentStatus: build.mutation({
+      query: ({ id, status }) => ({
+        url: `/payments/${id}`,
+        method: 'PATCH',
+        body: { status },
+      }),
+      invalidatesTags: ["Payments"]
+    }),
   })
 })
 
-export const { useGetAllOrderQuery } = productOrderApi;
+export const { useGetAllOrderQuery, useUpdatePaymentStatusMutation } = productOrderApi;
