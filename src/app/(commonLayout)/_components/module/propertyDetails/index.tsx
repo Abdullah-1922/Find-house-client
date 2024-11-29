@@ -1,21 +1,22 @@
-'use client';
-import React from 'react';
-import PropertyCarousel from './propertyCarousel';
-import CalenderSchedule from '../agencies/CalerderSchedule';
-import PropertyDetails from './propertyDetails';
-import PropertyDescription from './propertyDescription';
-import AgentInformation from './agentInformation';
-import FloorPlan from './floorPlan';
-import PropertyVideo from './propertyVideo';
-import FeaturedProperties from '../agencies/FeatureProperties';
-import ResentProperties from '../agencies/ResentProperties';
-import SpecialOfTheDay from './specialOfTheDay';
-import ProperLocation from './propertyLocation';
-import PopularTags from './PopularTags';
-import ResentPropertySlider from '@/app/(commonLayout)/_components/module/homeMap/resentPropertySlider';
-import { useGetSinglePropertyQuery } from '@/redux/api/features/property/propertyApi';
-import { TProperty } from '@/types';
-import Spinner from '@/components/ui/spinner';
+"use client";
+import React from "react";
+import PropertyCarousel from "./propertyCarousel";
+import CalenderSchedule from "../agencies/CalerderSchedule";
+import PropertyDetails from "./propertyDetails";
+import PropertyDescription from "./propertyDescription";
+import AgentInformation from "./agentInformation";
+import FloorPlan from "./floorPlan";
+import PropertyVideo from "./propertyVideo";
+import FeaturedProperties from "../agencies/FeatureProperties";
+import ResentProperties from "../agencies/ResentProperties";
+import SpecialOfTheDay from "./specialOfTheDay";
+import ProperLocation from "./propertyLocation";
+import PopularTags from "./PopularTags";
+import ResentPropertySlider from "@/app/(commonLayout)/_components/module/homeMap/resentPropertySlider";
+import { useGetSinglePropertyQuery } from "@/redux/api/features/property/propertyApi";
+import { TProperty } from "@/types";
+import Spinner from "@/components/ui/spinner";
+import { Toaster } from "sonner";
 
 export default function Property({ propertyId }: { propertyId: string }) {
   const { data, isLoading } = useGetSinglePropertyQuery(propertyId);
@@ -55,7 +56,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
 
   const slideImages = images.map((image) => ({
     src: image,
-    alt: 'image',
+    alt: "image",
   }));
 
   const { firstName, secondName, email, image, _id: agetId } = property.author;
@@ -67,6 +68,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
     phone: contactInfo.phone as string,
     email,
     image,
+    _id: agetId,
   };
   return (
     <div>
@@ -103,6 +105,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
         </div>
       </div>
       <ResentPropertySlider />
+      <Toaster duration={2000} position="bottom-right" />
     </div>
   );
 }
