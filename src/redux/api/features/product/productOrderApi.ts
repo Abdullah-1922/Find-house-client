@@ -24,11 +24,23 @@ const productOrderApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Payments'],
     }),
+    casOnDeliveryStatusUpdate: build.mutation({
+      query: (data) => {
+        console.log(data);
+        return {
+          url: `/payments/cash-on-delivery/${data.id}`,
+          method: 'POST',
+          body: data.data,
+        };
+      },
+      invalidatesTags: ['Payments'],
+    }),
   }),
 });
 
 export const {
   useGetAllOrderQuery,
   useGetOrdersByPaymentGatewayQuery,
+  useCasOnDeliveryStatusUpdateMutation,
   useUpdatePaymentStatusMutation,
 } = productOrderApi;
