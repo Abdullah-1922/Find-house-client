@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { Delete } from 'lucide-react';
+import Image from "next/image";
+import { Delete } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -7,13 +7,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { format } from 'date-fns';
-import Spinner from '@/components/ui/spinner';
-import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
-import { useUpdateUserRoleMutation } from '@/redux/api/features/users/userApi';
-import { TUser } from '@/types';
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
+import Spinner from "@/components/ui/spinner";
+import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
+import { useUpdateUserRoleMutation } from "@/redux/api/features/users/userApi";
+import { TUser } from "@/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,9 +22,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { toast } from 'sonner';
-import Nodata from '@/components/ui/noData';
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
+import Nodata from "@/components/ui/noData";
 
 interface UserTableProps {
   users: TUser[];
@@ -46,19 +46,19 @@ export default function UserTable({
   // handle update user role
   const handleUpdateUserRole = async (
     id: string,
-    role: 'user' | 'agent' | 'admin'
+    role: "user" | "agent" | "admin"
   ) => {
     if (!id) return;
 
-    const loadingToast = toast.loading('User role updating...');
+    const loadingToast = toast.loading("User role updating...");
     try {
       const res = await updateRole({ id, role }).unwrap();
       if (res.success) {
-        toast.success('User role updated successfully', { id: loadingToast });
+        toast.success("User role updated successfully", { id: loadingToast });
       }
     } catch (error: unknown) {
       const message =
-        error instanceof Error ? error.message : 'Failed to update user role';
+        error instanceof Error ? error.message : "Failed to update user role";
       toast.error(message, { id: loadingToast });
     }
   };
@@ -80,19 +80,19 @@ export default function UserTable({
           {users?.map((user, index) => (
             <TableRow
               key={user._id}
-              className={`${index % 2 === 0 ? 'bg-muted/50' : ''}`}
+              className={`${index % 2 === 0 ? "bg-muted/50" : ""}`}
             >
               <TableCell colSpan={2} className="py-5">
                 <div className="flex items-start gap-4">
                   <div className="relative h-[70px] w-24 overflow-hidden rounded-lg">
                     <Image
-                      src={user.image || '/default-avatar.png'}
+                      src={user.image || "/default-avatar.png"}
                       alt={user.firstName}
                       fill
                       className="object-cover"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.src = '/fallback-image.jpg';
+                        target.src = "/fallback-image.jpg";
                       }}
                     />
                   </div>
@@ -105,34 +105,34 @@ export default function UserTable({
                 </div>
               </TableCell>
               <TableCell className="py-5">
-                {format(new Date(user.createdAt), 'dd MMM, yyyy')}
+                {format(new Date(user.createdAt), "dd MMM, yyyy")}
               </TableCell>
               <TableCell className="capitalize">{user.role}</TableCell>
               <TableCell className="py-5">
                 <div className="flex gap-3 items-center justify-end">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline">Edit</Button>
+                      <Button variant="outline">Update Role</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56">
                       <DropdownMenuLabel>Update Role</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
                         <DropdownMenuItem
-                          onClick={() => handleUpdateUserRole(user._id, 'user')}
+                          onClick={() => handleUpdateUserRole(user._id, "user")}
                         >
                           Make User
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() =>
-                            handleUpdateUserRole(user._id, 'agent')
+                            handleUpdateUserRole(user._id, "agent")
                           }
                         >
                           Make Agent
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() =>
-                            handleUpdateUserRole(user._id, 'admin')
+                            handleUpdateUserRole(user._id, "admin")
                           }
                         >
                           Make Admin
@@ -153,7 +153,7 @@ export default function UserTable({
         </TableBody>
       </Table>
 
-      {users?.length === 0 ? <Nodata /> : ''}
+      {users?.length === 0 ? <Nodata /> : ""}
 
       {totalPages > 1 && (
         <DynamicPagination

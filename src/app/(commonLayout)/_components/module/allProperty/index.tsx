@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,8 +18,6 @@ export default function AllProperties() {
   const [sortBy, setSortBy] = useState("");
   const [isGridView, setIsGridView] = useState<boolean | undefined>(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const propertiesPerPage = 3;
-
   const limit = 9;
 
   // Update query based on sorting
@@ -31,7 +28,7 @@ export default function AllProperties() {
       ? "-price"
       : "";
 
-  const { data: propertyData, isFetching } = useGetAllPropertiesQuery(
+  const { data: propertyData } = useGetAllPropertiesQuery(
     `limit=${limit}&page=${currentPage}&sort=${sortQuery}`
   );
 

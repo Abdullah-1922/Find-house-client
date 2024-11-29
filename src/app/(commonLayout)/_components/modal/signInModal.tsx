@@ -1,35 +1,33 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Button } from '@/components/ui/button';
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Eye, EyeOff } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import SocialLogin from '../module/signup/socialLogin';
-import { useLoginMutation } from '@/redux/api/features/auth/authApi';
-import { toast, Toaster } from 'sonner';
-import Cookies from 'js-cookie';
-import { useUser } from '@/hooks/user.hook';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import SocialLogin from "../module/signup/socialLogin";
+import { useLoginMutation } from "@/redux/api/features/auth/authApi";
+import { toast, Toaster } from "sonner";
+import Cookies from "js-cookie";
+import { useUser } from "@/hooks/user.hook";
 
 export default function SignInModal() {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({
-    // email: "admin@gmail.com",
-    // password: "Admin123@",
-    // email: "rijwanjannat10@gmail.com",
-    // password: "A123456@",
-    email: 'rijwanjannat36@gmail.com',
-    password: 'User123@',
+    email: "admin@gmail.com",
+    password: "Admin123@",
+    // email: 'rijwanjannat36@gmail.com',
+    // password: 'User123@',
     remember: false,
   });
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
@@ -55,8 +53,8 @@ export default function SignInModal() {
 
   const resetForm = () => {
     setFormData({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       remember: false,
     });
     setErrorMessage(null);
@@ -73,9 +71,9 @@ export default function SignInModal() {
 
       // If login successful
       if (res?.data?.success) {
-        toast.success('Login successful');
-        Cookies.set('accessToken', res.data.data.accessToken);
-        Cookies.set('refreshToken', res.data.data.refreshToken);
+        toast.success("Login successful");
+        Cookies.set("accessToken", res.data.data.accessToken);
+        Cookies.set("refreshToken", res.data.data.refreshToken);
         resetForm();
         setOpen(false);
         window.location.reload();
@@ -84,11 +82,11 @@ export default function SignInModal() {
       // If error occurs
       if (res?.error) {
         setErrorMessage(
-          res.error?.data?.message || 'Something went wrong. Please try again.'
+          res.error?.data?.message || "Something went wrong. Please try again."
         );
       }
     } catch (error) {
-      setErrorMessage('An unexpected error occurred. Please try again.');
+      setErrorMessage("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -102,9 +100,9 @@ export default function SignInModal() {
         <DialogTrigger asChild>
           <Button
             className={`${
-              pathname === '/home-video'
-                ? 'text-white hover:text-white hover:bg-gray-50/20'
-                : 'text-black'
+              pathname === "/home-video"
+                ? "text-white hover:text-white hover:bg-gray-50/20"
+                : "text-black"
             }`}
             variant="ghost"
           >
@@ -115,7 +113,7 @@ export default function SignInModal() {
           <DialogHeader>
             <div className="flex items-center justify-between">
               <DialogTitle className="text-xl">
-                Welcome to{' '}
+                Welcome to{" "}
                 <span className="text-gray-800 font-bold">FINDHOUSES</span>
               </DialogTitle>
             </div>
@@ -140,7 +138,7 @@ export default function SignInModal() {
                 <Label htmlFor="password">Password *</Label>
                 <Input
                   id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleInputChange}
                   required
@@ -180,7 +178,7 @@ export default function SignInModal() {
                 type="submit"
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                {isLoading ? "Signing in..." : "Sign In"}
               </Button>
               {errorMessage && (
                 <p className="mt-2 text-center text-sm text-red-600">
@@ -189,11 +187,11 @@ export default function SignInModal() {
               )}
             </div>
             <p className="mt-5 text-center">
-              You have no account?{' '}
+              You have no account?{" "}
               <Link
                 onClick={() => setOpen(false)}
                 className="text-blue-500 underline"
-                href={'/signup'}
+                href={"/signup"}
               >
                 Create account
               </Link>
