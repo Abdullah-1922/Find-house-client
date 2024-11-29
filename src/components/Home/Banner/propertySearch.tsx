@@ -109,16 +109,24 @@ const PropertySearch: React.FC = () => {
   ];
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="w-full max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-md text-gray-800">
       <div className="mb-6 flex space-x-4">
         <Button
-          variant={searchType === 'sell' ? 'default' : 'outline'}
+          className={`${
+            searchType === 'sell'
+              ? 'bg-gray-800 hover:bg-gray-900'
+              : 'bg-white border text-gray-800 hover:bg-gray-10'
+          }`}
           onClick={() => setSearchType('sell')}
         >
           For Sale
         </Button>
         <Button
-          variant={searchType === 'rent' ? 'default' : 'outline'}
+          className={`${
+            searchType === 'rent'
+              ? 'bg-gray-800 hover:bg-gray-900'
+              : 'bg-white border text-gray-800 hover:bg-gray-10'
+          }`}
           onClick={() => setSearchType('rent')}
         >
           For Rent
@@ -164,7 +172,10 @@ const PropertySearch: React.FC = () => {
           </SelectContent>
         </Select>
 
-        <Button onClick={handleSearch} className="w-full">
+        <Button
+          onClick={handleSearch}
+          className="w-full bg-gray-800 hover:bg-gray-900"
+        >
           <Search className="mr-2 h-4 w-4" /> Search
         </Button>
       </div>
