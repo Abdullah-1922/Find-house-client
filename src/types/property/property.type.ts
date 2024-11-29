@@ -1,3 +1,5 @@
+import { TUser } from "../user/user.type";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type PropertyStatus = 'active' | 'non-active';
 
@@ -108,4 +110,23 @@ export type TSchedule = {
 export type TRangeFilters = {
   area?: { $gte: number; $lte: number };
   price?: { $gte: number; $lte: number };
+};
+
+
+export type TPropertyPayment = {
+  property: TProperty;
+  user: TUser;
+  category: "sell" | "rent";
+  paymentDate: Date;
+  extraInfo?: string;
+  totalPrice: number; // For Sell
+  monthlyRent: number; // For Rent
+  leaseDuration: number; // In months, for Rent
+  paymentType: "full" | "installment";
+  paymentStatus: "pending" | "completed" | "failed";
+  updatedBy: TUser;
+  gatewayName: string;
+  currency: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
