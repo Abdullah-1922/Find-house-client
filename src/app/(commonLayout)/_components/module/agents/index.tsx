@@ -1,42 +1,34 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { LayoutGrid, List } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { LayoutGrid, List } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui/pagination';
-import CalenderSchedule from '../agencies/CalerderSchedule';
-import RequestInquiry from '../agencies/RequestInquiry';
-import ResentProperties from '../agencies/ResentProperties';
-import FeaturedProperties from '../agencies/FeatureProperties';
-import { useGetRoleBasedUserQuery } from '@/redux/api/features/users/userApi';
-import { TUser } from '@/types';
-import Spinner from '@/components/ui/spinner';
-import Nodata from '@/components/ui/noData';
-import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
+} from "@/components/ui/select";
+
+import RequestInquiry from "../agencies/RequestInquiry";
+import ResentProperties from "../agencies/ResentProperties";
+import FeaturedProperties from "../agencies/FeatureProperties";
+import { useGetRoleBasedUserQuery } from "@/redux/api/features/users/userApi";
+import { TUser } from "@/types";
+import Spinner from "@/components/ui/spinner";
+import Nodata from "@/components/ui/noData";
+import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -58,7 +50,7 @@ export default function AllAgents() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    console.log('Selected Page:', page);
+    console.log("Selected Page:", page);
   };
 
   const agents = agentData?.data || ([] as TUser[]);
@@ -100,14 +92,14 @@ export default function AllAgents() {
               </div>
               <div className="flex gap-2">
                 <Button
-                  variant={isGridView ? 'default' : 'outline'}
+                  variant={isGridView ? "default" : "outline"}
                   size="icon"
                   onClick={() => setIsGridView(true)}
                 >
                   <LayoutGrid className="h-4 w-4" />
                 </Button>
                 <Button
-                  variant={!isGridView ? 'default' : 'outline'}
+                  variant={!isGridView ? "default" : "outline"}
                   size="icon"
                   onClick={() => setIsGridView(false)}
                 >
@@ -127,14 +119,14 @@ export default function AllAgents() {
           ) : (
             <div
               className={`mb-8 grid gap-6 ${
-                isGridView ? 'md:grid-cols-2' : 'grid-cols-1'
+                isGridView ? "md:grid-cols-2" : "grid-cols-1"
               }`}
             >
               {agents.map((agent: TUser) => (
                 <Card
                   key={agent._id}
                   className={`${
-                    isGridView ? 'flex flex-col' : 'flex flex-row'
+                    isGridView ? "flex flex-col" : "flex flex-row"
                   }`}
                 >
                   <CardHeader className="relative">
@@ -143,7 +135,7 @@ export default function AllAgents() {
                     </Badge>
                     <div className="flex justify-center">
                       <Image
-                        src={agent.image || '/default-avatar.png'}
+                        src={agent.image || "/default-avatar.png"}
                         alt={agent.firstName}
                         width={200}
                         height={200}
@@ -153,7 +145,7 @@ export default function AllAgents() {
                   </CardHeader>
                   <div
                     className={`${
-                      isGridView ? 'flex flex-col' : 'flex flex-col mt-5'
+                      isGridView ? "flex flex-col" : "flex flex-col mt-5"
                     } w-full`}
                   >
                     <CardContent className="space-y-4">
