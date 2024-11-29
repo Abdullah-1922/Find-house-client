@@ -37,6 +37,7 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
   const { data, isLoading } = useGetOrdersByPaymentGatewayQuery(
     `${gatewayName}?limit=${limit}&page=${currentPage}`
   );
+  console.log('data', data);
 
   const orders = data?.data as TOrder[];
   const meta = data?.meta;
