@@ -39,7 +39,8 @@ export const baseApi = createApi({
     "MyFavoriteProduct",
     "Payments",
     "Stats",
-    "Inquiry"
+    "Inquiry",
+    "PropertyPayment"
   ],
 
   endpoints: () => ({}),

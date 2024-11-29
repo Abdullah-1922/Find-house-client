@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Pencil } from 'lucide-react';
-import { format } from 'date-fns';
+import { Pencil } from "lucide-react";
+import { format } from "date-fns";
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -12,26 +12,26 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { TProperty, TUser } from '@/types';
+} from "@/components/ui/table";
+import { TProperty, TUser } from "@/types";
 import {
   useGetAllPropertiesQuery,
   useGetMyAllPropertiesQuery,
-} from '@/redux/api/features/property/propertyApi';
-import { useEffect, useState } from 'react';
-import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
-import Nodata from '@/components/ui/noData';
+} from "@/redux/api/features/property/propertyApi";
+import { useEffect, useState } from "react";
+import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
+import Nodata from "@/components/ui/noData";
 
 export default function ListingsTable({
   user,
   role,
 }: {
   user: TUser;
-  role: 'admin' | 'agent';
+  role: "admin" | "agent";
 }) {
   return (
     <div>
-      {role === 'admin' ? (
+      {role === "admin" ? (
         <AdminListingsTable />
       ) : (
         <AgentListingsTable user={user} />
@@ -88,7 +88,7 @@ export function AdminListingsTable() {
                     {property.title}
                   </TableCell>
                   <TableCell className="whitespace-nowrap">
-                    {format(property.createdAt, 'dd MMM yyyy')}
+                    {format(property.createdAt, "dd MMM yyyy")}
                   </TableCell>
                   <TableCell className="whitespace-nowrap">
                     <div className="flex items-center gap-1">
@@ -104,9 +104,9 @@ export function AdminListingsTable() {
                     <Badge
                       variant="outline"
                       className={
-                        property.status === 'active'
-                          ? 'border-green-500 text-green-500'
-                          : 'border-red-500 text-red-500'
+                        property.status === "active"
+                          ? "border-green-500 text-green-500"
+                          : "border-red-500 text-red-500"
                       }
                     >
                       {property.status}
@@ -189,7 +189,7 @@ export function AgentListingsTable({ user }: { user: TUser }) {
                     {property.title}
                   </TableCell>
                   <TableCell className="whitespace-nowrap">
-                    {format(property.createdAt, 'dd MMM yyyy')}
+                    {format(property.createdAt, "dd MMM yyyy")}
                   </TableCell>
                   <TableCell className="whitespace-nowrap">
                     <div className="flex items-center gap-1">
@@ -205,9 +205,9 @@ export function AgentListingsTable({ user }: { user: TUser }) {
                     <Badge
                       variant="outline"
                       className={
-                        property.status === 'active'
-                          ? 'border-green-500 text-green-500'
-                          : 'border-red-500 text-red-500'
+                        property.status === "active"
+                          ? "border-green-500 text-green-500"
+                          : "border-red-500 text-red-500"
                       }
                     >
                       {property.status}
