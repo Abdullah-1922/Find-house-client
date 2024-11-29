@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import './Navbar.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import navbarLogo from '../../../../public/assets/logo/logo-light-dark.svg';
-import Image from 'next/image';
-import Sidebar from './SideBar/Sidebar';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import UserProfileDropdown from './UserProfileDropdown';
-import SignInModal from '@/app/(commonLayout)/_components/modal/signInModal';
-import { useUser } from '@/hooks/user.hook';
+import "./Navbar.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import navbarLogo from "../../../../public/assets/logo/logo-light-dark.svg";
+import Image from "next/image";
+import Sidebar from "./SideBar/Sidebar";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import UserProfileDropdown from "./UserProfileDropdown";
+import SignInModal from "@/app/(commonLayout)/_components/modal/signInModal";
+import { useUser } from "@/hooks/user.hook";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className="lg:flex hidden">
           <div className="menu-bar ">
             <div className="flex items-center gap-10">
-              <Link href={'/'} className="logo">
+              <Link href={"/"} className="logo">
                 <Image
                   className="w-14"
                   width={1000}
@@ -110,15 +110,15 @@ const Navbar = () => {
                 href={
                   user
                     ? `/${
-                        user.role === 'user'
+                        user.role === "user"
                           ? `user-dashboard`
-                          : user.role === 'admin'
-                          ? 'admin-dashboard'
-                          : user.role === 'agent'
-                          ? 'agent-dashboard'
-                          : ''
+                          : user.role === "admin"
+                          ? "admin-dashboard"
+                          : user.role === "agent"
+                          ? "agent-dashboard"
+                          : ""
                       }`
-                    : '/signup'
+                    : "/signup"
                 }
               >
                 <Button className="text-white py-3 px-5 bg-gray-800 hover:bg-gray-900 rounded font-bold">
