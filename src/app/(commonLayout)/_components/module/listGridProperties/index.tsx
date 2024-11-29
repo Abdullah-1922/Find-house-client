@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-
 import {
   Select,
   SelectContent,
@@ -10,53 +10,103 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { LayoutGrid, List } from 'lucide-react';
+import { LayoutGrid, List, Rotate3D, RotateCw } from 'lucide-react';
 import PropertyCard from '@/components/shared/card/PropertyCard';
 import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
 import { TProperty } from '@/types';
 import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
+import PropertyLoadingCard from '@/components/shared/card/PropertyLoadingCard';
+import Link from 'next/link';
 
 export default function ListGridProperties() {
-  const [sortBy, setSortBy] = useState('Top Selling');
-  const [isGridView, setIsGridView] = useState<boolean | undefined>(true);
-
+  const [isGridView, setIsGridView] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const limit = 5;
-  const { data } = useGetAllPropertiesQuery(
-    `limit=${limit}&page=${currentPage}`
-  );
+  const [price, setPrice] = useState<string>('-price');
 
-  // handle pagination
-  const meta = data?.meta;
-  const totalPages = meta?.totalPage || 0;
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  // Extract query parameters from the URL
+  const sortParam = searchParams.get('sort') || price; // Default to sorting by price descending
+  const category = searchParams.get('category');
+  const type = searchParams.get('type');
+  const bathrooms = searchParams.get('bathrooms');
+  const features = searchParams.get('features');
+  const location = searchParams.get('location');
+  const minPrice = searchParams.get('minPrice');
+  const maxPrice = searchParams.get('maxPrice');
+  const minArea = searchParams.get('minArea');
+  const maxArea = searchParams.get('maxArea');
+  const pageParam = searchParams.get('page');
+  const limit = 9;
+
+  // Sync the state with query parameters
+  useEffect(() => {
+    if (pageParam) setCurrentPage(Number(pageParam));
+  }, [pageParam]);
+
+  // Update the query parameters in the URL
+  const updateQueryParams = (key: string, value: string | number) => {
+    const params = new URLSearchParams(searchParams as any);
+    params.set(key, value.toString());
+    router.push(`?${params.toString()}`);
   };
 
+  // Handle page change and update the URL
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    updateQueryParams('page', page);
+  };
+
+  // Construct query for the Redux hook
+  const query = new URLSearchParams({
+    limit: limit.toString(),
+    page: currentPage.toString(),
+    ...(sortParam ? { sort: sortParam } : {}),
+    ...(category ? { category } : {}),
+    ...(type ? { type } : {}),
+    ...(bathrooms ? { bathrooms } : {}),
+    ...(features ? { features } : {}),
+    ...(location ? { location } : {}),
+    ...(minPrice ? { minPrice } : {}),
+    ...(maxPrice ? { maxPrice } : {}),
+    ...(minArea ? { minArea } : {}),
+    ...(maxArea ? { maxArea } : {}),
+  }).toString();
+
+  const { data, isLoading } = useGetAllPropertiesQuery(query);
+
+  const meta = data?.meta;
+  const totalPages = meta?.totalPage || 0;
   const properties = data?.data as TProperty[];
 
   return (
     <div className="max-w-7xl mx-auto px-2 md:px-4">
       <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <p className="text-muted-foreground text-start">
-          {properties?.length} Search results
+          {properties?.length || 0} Search results
         </p>
         <div className="flex items-center gap-4">
+          <Link href={'/list-grid'}>
+            <Button size={'sm'} variant={'outline'}>
+              <RotateCw />
+            </Button>
+          </Link>
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium">SORT BY:</span>
-            <Select value={sortBy} onValueChange={setSortBy}>
+            <Select
+              value={sortParam}
+              onValueChange={(value) => updateQueryParams('sort', value)}
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Top Selling">Top Selling</SelectItem>
-                <SelectItem value="Most Viewed">Most Viewed</SelectItem>
-                <SelectItem value="Price(low to high)">
-                  Price(low to high)
+                <SelectItem onClick={() => setPrice('-price')} value="-price">
+                  Price (low to high)
                 </SelectItem>
-                <SelectItem value="Price(high to low)">
-                  Price(high to low)
+                <SelectItem onClick={() => setPrice('-rice')} value="price">
+                  Price (high to low)
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -91,14 +141,17 @@ export default function ListGridProperties() {
       </div>
 
       <div
-        className={`grid gap-6
-            ${
-              isGridView
-                ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
-                : 'md:grid-cols-1'
-            }
-        `}
+        className={`grid gap-6 ${
+          isGridView
+            ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
+            : 'md:grid-cols-1'
+        }`}
       >
+        {isLoading &&
+          Array.from({ length: 6 }, (_, index) => (
+            <PropertyLoadingCard key={index} />
+          ))}
+
         {properties?.map((property) => (
           <PropertyCard
             key={property.id}
@@ -106,15 +159,15 @@ export default function ListGridProperties() {
             isGridView={isGridView}
           />
         ))}
-        {totalPages > 1 && (
-
-          <DynamicPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        )}
       </div>
+
+      {totalPages > 1 && (
+        <DynamicPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 }

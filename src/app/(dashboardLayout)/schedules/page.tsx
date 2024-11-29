@@ -204,11 +204,13 @@ const SchedulePage = () => {
           {schedules?.length === 0 ? <Nodata /> : ''}
           {isLoading && <Spinner />}
 
-          <DynamicPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+          {totalPages > 1 && (
+            <DynamicPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
         </div>
       </div>
     </div>

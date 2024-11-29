@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function PropertyLoadingCard() {
   return (
@@ -49,5 +49,5 @@ export default function PropertyLoadingCard() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

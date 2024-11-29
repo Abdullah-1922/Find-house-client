@@ -81,9 +81,7 @@ export type TProperty = {
   category: PropertyCategory;
   type: PropertyType;
   rooms: number;
-  price: number;
   video: string;
-  area: number;
   images: string[];
   location: ILocation;
   extraInfo: IExtraInfo;
@@ -95,14 +93,19 @@ export type TProperty = {
 };
 
 export type TSchedule = {
-  _id: string
-  user: UserProperty
-  agent: UserProperty
-  property: TProperty
-  date: string
-  time: string
-  isAccepted: boolean
-  createdAt: string
-  updatedAt: string
-  isApproved: boolean
-}
+  _id: string;
+  user: UserProperty;
+  agent: UserProperty;
+  property: TProperty;
+  date: string;
+  time: string;
+  isAccepted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  isApproved: boolean;
+};
+
+export type TRangeFilters = {
+  area?: { $gte: number; $lte: number };
+  price?: { $gte: number; $lte: number };
+};

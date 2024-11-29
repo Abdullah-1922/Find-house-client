@@ -94,7 +94,7 @@ export default function PaymentHistory() {
         </Table>
         {isLoading && <Spinner />}
 
-        {totalPages > 5 && (
+        {totalPages > 1 && (
           <DynamicPagination
             currentPage={currentPage}
             totalPages={totalPages}

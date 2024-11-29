@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import ReviewCard from "./reviewCard";
-import { TProductReview, TUser } from "@/types";
+import React, { useEffect, useState } from 'react';
+import ReviewCard from './reviewCard';
+import { TProductReview, TUser } from '@/types';
 import {
   useGetAllProductReviewByAdminQuery,
   useGetAllProductReviewByUserQuery,
-} from "@/redux/api/features/product/productReviewApi";
-import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
+} from '@/redux/api/features/product/productReviewApi';
+import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
 
 interface TReview {
   name: string;
@@ -20,11 +20,11 @@ export default function Reviews({
   role,
 }: {
   user: TUser;
-  role: "user" | "admin" | "agent";
+  role: 'user' | 'admin' | 'agent';
 }) {
   return (
     <div>
-      {role === "admin" ? <AdminReviews /> : <UserReviews user={user} />}
+      {role === 'admin' ? <AdminReviews /> : <UserReviews user={user} />}
     </div>
   );
 }
@@ -70,11 +70,14 @@ export function AdminReviews() {
         ))}
       </div>
       {/* Pagination */}
-      <DynamicPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+
+      {totalPages > 1 && (
+        <DynamicPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 }
@@ -89,13 +92,14 @@ export function UserReviews({ user }: { user: TUser }) {
   });
   const reviewsData = ReviewRes?.data as TProductReview[];
 
-  const reviews = reviewsData?.map((item) => ({
-    name: `${item.userId.firstName} ${item.userId.secondName}`,
-    avatar: item.userId.image,
-    time: item.createdAt,
-    reviewText: item.review,
-    rating: item.rating,
-  })) || [];
+  const reviews =
+    reviewsData?.map((item) => ({
+      name: `${item.userId.firstName} ${item.userId.secondName}`,
+      avatar: item.userId.image,
+      time: item.createdAt,
+      reviewText: item.review,
+      rating: item.rating,
+    })) || [];
   const meta = ReviewRes?.meta;
   const totalPages = meta?.totalPage;
 
@@ -111,20 +115,27 @@ export function UserReviews({ user }: { user: TUser }) {
   return (
     <div className="space-y-6 bg-white rounded-md border p-2 md:p-5">
       <h2 className="text-xl font-semibold tracking-tight text-gray-700">
-       Product Reviews
+        Product Reviews
       </h2>
       <div className="grid gap-4 sm:grid-cols-1">
-        { reviews?.length === 0 && <div className="text-center text-3xl font-bold my-5">No reviews found</div>}
-        {reviews?.length !==0 && reviews?.map((review: TReview) => (
-          <ReviewCard key={review?.time} {...review} />
-        ))}
+        {reviews?.length === 0 && (
+          <div className="text-center text-3xl font-bold my-5">
+            No reviews found
+          </div>
+        )}
+        {reviews?.length !== 0 &&
+          reviews?.map((review: TReview) => (
+            <ReviewCard key={review?.time} {...review} />
+          ))}
       </div>
       {/* Pagination */}
-   {   reviews?.length!==0&&  <DynamicPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />}
+      {totalPages > 1 && (
+        <DynamicPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 }
