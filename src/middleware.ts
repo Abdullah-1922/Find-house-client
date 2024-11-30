@@ -36,6 +36,7 @@ export async function middleware(request: NextRequest) {
       "/admin-dashboard/all-products",
       "/admin-dashboard/all-users",
       "/admin-dashboard/all-orders",
+      "/admin-dashboard/newsletters",
       "/admin-dashboard/add-product",
       "/bookmarked-products",
       "/add-payment",
