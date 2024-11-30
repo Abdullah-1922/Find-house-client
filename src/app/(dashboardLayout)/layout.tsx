@@ -1,7 +1,7 @@
-import DashboardSidebar from '@/components/shared/dashboardMenubar';
-import DashboardNavbar from '@/components/shared/dashboardMenubar/dashboardNavbar';
-import React, { ReactNode } from 'react';
-import { Toaster } from 'sonner';
+import DashboardSidebar from "@/components/shared/dashboardMenubar";
+import DashboardNavbar from "@/components/shared/dashboardMenubar/dashboardNavbar";
+import React, { ReactNode } from "react";
+import { Toaster } from "sonner";
 
 interface TLayoutProps {
   children: ReactNode;
@@ -22,7 +22,7 @@ export default function Layout({ children }: TLayoutProps) {
             <DashboardNavbar />
           </header>
 
-          <section className="mt-20 px-2 md:pr-6 overflow-y-auto overflow-x-hidden py-2">
+          <section className="mt-20 px-2 md:pr-2 overflow-y-auto overflow-x-hidden py-2">
             {children}
           </section>
         </main>

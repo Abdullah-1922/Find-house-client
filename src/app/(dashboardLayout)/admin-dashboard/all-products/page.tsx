@@ -1,6 +1,6 @@
-'use client';
-import Image from 'next/image';
-import { Star } from 'lucide-react';
+"use client";
+import Image from "next/image";
+import { Star } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -8,21 +8,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { TProduct } from '@/types';
-import { format } from 'date-fns';
-import { useState } from 'react';
-import Spinner from '@/components/ui/spinner';
-import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
-import Link from 'next/link';
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { TProduct } from "@/types";
+import { format } from "date-fns";
+import { useState } from "react";
+import Spinner from "@/components/ui/spinner";
+import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
+import Link from "next/link";
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
-} from '@/redux/api/features/product/productApi';
-import { PopConfirm } from '@/components/ui/pop-confirm';
-import { toast } from 'sonner';
-import Nodata from '@/components/ui/noData';
+} from "@/redux/api/features/product/productApi";
+import { PopConfirm } from "@/components/ui/pop-confirm";
+import { toast } from "sonner";
+import Nodata from "@/components/ui/noData";
 
 export default function AllProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,20 +39,20 @@ export default function AllProductsPage() {
   const totalPages = meta?.totalPage;
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    console.log('Selected Page:', page);
+    console.log("Selected Page:", page);
   };
 
   // handle delete product
   const handleDeleteProduct = async (id: string) => {
-    const loadingToast = toast.loading('Product deleting...');
+    const loadingToast = toast.loading("Product deleting...");
     const res = await deleteProduct(id);
 
     if (res?.data?.success) {
-      toast.success('Product Deleted Successfully', {
+      toast.success("Product Deleted Successfully", {
         id: loadingToast,
       });
     } else {
-      toast.error('Failed to delete product', {
+      toast.error("Failed to delete product", {
         id: loadingToast,
       });
     }
@@ -64,7 +64,7 @@ export default function AllProductsPage() {
   }
 
   return (
-    <div className="space-y-6 bg-white rounded-md border p-2 md:p-5">
+    <div className="space-y-6 bg-white rounded-md border p-2 md:p-5 m-4">
       <h2 className="text-lg md:text-xl font-semibold tracking-tight text-gray-700">
         All Products
       </h2>
@@ -82,7 +82,7 @@ export default function AllProductsPage() {
             {productData?.map((product: TProduct, index: number) => (
               <TableRow
                 key={product._id}
-                className={`${index % 2 === 0 ? 'bg-muted/50' : ''}`}
+                className={`${index % 2 === 0 ? "bg-muted/50" : ""}`}
               >
                 <TableCell colSpan={2} className="py-5">
                   <div className="flex items-start gap-4">
@@ -96,7 +96,7 @@ export default function AllProductsPage() {
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.src =
-                            'https://code-theme.com/html/findhouses/images/feature-properties/fp-1.jpg';
+                            "https://code-theme.com/html/findhouses/images/feature-properties/fp-1.jpg";
                         }}
                       />
                     </div>
@@ -113,8 +113,8 @@ export default function AllProductsPage() {
                             key={i}
                             className={`h-4 w-4 ${
                               i < product.rating
-                                ? 'fill-yellow-400 text-yellow-400'
-                                : 'fill-muted text-muted'
+                                ? "fill-yellow-400 text-yellow-400"
+                                : "fill-muted text-muted"
                             }`}
                           />
                         ))}
@@ -127,7 +127,7 @@ export default function AllProductsPage() {
                 </TableCell>
                 <TableCell className="py-5">${product.price}</TableCell>
                 <TableCell className="py-5">
-                  {format(product.createdAt, 'dd MMM, yyyy')}
+                  {format(product.createdAt, "dd MMM, yyyy")}
                 </TableCell>
                 <TableCell className="py-5">
                   <div className="flex gap-3 items-center justify-end">
@@ -141,7 +141,7 @@ export default function AllProductsPage() {
                       </Button>
                     </Link>
                     <PopConfirm
-                      name={'product'}
+                      name={"product"}
                       onConfirm={() => handleDeleteProduct(product._id)}
                     />
                   </div>

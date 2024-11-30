@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import ReviewCard from './reviewCard';
-import { TProductReview, TUser } from '@/types';
+import React, { useEffect, useState } from "react";
+import ReviewCard from "./reviewCard";
+import { TProductReview, TUser } from "@/types";
 import {
   useGetAllProductReviewByAdminQuery,
   useGetAllProductReviewByUserQuery,
-} from '@/redux/api/features/product/productReviewApi';
-import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
+} from "@/redux/api/features/product/productReviewApi";
+import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
 
 interface TReview {
   name: string;
@@ -20,11 +20,11 @@ export default function Reviews({
   role,
 }: {
   user: TUser;
-  role: 'user' | 'admin' | 'agent';
+  role: "user" | "admin" | "agent";
 }) {
   return (
     <div>
-      {role === 'admin' ? <AdminReviews /> : <UserReviews user={user} />}
+      {role === "admin" ? <AdminReviews /> : <UserReviews user={user} />}
     </div>
   );
 }
@@ -113,7 +113,7 @@ export function UserReviews({ user }: { user: TUser }) {
   }, []);
 
   return (
-    <div className="space-y-6 bg-white rounded-md border p-2 md:p-5">
+    <div className="space-y-6 mb-3 bg-white rounded-md border p-2 md:p-5">
       <h2 className="text-xl font-semibold tracking-tight text-gray-700">
         Product Reviews
       </h2>
