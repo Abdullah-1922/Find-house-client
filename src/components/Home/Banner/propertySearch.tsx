@@ -182,7 +182,9 @@ const PropertySearch: React.FC = () => {
 
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="advanced-search">
-          <AccordionTrigger>Advanced Search</AccordionTrigger>
+          <AccordionTrigger className="no-underline border-none">
+            Advanced Search
+          </AccordionTrigger>
           <AccordionContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div>

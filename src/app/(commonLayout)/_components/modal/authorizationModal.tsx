@@ -20,7 +20,7 @@ export function AuthorizationModal({ buttonText }: { buttonText: string }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className="bg-primary text-primary-foreground"
+          className="bg-gray-800 hover:bg-gray-900 w-full text-white hover:text-white"
           variant="outline"
         >
           {buttonText}
@@ -39,7 +39,8 @@ export function AuthorizationModal({ buttonText }: { buttonText: string }) {
             onClick={() => {
               setOpen(false);
             }}
-            className="bg-gray-700 hover:bg-gray-600 text-white"
+            variant="outline"
+            className="border-gray-700 text-gray-700 hover:bg-gray-100"
           >
             Cancel
           </Button>
@@ -48,8 +49,7 @@ export function AuthorizationModal({ buttonText }: { buttonText: string }) {
               router.push('/signup');
               setOpen(false);
             }}
-            variant="outline"
-            className="border-gray-700 text-gray-700 hover:bg-gray-100"
+            className="bg-gray-800 hover:bg-gray-900 text-white"
           >
             Sign Up
           </Button>

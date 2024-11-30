@@ -83,9 +83,6 @@ const DashboardNavbar = () => {
               <li>
                 <Link href="/blogs">Blog</Link>
               </li>
-              <li>
-                <Link href="/contact-us">Contact us</Link>
-              </li>
             </ul>
           </div>
           {/* Right-side options */}

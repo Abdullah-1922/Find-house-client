@@ -36,7 +36,7 @@ export default function AllProperties() {
       ? "-price"
       : "";
 
-  const { data: propertyData,isLoading } = useGetAllPropertiesQuery(
+  const { data: propertyData, isLoading } = useGetAllPropertiesQuery(
     `limit=${limit}&page=${currentPage}&sort=${sortQuery}`
   );
 

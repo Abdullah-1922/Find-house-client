@@ -101,9 +101,6 @@ const Navbar = () => {
                 <li>
                   <Link href="/blogs">Blog</Link>
                 </li>
-                <li>
-                  <Link href="/contact-us">Contact us</Link>
-                </li>
               </ul>
             </div>
             <div className="flex justify-center items-center gap-2 md:p-5">

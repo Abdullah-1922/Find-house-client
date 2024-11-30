@@ -16,6 +16,7 @@ import { Label } from '@/components/ui/label';
 import { useCreateScheduleMutation } from '@/redux/api/features/property/propertyApi';
 import { useUser } from '@/hooks/user.hook';
 import { toast } from 'sonner';
+import { AuthorizationModal } from '../../modal/authorizationModal';
 
 const months = [
   'Jan',
@@ -201,9 +202,7 @@ export default function CalenderSchedule({
             )}
           </Button>
         ) : (
-          <Button className="w-full bg-gray-800 hover:bg-gray-900">
-            Submit Request
-          </Button>
+          <AuthorizationModal buttonText="Submit Request" />
         )}
       </CardContent>
     </Card>
