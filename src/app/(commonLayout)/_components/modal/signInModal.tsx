@@ -73,6 +73,7 @@ export default function SignInModal() {
       if (res?.data?.success) {
         toast.success('Login successful');
         Cookies.set('accessToken', res.data.data.accessToken);
+        Cookies.set('refreshToken', res.data.data.refreshToken);
         resetForm();
         setOpen(false);
         window.location.reload();

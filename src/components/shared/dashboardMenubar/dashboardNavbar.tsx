@@ -1,8 +1,8 @@
-import './dashboardNavbar.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import Link from 'next/link';
-import Sidebar from '../Navbar/SideBar/Sidebar';
-import UserProfileDropdown from '../Navbar/UserProfileDropdown';
+import "./dashboardNavbar.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import Link from "next/link";
+import Sidebar from "../Navbar/SideBar/Sidebar";
+import UserProfileDropdown from "../Navbar/UserProfileDropdown";
 
 const DashboardNavbar = () => {
   return (
@@ -28,6 +28,9 @@ const DashboardNavbar = () => {
                     </li>
                     <li>
                       <Link href="/all-agents">All Agents</Link>
+                    </li>
+                    <li>
+                      <Link href="/agencies">All Agencies</Link>
                     </li>
                   </ul>
                 </div>
@@ -79,9 +82,6 @@ const DashboardNavbar = () => {
               </li>
               <li>
                 <Link href="/blogs">Blog</Link>
-              </li>
-              <li>
-                <Link href="/contact-us">Contact us</Link>
               </li>
             </ul>
           </div>

@@ -1,9 +1,9 @@
-import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useGetAllPropertiesQuery } from "@/redux/api/features/property/propertyApi";
-import Spinner from "@/components/ui/spinner";
-import { TProperty } from "@/types";
-import Link from "next/link";
+import Image from 'next/image';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
+import Spinner from '@/components/ui/spinner';
+import { TProperty } from '@/types';
+import Link from 'next/link';
 
 export default function ResentProperties() {
   const { data, isLoading } = useGetAllPropertiesQuery(`limit=${3}`);
@@ -17,21 +17,26 @@ export default function ResentProperties() {
       <CardContent>
         <div className="space-y-4">
           {properties.map((property: TProperty) => (
-            <div key={property.id} className="flex items-center gap-4">
-              <Link href={`/all-properties/${property._id}`}>
-                <Image
-                  src={property.images[0]}
-                  alt={property.title}
-                  width={100}
-                  height={75}
-                  className="rounded-lg object-cover"
-                />
-              </Link>
+            <div
+              key={property.id}
+              className="flex items-center justify-between gap-2"
+            >
               <div>
                 <Link href={`/all-properties/${property._id}`}>
-                  <h3 className="font-medium">{property.title}</h3>
+                  <Image
+                    src={property.images[0]}
+                    alt={property.title}
+                    width={100}
+                    height={75}
+                    className="rounded-md object-cover w-[130px] h-[70px]"
+                  />
                 </Link>
-                <p className="text-lg font-semibold text-primary">
+              </div>
+              <div className="w-full">
+                <Link href={`/all-properties/${property._id}`}>
+                  <h3 className="text-sm font-medium">{property.title}</h3>
+                </Link>
+                <p className="text-sm font-semibold text-primary">
                   ${property.price.toLocaleString()}
                 </p>
               </div>

@@ -24,6 +24,7 @@ import { useUser } from '@/hooks/user.hook';
 import { useState } from 'react';
 import { useGetAllProductReviewsQuery } from '@/redux/api/features/product/productReviewApi';
 import Spinner from '@/components/ui/spinner';
+import { AuthorizationModal } from '../../modal/authorizationModal';
 
 export default function ProductDetails({ productId }: { productId: string }) {
   const { user } = useUser();
@@ -134,30 +135,34 @@ export default function ProductDetails({ productId }: { productId: string }) {
                     </span>
                   </div>
                   <div>
-                    <Button
-                      onClick={async () => {
-                        if (!user?._id || !singleProduct?._id) {
-                          return toast.error('User or product ID is missing');
-                        }
+                    {user?.email ? (
+                      <Button
+                        onClick={async () => {
+                          if (!user?._id || !singleProduct?._id) {
+                            return toast.error('User or product ID is missing');
+                          }
 
-                        try {
-                          await addFavoriteFn({
-                            userId: user._id,
-                            productId: singleProduct._id,
-                          });
-                          toast.success(
-                            'Added to favorite product successfully'
-                          );
-                        } catch (error) {
-                          toast.error(
-                            'Failed to add favorite product. Please try again.'
-                          );
-                        }
-                      }}
-                      className="bg-gray-800 hover:bg-gray-900 mt-5"
-                    >
-                      Add To Cart
-                    </Button>
+                          try {
+                            await addFavoriteFn({
+                              userId: user._id,
+                              productId: singleProduct._id,
+                            });
+                            toast.success(
+                              'Added to favorite product successfully'
+                            );
+                          } catch (error) {
+                            toast.error(
+                              'Failed to add favorite product. Please try again.'
+                            );
+                          }
+                        }}
+                        className="bg-gray-800 hover:bg-gray-900 mt-5"
+                      >
+                        Add To Cart
+                      </Button>
+                    ) : (
+                      <AuthorizationModal buttonText="Add To Card" />
+                    )}
                   </div>
                 </div>
               </div>

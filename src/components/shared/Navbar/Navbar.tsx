@@ -47,6 +47,9 @@ const Navbar = () => {
                       <li>
                         <Link href="/all-agents">All Agents</Link>
                       </li>
+                      <li>
+                        <Link href="/agencies">All Agencies</Link>
+                      </li>
                     </ul>
                   </div>
                 </li>
@@ -97,9 +100,6 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link href="/blogs">Blog</Link>
-                </li>
-                <li>
-                  <Link href="/contact-us">Contact us</Link>
                 </li>
               </ul>
             </div>

@@ -69,7 +69,7 @@ const PopularPlaces = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent transition-opacity duration-300 group-hover:opacity-80"></div>
                 {location.isFeatured && (
-                  <div className="absolute top-2 md:p-5 -left-5 bg-black/80 text-white text-xs font-semibold px-6 -rotate-45 py-1 rounded">
+                  <div className="absolute top-3  -left-6 bg-black/80 text-white text-xs font-semibold  -rotate-45 px-6 py-1  text-center rounded">
                     Featured
                   </div>
                 )}

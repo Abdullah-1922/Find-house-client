@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Container from '@/components/ui/container';
-import { useGetMyProductPaymentsDataQuery } from '@/redux/api/features/product/productApi';
-import { TProductPayment } from '@/types';
-import { useUser } from '@/hooks/user.hook';
-import Nodata from '@/components/ui/noData';
-import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
-import Spinner from '@/components/ui/spinner';
-import InvoiceCard from './invoiceCard';
+import React, { useState } from "react";
+import Container from "@/components/ui/container";
+import { useGetMyProductPaymentsDataQuery } from "@/redux/api/features/product/productApi";
+import { TProductPayment } from "@/types";
+import { useUser } from "@/hooks/user.hook";
+import Nodata from "@/components/ui/noData";
+import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
+import Spinner from "@/components/ui/spinner";
+import InvoiceCard from "./invoiceCard";
 
 export default function Invoice() {
   const { user } = useUser();
@@ -25,7 +25,7 @@ export default function Invoice() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    console.log('Selected Page:', page);
+    console.log("Selected Page:", page);
   };
 
   return (

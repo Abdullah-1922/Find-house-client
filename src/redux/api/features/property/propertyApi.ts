@@ -5,14 +5,14 @@ const propertyApi = baseApi.injectEndpoints({
     getAllProperties: builder.query({
       query: (query) => {
         return {
-          url: query ? `/property/?${query}` : '/property',
+          url: query ? `/property?${query}` : '/property',
           method: 'GET',
         };
       },
       providesTags: ['Property'],
     }),
     getMyAllProperties: builder.query({
-      query: ({userId,query}) => {
+      query: ({ userId, query }) => {
         return {
           url: `/property/my-property/${userId}/${query}`,
           method: 'GET',

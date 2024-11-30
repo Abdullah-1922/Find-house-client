@@ -1,9 +1,9 @@
-import React from 'react';
-import AddProperties from '../_components/modules/myProperties/addProperties';
+import React from "react";
+import AddProperties from "../_components/modules/myProperties/addProperties";
 
 export default function AddPropertyPage() {
   return (
-    <div>
+    <div className="m-4">
       <AddProperties />
     </div>
   );
