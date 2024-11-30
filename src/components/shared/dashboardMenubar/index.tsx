@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   Building2,
   CheckCheck,
@@ -18,13 +18,13 @@ import {
   CalendarCheck,
   BookmarkCheck,
   DollarSign,
-} from "lucide-react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { logoutUser } from "@/utils/logutUser";
-import { useUser } from "@/hooks/user.hook";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from 'lucide-react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { logoutUser } from '@/utils/logutUser';
+import { useUser } from '@/hooks/user.hook';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface NavItem {
   title: string;
@@ -32,61 +32,69 @@ interface NavItem {
   icon: React.ElementType;
 }
 
-type Role = "user" | "agent" | "admin";
+type Role = 'user' | 'agent' | 'admin';
 
 const commonNavItems: NavItem[] = [
-  { title: "My Properties", href: "/my-properties", icon: Building2 },
-  { title: "Favorite Properties", href: "/favorite-properties", icon: Heart },
+  { title: 'My Properties', href: '/my-properties', icon: Building2 },
+  { title: 'Favorite Properties', href: '/favorite-properties', icon: Heart },
   {
-    title: "Bookmarked Products",
-    href: "/bookmarked-products",
+    title: 'Bookmarked Products',
+    href: '/bookmarked-products',
     icon: BookmarkCheck,
   },
 
-  { title: "Payments", href: "/payment", icon: CreditCard },
-  { title: "Invoices", href: "/product-invoice", icon: FileText },
-  { title: "Schedules", href: "/schedules", icon: CalendarCheck },
-  { title: "Setting", href: "/setting", icon: KeyRound },
+  { title: 'Payments', href: '/payment', icon: CreditCard },
+  { title: 'Invoices', href: '/product-invoice', icon: FileText },
+  { title: 'Schedules', href: '/schedules', icon: CalendarCheck },
+  { title: 'Setting', href: '/setting', icon: KeyRound },
 ];
 
 const roleBasedNavItems = {
   user: [
-    { title: "Dashboard", href: "/user-dashboard", icon: LayoutDashboard },
-    { title: "Profile", href: "/profile", icon: User2 },
+    { title: 'Dashboard', href: '/user-dashboard', icon: LayoutDashboard },
+    { title: 'Profile', href: '/profile', icon: User2 },
   ],
   agent: [
-    { title: "Dashboard", href: "/agent-dashboard", icon: LayoutDashboard },
-    { title: "Profile", href: "/profile", icon: User2 },
-    { title: "Add Property", href: "/add-property", icon: Plus },
-    { title: "Add Property Payment", href: "/add-payment", icon: Plus },
-    { title: "All Property Payment", href: "/add-payment", icon: DollarSign },
+    { title: 'Dashboard', href: '/agent-dashboard', icon: LayoutDashboard },
+    { title: 'Profile', href: '/profile', icon: User2 },
+    { title: 'Add Property', href: '/add-property', icon: Plus },
+    { title: 'Add Property Payment', href: '/add-payment', icon: Plus },
     {
-      title: "Sold Properties",
-      href: "/agent-dashboard/properties-sold",
+      title: 'All Property Payment',
+      href: '/all-property-payment',
+      icon: DollarSign,
+    },
+    {
+      title: 'Sold Properties',
+      href: '/agent-dashboard/properties-sold',
       icon: CheckCheck,
     },
   ],
   admin: [
-    { title: "Dashboard", href: "/admin-dashboard", icon: LayoutDashboard },
-    { title: "Profile", href: "/profile", icon: User2 },
-    { title: "Add Product", href: "/admin-dashboard/add-product", icon: Plus },
-    { title: "Add Property Property", href: "/add-property", icon: Plus },
-    { title: "Add Payment", href: "/add-payment", icon: Plus },
-    { title: "All Property Payment", href: "/add-payment", icon: DollarSign },
+    { title: 'Dashboard', href: '/admin-dashboard', icon: LayoutDashboard },
+    { title: 'Profile', href: '/profile', icon: User2 },
+    { title: 'Add Product', href: '/admin-dashboard/add-product', icon: Plus },
+    { title: 'Add Property', href: '/add-property', icon: Plus },
+    { title: 'Add Property Payment', href: '/add-payment', icon: Plus },
     {
-      title: "All Properties",
-      href: "/admin-dashboard/all-properties",
+      title: 'All Property Payment',
+      href: '/all-property-payment',
+      icon: DollarSign,
+    },
+    {
+      title: 'All Properties',
+      href: '/admin-dashboard/all-properties',
       icon: Building2,
     },
     {
-      title: "All Products",
-      href: "/admin-dashboard/all-products",
+      title: 'All Products',
+      href: '/admin-dashboard/all-products',
       icon: Dock,
     },
-    { title: "All Users", href: "/admin-dashboard/all-users", icon: User2 },
+    { title: 'All Users', href: '/admin-dashboard/all-users', icon: User2 },
     {
-      title: "All Orders",
-      href: "/admin-dashboard/all-orders",
+      title: 'All Orders',
+      href: '/admin-dashboard/all-orders',
       icon: FileText,
     },
   ],
@@ -102,13 +110,13 @@ export default function DashboardSidebar() {
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const sidebarVariants = {
     open: { x: 0 },
-    closed: { x: "-100%" },
+    closed: { x: '-100%' },
   };
 
   // Access the user's role, ensuring that it is one of the defined roles
@@ -128,7 +136,7 @@ export default function DashboardSidebar() {
           className="absolute right-5 w-[140px] lg:hidden flex items-center px-3 py-2 mt-[60px] text-white rounded-md bg-[#24324A] border-none"
         >
           <Dock />
-          <p>{isOpen ? "Close" : "Open"} Sidebar</p>
+          <p>{isOpen ? 'Close' : 'Open'} Sidebar</p>
         </Button>
       </div>
 
@@ -141,7 +149,7 @@ export default function DashboardSidebar() {
 
       <motion.div
         initial="closed"
-        animate={isOpen || !isMobile ? "open" : "closed"}
+        animate={isOpen || !isMobile ? 'open' : 'closed'}
         variants={sidebarVariants}
         className="fixed top-0 left-0 z-20 h-full w-64 bg-[#1e2837] text-white lg:block"
       >
@@ -167,7 +175,7 @@ export default function DashboardSidebar() {
               />
             </div>
             <div className="text-center font-medium">
-              {user?.firstName || "Anonymous"} {user?.secondName}
+              {user?.firstName || 'Anonymous'} {user?.secondName}
             </div>
           </div>
 
@@ -177,7 +185,7 @@ export default function DashboardSidebar() {
                 href={item.href}
                 key={item.href}
                 className={`flex items-center gap-4 p-2 rounded-md text-white/70 hover:bg-white/10 hover:text-white ${
-                  pathname === item.href ? "bg-white/10 text-white" : ""
+                  pathname === item.href ? 'bg-white/10 text-white' : ''
                 }`}
               >
                 <item.icon className="h-4 w-4" />

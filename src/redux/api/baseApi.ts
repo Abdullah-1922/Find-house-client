@@ -1,14 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// Need to use the React-specific entry point to import createApi
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Cookies from 'js-cookie';
 
-const token = Cookies.get('accessToken');
-
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
-if (!process.env.NEXT_PUBLIC_API_URL) {
-  console.error('BASE_URL is not defined.');
+
+if (!baseUrl) {
+  throw new Error('NEXT_PUBLIC_API_URL is not defined.');
 }
 
 // Define a service using a base URL and expected endpoints
@@ -17,10 +13,13 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
     credentials: 'include',
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers) => {
+      const token = Cookies.get('accessToken');
+
       if (token) {
-        headers.set('authorization', `${token}`);
+        headers.set('Authorization', `${token}`);
       }
+
       return headers;
     },
   }),
@@ -33,15 +32,14 @@ export const baseApi = createApi({
     'SingleProduct',
     'ProductReview',
     'SingleProductReview',
-    "Users",
-    "Schedules",
-    "myFavoriteProperties",
-    "MyFavoriteProduct",
-    "Payments",
-    "Stats",
-    "Inquiry",
-    "PropertyPayment"
+    'Users',
+    'Schedules',
+    'myFavoriteProperties',
+    'MyFavoriteProduct',
+    'Payments',
+    'Stats',
+    'Inquiry',
+    'PropertyPayment',
   ],
-
   endpoints: () => ({}),
 });

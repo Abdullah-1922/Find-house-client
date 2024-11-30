@@ -1,12 +1,20 @@
+'use client';
+
 import Image from 'next/image';
 import NavbarLogo from '../../../../../public/assets/logo/logo-white-1.svg';
 import './Sidebar.css';
+import UserProfileDropdown from '../UserProfileDropdown';
+import SignInModal from '@/app/(commonLayout)/_components/modal/signInModal';
+import Link from 'next/link';
+import { useUser } from '@/hooks/user.hook';
+import { Button } from '@/components/ui/button';
 
 interface CustomCSSProperties extends React.CSSProperties {
   '--i'?: string; // Allow custom property --i
 }
 
 const Sidebar: React.FC = () => {
+  const { user } = useUser();
   return (
     <header>
       <div className="container ">
@@ -111,65 +119,31 @@ const Sidebar: React.FC = () => {
               >
                 <a href="#">Blogs</a>
               </li>
-              <li
-                className="nav-link"
-                style={{ '--i': '1.35s' } as CustomCSSProperties}
-              >
-                <a href="#">Contact</a>
-              </li>
             </ul>
           </div>
 
-          <div className="flex flex-wrap justify-center items-center gap-2 md:p-5">
-            <div className="flex justify-center gap-x-2 items-center">
-              <i className="fas fa-globe-americas text-white"></i>
-              <h2 className="font-bold border-r border-white pr-5 text-white">
-                ENG
-              </h2>
-            </div>
-            <h2 className="border-r border-white pr-5 text-white">Sign In</h2>
-
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar flex justify-center items-center w-36"
-              >
-                <div className="w-10 rounded-full">
-                  <Image
-                    width={1000}
-                    height={1000}
-                    alt="user profile image"
-                    src="https://code-theme.com/html/findhouses/images/testimonials/ts-1.jpg"
-                  />
-                </div>
-                <h3 tabIndex={0} role="button" className="text-white text-sm">
-                  Hi, Mary <i className="fas fa-caret-right text-gray-500"></i>
-                </h3>
-              </div>
-
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-              >
-                <li>
-                  <a className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
-                  </a>
-                </li>
-                <li>
-                  <a>Settings</a>
-                </li>
-                <li>
-                  <a>Logout</a>
-                </li>
-              </ul>
-            </div>
-
-            <button className="text-white py-3 px-5 bg-gray-600 rounded font-bold">
-              Add Listing <i className="fas fa-laptop-house ml-2"></i>
-            </button>
+          <div className="flex justify-center items-center gap-2 md:p-5">
+            <SignInModal />
+            {user && <UserProfileDropdown />}
+            <Link
+              href={
+                user
+                  ? `/${
+                      user.role === 'user'
+                        ? `user-dashboard`
+                        : user.role === 'admin'
+                        ? 'admin-dashboard'
+                        : user.role === 'agent'
+                        ? 'agent-dashboard'
+                        : ''
+                    }`
+                  : '/signup'
+              }
+            >
+              <Button className="text-white py-3 px-5 bg-gray-800 hover:bg-gray-900 rounded font-bold">
+                Dashboard
+              </Button>
+            </Link>
           </div>
         </div>
 
