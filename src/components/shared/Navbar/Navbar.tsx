@@ -47,6 +47,9 @@ const Navbar = () => {
                       <li>
                         <Link href="/all-agents">All Agents</Link>
                       </li>
+                      <li>
+                        <Link href="/agencies">All Agencies</Link>
+                      </li>
                     </ul>
                   </div>
                 </li>
