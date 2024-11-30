@@ -1,40 +1,33 @@
-"use client";
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+'use client';
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { LayoutGrid, List } from "lucide-react";
-import PropertyCard from "@/components/shared/card/PropertyCard";
-import { TProperty } from "@/types";
-import { useGetAllPropertiesQuery } from "@/redux/api/features/property/propertyApi";
-import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
-
-import { LayoutGrid, List } from 'lucide-react';
-import PropertyCard from '@/components/shared/card/PropertyCard';
-import { TProperty } from '@/types';
-import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
-import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
+} from '@/components/ui/select';
 import PropertyLoadingCard from '@/components/shared/card/PropertyLoadingCard';
-
+import { LayoutGrid, List } from 'lucide-react';
+import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
+import { TProperty } from '@/types';
+import PropertyCard from '@/components/shared/card/PropertyCard';
+import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
 
 export default function AllProperties() {
-  const [sortBy, setSortBy] = useState("");
+  const [sortBy, setSortBy] = useState('');
   const [isGridView, setIsGridView] = useState<boolean | undefined>(true);
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 9;
 
   // Update query based on sorting
   const sortQuery =
-    sortBy === "Price(low to high)"
-      ? "price"
-      : sortBy === "Price(high to low)"
-      ? "-price"
-      : "";
+    sortBy === 'Price(low to high)'
+      ? 'price'
+      : sortBy === 'Price(high to low)'
+      ? '-price'
+      : '';
 
   const { data: propertyData, isLoading } = useGetAllPropertiesQuery(
     `limit=${limit}&page=${currentPage}&sort=${sortQuery}`
@@ -77,24 +70,24 @@ export default function AllProperties() {
           </div>
           <div className="flex gap-2">
             <Button
-              variant={isGridView ? "default" : "outline"}
+              variant={isGridView ? 'default' : 'outline'}
               size="icon"
               className={`${
                 isGridView
-                  ? "bg-gray-800 hover:bg-gray-900 text-white"
-                  : "bg-gray-100 hover:bg-gray-200 text-gray-800"
+                  ? 'bg-gray-800 hover:bg-gray-900 text-white'
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
               }`}
               onClick={() => setIsGridView(true)}
             >
               <LayoutGrid className="h-4 w-4" />
             </Button>
             <Button
-              variant={!isGridView ? "default" : "outline"}
+              variant={!isGridView ? 'default' : 'outline'}
               size="icon"
               className={`${
                 !isGridView
-                  ? "bg-gray-800 hover:bg-gray-900 text-white"
-                  : "bg-gray-100 hover:bg-gray-200 text-gray-800"
+                  ? 'bg-gray-800 hover:bg-gray-900 text-white'
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
               }`}
               onClick={() => setIsGridView(false)}
             >
@@ -107,8 +100,8 @@ export default function AllProperties() {
       <div
         className={`grid gap-6 ${
           isGridView
-            ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
-            : "md:grid-cols-1"
+            ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'
+            : 'md:grid-cols-1'
         }`}
       >
         {isLoading &&

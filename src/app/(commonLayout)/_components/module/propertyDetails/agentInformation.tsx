@@ -206,7 +206,6 @@ export default function AgentInformation({ agent }: AgentInformationProps) {
           </Form>
         </div>
       </CardContent>
-      <Toaster position="top-center" />
     </Card>
   );
 }

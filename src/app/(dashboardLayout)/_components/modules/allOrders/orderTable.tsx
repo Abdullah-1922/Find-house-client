@@ -1,36 +1,43 @@
+'use client';
 
-"use client";
-import { useState } from "react";
-import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
-import {
-  useGetAllOrderQuery,
-  useUpdatePaymentStatusMutation,
-} from "@/redux/api/features/product/productOrderApi";
-import { TOrder } from "@/types/products/order.types";
-
-import Image from "next/image";
+import { useState } from 'react';
+import Image from 'next/image';
 import { format } from 'date-fns';
+import { ChevronDown } from 'lucide-react';
+import { toast } from 'sonner';
+
+import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
+import {
+  useGetOrdersByPaymentGatewayQuery,
+  useUpdatePaymentStatusMutation,
+} from '@/redux/api/features/product/productOrderApi';
+import { TOrder } from '@/types/products/order.types';
 import Spinner from '@/components/ui/spinner';
 import Nodata from '@/components/ui/noData';
+import { Button } from '@/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
-import { toast } from 'sonner';
 
 export default function OrderTable({ gatewayName }: { gatewayName: string }) {
-  const [updateStatus] = useCasOnDeliveryStatusUpdateMutation();
+  const [updateStatus] = useUpdatePaymentStatusMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 9;
 
   const { data, isLoading } = useGetOrdersByPaymentGatewayQuery(
     `${gatewayName}?limit=${limit}&page=${currentPage}`
   );
-  console.log('data', data);
-
 
   const orders = data?.data as TOrder[];
   const meta = data?.meta;
@@ -82,7 +89,7 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
           {orders?.map((order: TOrder, index: number) => (
             <TableRow
               key={order._id}
-              className={`${index % 2 === 0 ? "bg-muted/50" : ""}`}
+              className={`${index % 2 === 0 ? 'bg-muted/50' : ''}`}
             >
               <TableCell className="py-5">
                 <div className="flex items-start gap-4">
@@ -96,7 +103,7 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src =
-                          "https://code-theme.com/html/findhouses/images/feature-properties/fp-1.jpg";
+                          'https://code-theme.com/html/findhouses/images/feature-properties/fp-1.jpg';
                       }}
                     />
                   </div>
@@ -118,17 +125,11 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
               <TableCell className={`py-5`}>
                 <p
                   className={`px-2 py-1 rounded-md border ${
-
-                    order.status === "Paid"
-                      ? "text-green-600/80 border-green-600/40 inline-block text-sm"
-                      : "text-yellow-600/80 border-yellow-600/40 inline-block text-sm"
-
                     order.status === 'Paid'
                       ? 'text-green-600/80 border-green-600/40 inline-block text-sm'
                       : order.status === 'Canceled'
                       ? 'text-red-600/80 border-red-600/40 inline-block text-sm'
                       : 'text-yellow-600/80 border-yellow-600/40 inline-block text-sm'
-
                   }`}
                 >
                   {order.status}
@@ -164,7 +165,7 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
                             'Canceled'
                           )
                         }
-                        disabled={order.status === 'Paid'}
+                        disabled={order.status === 'Canceled'}
                       >
                         Cancel Order
                       </DropdownMenuItem>
