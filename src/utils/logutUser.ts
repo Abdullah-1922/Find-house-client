@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { toast } from 'sonner';
 
 export const logoutUser = () => {
+  console.log('Logout function=>>>>>>>>>>');
   Cookies.remove('accessToken');
   Cookies.remove('refreshToken');
   toast.success('Logout successful!');

@@ -17,7 +17,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import SocialLogin from '../module/signup/socialLogin';
 import { useLoginMutation } from '@/redux/api/features/auth/authApi';
-import { toast, Toaster } from 'sonner';
+import { Toaster } from 'sonner';
 import Cookies from 'js-cookie';
 import { useUser } from '@/hooks/user.hook';
 
@@ -70,13 +70,41 @@ export default function SignInModal() {
       });
 
       // If login successful
-      if (res?.data?.success) {
-        toast.success('Login successful');
-        Cookies.set('accessToken', res.data.data.accessToken);
-        Cookies.set('refreshToken', res.data.data.refreshToken);
-        resetForm();
-        setOpen(false);
-        window.location.reload();
+      // if (res?.data?.success) {
+      //   toast.success('Login successful');
+      //   Cookies.set('accessToken', res.data.data.accessToken);
+      //   Cookies.set('refreshToken', res.data.data.refreshToken);
+      //   resetForm();
+      //   setOpen(false);
+      //   window.location.reload();
+      // }
+
+      if (formData.remember) {
+        Cookies.set('accessToken', res.data.data.accessToken, {
+          secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+          sameSite: 'strict', // Adjust to 'lax' if needed
+          path: '/', // Accessible across the entire app
+          expires: 7, // 7 days expiration for "Remember Me"
+        });
+
+        Cookies.set('refreshToken', res.data.data.refreshToken, {
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          path: '/',
+          expires: 7,
+        });
+      } else {
+        Cookies.set('accessToken', res.data.data.accessToken, {
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          path: '/',
+        });
+
+        Cookies.set('refreshToken', res.data.data.refreshToken, {
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          path: '/',
+        });
       }
 
       // If error occurs
@@ -85,8 +113,11 @@ export default function SignInModal() {
           res.error?.data?.message || 'Something went wrong. Please try again.'
         );
       }
+      console.log('hunter access Token 2===>');
     } catch (error) {
       setErrorMessage('An unexpected error occurred. Please try again.');
+
+      console.log('hunter access Token3===>');
     }
   };
 
