@@ -159,7 +159,6 @@ export default function DashboardStats({
           (resData as TUserStats)?.totalPropertyComments?.toString() || "...",
         className: "bg-blue-500",
       },
-     
     ];
   }
   if (role === "agent") {

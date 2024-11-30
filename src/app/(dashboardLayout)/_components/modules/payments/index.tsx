@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import * as React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -14,53 +14,53 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { toast } from 'sonner';
-import { useUser } from '@/hooks/user.hook';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { toast } from "sonner";
+import { useUser } from "@/hooks/user.hook";
 import {
   useCreateCashOnDeliveryPaymentMutation,
   useCreateOnlinePaymentMutation,
   useGetMyFavoriteProductsQuery,
-} from '@/redux/api/features/product/productApi';
-import { TProduct } from '@/types';
-import PaymentHistory from './paymentHistory';
+} from "@/redux/api/features/product/productApi";
+import { TProduct } from "@/types";
+import PaymentHistory from "./paymentHistory";
 
 const formSchema = z.object({
   name: z
-    .string({ required_error: 'Name is required' })
-    .min(2, 'Name must be at least 2 characters'),
+    .string({ required_error: "Name is required" })
+    .min(2, "Name must be at least 2 characters"),
   email: z
-    .string({ required_error: 'Email is required' })
-    .email('Invalid email address'),
+    .string({ required_error: "Email is required" })
+    .email("Invalid email address"),
   phone: z
-    .string({ required_error: 'Phone number is required' })
-    .min(10, 'Phone number must be at least 10 digits'),
+    .string({ required_error: "Phone number is required" })
+    .min(10, "Phone number must be at least 10 digits"),
   city: z
-    .string({ required_error: 'City is required' })
-    .min(2, 'City must be at least 2 characters'),
+    .string({ required_error: "City is required" })
+    .min(2, "City must be at least 2 characters"),
   state: z
-    .string({ required_error: 'State is required' })
-    .min(2, 'State must be at least 2 characters'),
+    .string({ required_error: "State is required" })
+    .min(2, "State must be at least 2 characters"),
   country: z
-    .string({ required_error: 'Country is required' })
-    .min(2, 'Country must be at least 2 characters'),
+    .string({ required_error: "Country is required" })
+    .min(2, "Country must be at least 2 characters"),
   address: z
-    .string({ required_error: 'Address is required' })
-    .min(5, 'Address must be at least 5 characters'),
-  zip: z.string({ required_error: 'Zip code is required' }),
+    .string({ required_error: "Address is required" })
+    .min(5, "Address must be at least 5 characters"),
+  zip: z.string({ required_error: "Zip code is required" }),
 });
 
 const paymentGateway = {
-  CashOnDelivery: 'Cash On Delivery',
-  OnlinePayment: 'Online Payment',
+  CashOnDelivery: "Cash On Delivery",
+  OnlinePayment: "Online Payment",
 } as const;
 
 export default function Payments() {
-  const [method, setMethod] = React.useState<string>('amarpay');
+  const [method, setMethod] = React.useState<string>("amarpay");
   const { user } = useUser();
 
   console.log(method);
@@ -90,45 +90,45 @@ export default function Payments() {
     const formData = {
       customerId: user._id,
       products: [...addToCardData?.map((item) => item?._id)],
-      currency: 'BDT',
+      currency: "BDT",
       amount: totalCost,
       gatewayName:
-        method === 'cashOnDelivery'
+        method === "cashOnDelivery"
           ? paymentGateway.CashOnDelivery
           : paymentGateway.OnlinePayment,
-      status: method === 'cashOnDelivery' ? 'Pending' : 'Paid',
+      status: method === "cashOnDelivery" ? "Pending" : "Paid",
       ...values,
     };
 
     console.log(formData);
-    const loadingToast = toast.loading('Processing payment...');
+    const loadingToast = toast.loading("Processing payment...");
 
     try {
       let res;
-      if (method === 'cashOnDelivery') {
+      if (method === "cashOnDelivery") {
         res = await createCashOnDeliveryPaymentFn(formData).unwrap();
       } else {
         res = await createOnlinePaymentFn(formData).unwrap();
       }
 
       if (res.success) {
-        if (method === 'amarpay' && res?.data?.paymentResponse?.payment_url) {
+        if (method === "amarpay" && res?.data?.paymentResponse?.payment_url) {
           window.location.href = res.data.paymentResponse.payment_url;
         } else {
-          toast.success('Order placed successfully', { id: loadingToast });
+          toast.success("Order placed successfully", { id: loadingToast });
         }
       } else {
-        toast.error('Payment processing failed', { id: loadingToast });
+        toast.error("Payment processing failed", { id: loadingToast });
       }
     } catch (error) {
-      toast.error('An error occurred while processing the payment', {
+      toast.error("An error occurred while processing the payment", {
         id: loadingToast,
       });
     }
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 m-2 my-4 mr-6">
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
@@ -280,8 +280,8 @@ export default function Payments() {
                   }
                 >
                   {isOnlinePaymentLoading || isCashOnDeliveryPaymentLoading
-                    ? 'Processing...'
-                    : 'Place Order'}
+                    ? "Processing..."
+                    : "Place Order"}
                 </Button>
               </form>
             </Form>
@@ -315,7 +315,7 @@ export default function Payments() {
                 <div className="flex items-center justify-between rounded-lg border p-4">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem
-                      onClick={() => setMethod('amarpay')}
+                      onClick={() => setMethod("amarpay")}
                       value="amarpay"
                       id="amarpay"
                     />
@@ -325,7 +325,7 @@ export default function Payments() {
                 <div className="flex items-center justify-between rounded-lg border p-4">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem
-                      onClick={() => setMethod('cashOnDelivery')}
+                      onClick={() => setMethod("cashOnDelivery")}
                       value="cashOnDelivery"
                       id="cashOnDelivery"
                     />

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import UserTable from './userTable';
-import { Toaster } from 'sonner';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useGetRoleBasedUserQuery } from '@/redux/api/features/users/userApi';
-import Spinner from '@/components/ui/spinner';
+import React, { useState } from "react";
+import UserTable from "./userTable";
+import { Toaster } from "sonner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useGetRoleBasedUserQuery } from "@/redux/api/features/users/userApi";
+import Spinner from "@/components/ui/spinner";
 
 export default function AllUsers() {
   const [currentPage, setCurrentPage] = useState({
@@ -22,13 +22,13 @@ export default function AllUsers() {
   const { data: adminData, isFetching: isAdminFetching } =
     useGetRoleBasedUserQuery(`admin?limit=${limit}&page=${currentPage.admin}`);
 
-  const handlePageChange = (role: 'user' | 'agent' | 'admin', page: number) => {
+  const handlePageChange = (role: "user" | "agent" | "admin", page: number) => {
     setCurrentPage((prev) => ({ ...prev, [role]: page }));
   };
 
   return (
     <div>
-      <div className="space-y-6 bg-white rounded-md border p-2 md:p-5">
+      <div className="space-y-6 bg-white rounded-md border p-2 md:p-5 m-2 my-4 mr-6">
         <h2 className="text-lg md:text-xl font-semibold tracking-tight text-gray-700">
           All Users
         </h2>
@@ -48,7 +48,7 @@ export default function AllUsers() {
                 users={userData?.data || []}
                 meta={userData?.meta}
                 currentPage={currentPage.user}
-                onPageChange={(page) => handlePageChange('user', page)}
+                onPageChange={(page) => handlePageChange("user", page)}
               />
             )}
           </TabsContent>
@@ -62,7 +62,7 @@ export default function AllUsers() {
                 users={agentData?.data || []}
                 meta={agentData?.meta}
                 currentPage={currentPage.agent}
-                onPageChange={(page) => handlePageChange('agent', page)}
+                onPageChange={(page) => handlePageChange("agent", page)}
               />
             )}
           </TabsContent>
@@ -76,7 +76,7 @@ export default function AllUsers() {
                 users={adminData?.data || []}
                 meta={adminData?.meta}
                 currentPage={currentPage.admin}
-                onPageChange={(page) => handlePageChange('admin', page)}
+                onPageChange={(page) => handlePageChange("admin", page)}
               />
             )}
           </TabsContent>
