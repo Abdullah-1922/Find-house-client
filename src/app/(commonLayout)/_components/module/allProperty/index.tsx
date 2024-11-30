@@ -13,6 +13,7 @@ import PropertyCard from '@/components/shared/card/PropertyCard';
 import { TProperty } from '@/types';
 import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
 import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
+import PropertyLoadingCard from '@/components/shared/card/PropertyLoadingCard';
 
 export default function AllProperties() {
   const [sortBy, setSortBy] = useState('');
@@ -28,7 +29,7 @@ export default function AllProperties() {
       ? '-price'
       : '';
 
-  const { data: propertyData } = useGetAllPropertiesQuery(
+  const { data: propertyData,isLoading } = useGetAllPropertiesQuery(
     `limit=${limit}&page=${currentPage}&sort=${sortQuery}`
   );
 
@@ -46,7 +47,7 @@ export default function AllProperties() {
   }, [sortBy]);
 
   return (
-    <div className="max-w-7xl mx-auto px-2 md:px-4">
+    <div className="max-w-7xl mx-auto pb-20 px-2 md:px-4">
       <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <p className="text-muted-foreground text-start">All Properties</p>
         <div className="flex items-center gap-4">
@@ -103,6 +104,10 @@ export default function AllProperties() {
             : 'md:grid-cols-1'
         }`}
       >
+        {isLoading &&
+          Array.from({ length: 6 }, (_, index) => (
+            <PropertyLoadingCard key={index} />
+          ))}
         {properties?.map((property) => (
           <PropertyCard
             key={property._id}
