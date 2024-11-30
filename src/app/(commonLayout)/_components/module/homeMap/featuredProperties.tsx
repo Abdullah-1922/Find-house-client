@@ -31,7 +31,7 @@ export default function FeaturedProperties() {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
         variants={containerVariants}
       >
-        {allProperties.slice(0, 6).map((property, index) => (
+        {allProperties?.slice(0, 6).map((property, index) => (
           <PropertyCard isGridView={true} key={index} property={property} />
         ))}
       </motion.div>
