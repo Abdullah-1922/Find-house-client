@@ -1,3 +1,4 @@
+
 "use client";
 import { useState } from "react";
 import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
@@ -8,41 +9,29 @@ import {
 import { TOrder } from "@/types/products/order.types";
 
 import Image from "next/image";
+import { format } from 'date-fns';
+import Spinner from '@/components/ui/spinner';
+import Nodata from '@/components/ui/noData';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { format } from "date-fns";
-import Spinner from "@/components/ui/spinner";
-import Nodata from "@/components/ui/noData";
-import { SquareCheckBig } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tolltip";
-import { toast } from "sonner";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { ChevronDown } from 'lucide-react';
+import { toast } from 'sonner';
 
-export default function OrderTable({
-  gatewayName,
-}: {
-  gatewayName: "Online Payment" | "Cash On Delivery";
-}) {
-  const [updateStatus] = useUpdatePaymentStatusMutation();
+export default function OrderTable({ gatewayName }: { gatewayName: string }) {
+  const [updateStatus] = useCasOnDeliveryStatusUpdateMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 9;
 
-  const { data, isLoading } = useGetAllOrderQuery(
-    `limit=${limit}&page=${currentPage}`
+  const { data, isLoading } = useGetOrdersByPaymentGatewayQuery(
+    `${gatewayName}?limit=${limit}&page=${currentPage}`
   );
   console.log("data", data);
 
-  const orders = data?.data.result as TOrder[];
+  const orders = data?.data as TOrder[];
   const meta = data?.meta;
   const totalPages = meta?.totalPage;
 
@@ -50,18 +39,25 @@ export default function OrderTable({
     setCurrentPage(page);
   };
 
-  const handleUpdateStatus = async (id: string) => {
+  const handleUpdateStatus = async (
+    id: string,
+    transactionId: string,
+    newStatus: string
+  ) => {
     try {
-      const res = await updateStatus({ id, status: "Paid" }).unwrap();
-      console.log("res", res);
+      const updateData = {
+        id: id,
+        data: { status: newStatus, transactionId: transactionId },
+      };
+      const res = await updateStatus(updateData).unwrap();
       if (res?.data?.success) {
         toast.success(
-          res?.data?.message || "Payment status updated successfully"
+          res?.data?.message || `Order status updated to ${newStatus}`
         );
       }
     } catch (err: any) {
-      console.log("err", err);
-      toast.error(err?.data?.message || "Failed to update payment status");
+      console.error('Error updating status:', err);
+      toast.error(err?.data?.message || 'Failed to update order status');
     }
   };
 
@@ -115,15 +111,23 @@ export default function OrderTable({
                 </div>
               </TableCell>
               <TableCell className="py-5">
-                {format(order.createdAt, "dd MMM, yyyy")}
+                {format(new Date(order.createdAt), 'dd MMM, yyyy')}
               </TableCell>
               <TableCell className="py-5">৳{order.amount}</TableCell>
               <TableCell className={`py-5`}>
                 <p
                   className={`px-2 py-1 rounded-md border ${
+
                     order.status === "Paid"
                       ? "text-green-600/80 border-green-600/40 inline-block text-sm"
                       : "text-yellow-600/80 border-yellow-600/40 inline-block text-sm"
+
+                    order.status === 'Paid'
+                      ? 'text-green-600/80 border-green-600/40 inline-block text-sm'
+                      : order.status === 'Canceled'
+                      ? 'text-red-600/80 border-red-600/40 inline-block text-sm'
+                      : 'text-yellow-600/80 border-yellow-600/40 inline-block text-sm'
+
                   }`}
                 >
                   {order.status}
@@ -132,24 +136,39 @@ export default function OrderTable({
               <TableCell className="py-5">{order.transactionId}</TableCell>
               <TableCell className="py-5">
                 <div className="flex gap-3 items-center justify-end">
-                  {order.status !== "Paid" && (
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <SquareCheckBig
-                            onClick={() => {
-                              handleUpdateStatus(order._id);
-                            }}
-                            className="cursor-pointer p-2 rounded-md bg-green-600 text-white"
-                            size={35}
-                          />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Mark as Paid</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  )}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm">
+                        Update Status <ChevronDown className="ml-2 h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          handleUpdateStatus(
+                            order.customerId._id,
+                            order.transactionId,
+                            'Paid'
+                          )
+                        }
+                        disabled={order.status === 'Paid'}
+                      >
+                        Mark as Paid
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          handleUpdateStatus(
+                            order.customerId._id,
+                            order.transactionId,
+                            'Canceled'
+                          )
+                        }
+                        disabled={order.status === 'Paid'}
+                      >
+                        Cancel Order
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </TableCell>
             </TableRow>

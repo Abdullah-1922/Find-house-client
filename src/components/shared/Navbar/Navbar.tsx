@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="absolute top-0 z-[999] w-full">
+      <div className="absolute  top-0 z-[999] w-full">
         <div className="lg:flex hidden">
           <div className="menu-bar ">
             <div className="flex items-center gap-10">
@@ -32,7 +32,7 @@ const Navbar = () => {
               <ul className="px-2 space-x-4">
                 <li>
                   <Link href="/">
-                    Home <i className="fas"></i>
+                    Home<i className="fas"></i>
                   </Link>
                 </li>
                 <li>
@@ -46,6 +46,9 @@ const Navbar = () => {
                       </li>
                       <li>
                         <Link href="/all-agents">All Agents</Link>
+                      </li>
+                      <li>
+                        <Link href="/agencies">All Agencies</Link>
                       </li>
                     </ul>
                   </div>

@@ -1,8 +1,8 @@
-"use client";
-import { Toaster } from "sonner";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TabsContent } from "@radix-ui/react-tabs";
-import OrderTable from "../../_components/modules/allOrders/orderTable";
+'use client';
+import { Toaster } from 'sonner';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { TabsContent } from '@radix-ui/react-tabs';
+import OrderTable from '../../_components/modules/allOrders/orderTable';
 
 export default function AllOrders() {
   return (
