@@ -1,13 +1,11 @@
 'use client';
-
 import Image from 'next/image';
 import NavbarLogo from '../../../../../public/assets/logo/logo-white-1.svg';
 import './Sidebar.css';
-import UserProfileDropdown from '../UserProfileDropdown';
-import SignInModal from '@/app/(commonLayout)/_components/modal/signInModal';
 import Link from 'next/link';
-import { useUser } from '@/hooks/user.hook';
+import SignInModal from '@/app/(commonLayout)/_components/modal/signInModal';
 import { Button } from '@/components/ui/button';
+import { useUser } from '@/hooks/user.hook';
 
 interface CustomCSSProperties extends React.CSSProperties {
   '--i'?: string; // Allow custom property --i
@@ -22,13 +20,16 @@ const Sidebar: React.FC = () => {
 
         <div className="logo-container">
           <h3 className="logo">
-            <Image
-              className="w-14 p-1"
-              width={1000}
-              height={1000}
-              src={NavbarLogo}
-              alt="navigation logo"
-            />
+            <Link href={'/'}>
+              {' '}
+              <Image
+                className="w-14 p-1"
+                width={1000}
+                height={1000}
+                src={NavbarLogo}
+                alt="navigation logo"
+              />
+            </Link>
           </h3>
         </div>
 
@@ -39,76 +40,26 @@ const Sidebar: React.FC = () => {
                 className="nav-link"
                 style={{ '--i': '.6s' } as CustomCSSProperties}
               >
-                <a href="#">Home</a>
+                <Link href={'/'}>Home</Link>
               </li>
               <li
                 className="nav-link"
                 style={{ '--i': '.85s' } as CustomCSSProperties}
               >
-                <a href="#">
+                <a>
                   Listing<i className="fas fa-caret-down"></i>
                 </a>
+
                 <div className="dropdown-sidebar">
                   <ul>
                     <li className="dropdown-sidebar-link">
-                      <a href="#">Listing Grid</a>
+                      <Link href="/list-grid">Listing Grid</Link>
                     </li>
                     <li className="dropdown-sidebar-link">
-                      <a href="#">Listing List</a>
+                      <Link href="/all-agents">All Agents </Link>
                     </li>
-                    <li
-                      className="dropdown-sidebar-link"
-                      style={{ '--i': '1s' } as CustomCSSProperties}
-                    >
-                      <a href="#">All Agents</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li
-                className="nav-link"
-                style={{ '--i': '1.1s' } as CustomCSSProperties}
-              >
-                <a href="#">
-                  Pages<i className="fas fa-caret-down"></i>
-                </a>
-                <div className="dropdown-sidebar">
-                  <ul>
-                    <li
-                      className="dropdown-sidebar-link"
-                      style={{ '--i': '1.1s' } as CustomCSSProperties}
-                    >
-                      <a href="#">
-                        Shop<i className="fas fa-caret-down"></i>
-                      </a>
-                      <div className="dropdown-sidebar second">
-                        <ul>
-                          <li className="dropdown-sidebar-link">
-                            <a href="#">All Products</a>
-                          </li>
-                          <li className="dropdown-sidebar-link">
-                            <a href="#">Order Page</a>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li
-                      className="dropdown-sidebar-link"
-                      style={{ '--i': '1s' } as CustomCSSProperties}
-                    >
-                      <a href="#">About Us</a>
-                    </li>
-                    <li
-                      className="dropdown-sidebar-link"
-                      style={{ '--i': '1s' } as CustomCSSProperties}
-                    >
-                      <a href="#">Faq</a>
-                    </li>
-                    <li
-                      className="dropdown-sidebar-link"
-                      style={{ '--i': '1s' } as CustomCSSProperties}
-                    >
-                      <a href="#">Coming Soon</a>
+                    <li className="dropdown-sidebar-link">
+                      <Link href="/agencies">All Agencies </Link>
                     </li>
                   </ul>
                 </div>
@@ -117,14 +68,101 @@ const Sidebar: React.FC = () => {
                 className="nav-link"
                 style={{ '--i': '1.35s' } as CustomCSSProperties}
               >
-                <a href="#">Blogs</a>
+                <Link href="/all-properties">All Properties</Link>
+              </li>
+              <li
+                className="nav-link"
+                style={{ '--i': '1.1s' } as CustomCSSProperties}
+              >
+                <a>
+                  Pages<i className="fas fa-caret-down"></i>
+                </a>
+                <div className="dropdown-sidebar">
+                  <ul>
+                    <li
+                      className="dropdown-sidebar-link"
+                      style={{ '--i': '1.1s' } as CustomCSSProperties}
+                    >
+                      <a>
+                        Shop<i className="fas fa-caret-down"></i>
+                      </a>
+                      <div className="dropdown-sidebar second">
+                        <ul>
+                          <li className="dropdown-sidebar-link">
+                            <Link href="/products">All Products</Link>
+                          </li>
+                          <li className="dropdown-sidebar-link">
+                            <Link href="/payment">Order Page</Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li
+                      className="dropdown-sidebar-link"
+                      style={{ '--i': '1s' } as CustomCSSProperties}
+                    >
+                      <Link href="/about-us">About Us</Link>
+                    </li>
+                    <li
+                      className="dropdown-sidebar-link"
+                      style={{ '--i': '1s' } as CustomCSSProperties}
+                    >
+                      <Link href="/faq">Faq</Link>
+                    </li>
+                    <li
+                      className="dropdown-sidebar-link"
+                      style={{ '--i': '1s' } as CustomCSSProperties}
+                    >
+                      <Link href="/pricing-packages">Pricing Table</Link>
+                    </li>
+                    <li
+                      className="dropdown-sidebar-link"
+                      style={{ '--i': '1s' } as CustomCSSProperties}
+                    >
+                      <Link href="/coming-soon">Coming Soon</Link>
+                    </li>
+                    <li
+                      className="dropdown-sidebar-link"
+                      style={{ '--i': '1s' } as CustomCSSProperties}
+                    >
+                      <Link href="/under-constrauction">
+                        Under-Construction
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li
+                className="nav-link"
+                style={{ '--i': '1.35s' } as CustomCSSProperties}
+              >
+                <Link href="/blogs">Blogs</Link>
+              </li>
+              <li
+                className="nav-link"
+                style={{ '--i': '1.35s' } as CustomCSSProperties}
+              >
+                <Link href="/contact-us">Contact</Link>
               </li>
             </ul>
           </div>
 
-          <div className="flex justify-center items-center gap-2 md:p-5">
+          <div className="flex flex-wrap justify-center items-center gap-2 md:p-5">
             <SignInModal />
-            {user && <UserProfileDropdown />}
+            {user && (
+              <div className="flex gap-2 items-center p-1  font-semibold px-3 text-white border border-white rounded-3xl">
+                <div>
+                  <Image
+                    width={100}
+                    height={100}
+                    src={user?.image}
+                    alt={user?.firstName}
+                    className="object-cover w-10 h-10  rounded-full"
+                  />
+                </div>
+                <p>{user?.firstName}</p>
+              </div>
+            )}
             <Link
               href={
                 user

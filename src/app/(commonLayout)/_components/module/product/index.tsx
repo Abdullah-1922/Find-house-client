@@ -14,6 +14,8 @@ import { TProduct } from '@/types';
 import { ProductSkeletonCard } from '../../skeleton/productSkeletonCard';
 import { useUser } from '@/hooks/user.hook';
 import { toast } from 'sonner';
+import { AuthorizationModal } from '../../modal/authorizationModal';
+import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
 
 const AllProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +26,7 @@ const AllProducts = () => {
     data: productsData,
     isLoading,
     isError,
-  } = useGetAllProductsQuery({ page: currentPage, limit: 6 });
+  } = useGetAllProductsQuery({ page: currentPage, limit: 9 });
 
   const allProducts = productsData?.data as TProduct[];
   const totalPages = productsData?.meta.totalPage || 1;
@@ -42,9 +44,8 @@ const AllProducts = () => {
 
   // Handle page change
   const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
+    setCurrentPage(page);
+    console.log('Selected Page:', page);
   };
 
   return (
@@ -122,28 +123,34 @@ const AllProducts = () => {
                     </div>
                   </CardContent>
                   <CardFooter className="p-4 pt-0">
-                    <Button
-                      onClick={async () => {
-                        if (!user?._id || !product?._id) {
-                          return toast.error('User or product ID is missing');
-                        }
+                    {user?.email ? (
+                      <Button
+                        onClick={async () => {
+                          if (!user?._id || !product?._id) {
+                            return toast.error('User or product ID is missing');
+                          }
 
-                        try {
-                          await addFavoriteFn({
-                            userId: user._id,
-                            productId: product._id,
-                          });
-                          toast.success('Favorite added product successfully');
-                        } catch (error) {
-                          toast.error(
-                            'Failed to product favorite. Please try again.'
-                          );
-                        }
-                      }}
-                      className="w-full bg-gray-700 hover:bg-gray-800 text-white"
-                    >
-                      Add To Cart
-                    </Button>
+                          try {
+                            await addFavoriteFn({
+                              userId: user._id,
+                              productId: product._id,
+                            });
+                            toast.success(
+                              'Favorite added product successfully'
+                            );
+                          } catch (error) {
+                            toast.error(
+                              'Failed to product favorite. Please try again.'
+                            );
+                          }
+                        }}
+                        className="w-full bg-gray-700 hover:bg-gray-800 text-white"
+                      >
+                        Add To Cart
+                      </Button>
+                    ) : (
+                      <AuthorizationModal buttonText="Add To Card" />
+                    )}
                   </CardFooter>
                 </Card>
               );
@@ -151,39 +158,13 @@ const AllProducts = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center items-center gap-2 mt-8 mb-8">
-        <Button
-          variant="outline"
-          size="sm"
-          className="text-sm text-gray-600 border-gray-300"
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </Button>
-
-        {[...Array(totalPages)].map((_, index) => (
-          <Button
-            key={index}
-            variant={currentPage === index + 1 ? 'default' : 'outline'}
-            size="sm"
-            className="text-sm"
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </Button>
-        ))}
-
-        <Button
-          variant="outline"
-          size="sm"
-          className="text-sm text-gray-600 border-gray-300"
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </Button>
-      </div>
+      {totalPages > 1 && (
+        <DynamicPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 };
