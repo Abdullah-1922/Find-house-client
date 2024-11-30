@@ -1,12 +1,19 @@
 'use client';
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const dynamic = 'force-dynamic';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { toast } from 'sonner';
-import ProperLocation from '../propertyDetails/propertyLocation';
+import dynamic from 'next/dynamic';
+
+// Dynamically import with SSR disabled
+const ProperLocation = dynamic(
+  () => import('../propertyDetails/propertyLocation'),
+  {
+    ssr: false,
+  }
+);
 const ContactUs = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
