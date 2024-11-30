@@ -27,7 +27,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useUser } from "@/hooks/user.hook";
-import { useState } from "react";
 
 const paymentSchema = z.object({
   property: z.string().min(1, "Property ID is required"),
@@ -115,7 +114,10 @@ export default function AddPaymentPage() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mb-10">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 m-4 mb-10"
+      >
         <Card>
           <CardContent>
             <h2 className="text-xl font-semibold text-[#24324A] my-5">
