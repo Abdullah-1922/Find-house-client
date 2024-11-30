@@ -1,14 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { format } from 'date-fns';
+import { ChevronDown } from 'lucide-react';
+import { toast } from 'sonner';
+
 import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
 import {
-  useCasOnDeliveryStatusUpdateMutation,
   useGetOrdersByPaymentGatewayQuery,
+  useUpdatePaymentStatusMutation,
 } from '@/redux/api/features/product/productOrderApi';
 import { TOrder } from '@/types/products/order.types';
-import Image from 'next/image';
+import Spinner from '@/components/ui/spinner';
+import Nodata from '@/components/ui/noData';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -17,27 +23,21 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { format } from 'date-fns';
-import Spinner from '@/components/ui/spinner';
-import Nodata from '@/components/ui/noData';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
-import { toast } from 'sonner';
 
 export default function OrderTable({ gatewayName }: { gatewayName: string }) {
-  const [updateStatus] = useCasOnDeliveryStatusUpdateMutation();
+  const [updateStatus] = useUpdatePaymentStatusMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 9;
 
   const { data, isLoading } = useGetOrdersByPaymentGatewayQuery(
     `${gatewayName}?limit=${limit}&page=${currentPage}`
   );
-  console.log('data', data);
 
   const orders = data?.data as TOrder[];
   const meta = data?.meta;
@@ -165,7 +165,7 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
                             'Canceled'
                           )
                         }
-                        disabled={order.status === 'Paid'}
+                        disabled={order.status === 'Canceled'}
                       >
                         Cancel Order
                       </DropdownMenuItem>

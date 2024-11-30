@@ -8,12 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { LayoutGrid, List } from 'lucide-react';
-import PropertyCard from '@/components/shared/card/PropertyCard';
-import { TProperty } from '@/types';
-import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
-import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
 import PropertyLoadingCard from '@/components/shared/card/PropertyLoadingCard';
+import { LayoutGrid, List } from 'lucide-react';
+import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
+import { TProperty } from '@/types';
+import PropertyCard from '@/components/shared/card/PropertyCard';
+import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
 
 export default function AllProperties() {
   const [sortBy, setSortBy] = useState('');
