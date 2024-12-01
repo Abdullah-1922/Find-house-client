@@ -13,14 +13,7 @@ import PropertyCard from "@/components/shared/card/PropertyCard";
 import { TProperty } from "@/types";
 import { useGetAllPropertiesQuery } from "@/redux/api/features/property/propertyApi";
 import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
-
-import { LayoutGrid, List } from 'lucide-react';
-import PropertyCard from '@/components/shared/card/PropertyCard';
-import { TProperty } from '@/types';
-import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
-import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
-import PropertyLoadingCard from '@/components/shared/card/PropertyLoadingCard';
-
+import PropertyLoadingCard from "@/components/shared/card/PropertyLoadingCard";
 
 export default function AllProperties() {
   const [sortBy, setSortBy] = useState("");

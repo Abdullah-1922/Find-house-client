@@ -1,36 +1,43 @@
-
 "use client";
+
 import { useState } from "react";
+import Image from "next/image";
+import { format } from "date-fns";
+import { ChevronDown } from "lucide-react";
+import { toast } from "sonner";
+
 import DynamicPagination from "@/components/shared/pagination/DynamicPagination";
 import {
-  useGetAllOrderQuery,
+  useGetOrdersByPaymentGatewayQuery,
   useUpdatePaymentStatusMutation,
 } from "@/redux/api/features/product/productOrderApi";
 import { TOrder } from "@/types/products/order.types";
-
-import Image from "next/image";
-import { format } from 'date-fns';
-import Spinner from '@/components/ui/spinner';
-import Nodata from '@/components/ui/noData';
+import Spinner from "@/components/ui/spinner";
+import Nodata from "@/components/ui/noData";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
-import { toast } from 'sonner';
+} from "@/components/ui/dropdown-menu";
 
 export default function OrderTable({ gatewayName }: { gatewayName: string }) {
-  const [updateStatus] = useCasOnDeliveryStatusUpdateMutation();
+  const [updateStatus] = useUpdatePaymentStatusMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 9;
 
   const { data, isLoading } = useGetOrdersByPaymentGatewayQuery(
     `${gatewayName}?limit=${limit}&page=${currentPage}`
   );
-  console.log('data', data);
-
 
   const orders = data?.data as TOrder[];
   const meta = data?.meta;
@@ -57,8 +64,8 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
         );
       }
     } catch (err: any) {
-      console.error('Error updating status:', err);
-      toast.error(err?.data?.message || 'Failed to update order status');
+      console.error("Error updating status:", err);
+      toast.error(err?.data?.message || "Failed to update order status");
     }
   };
 
@@ -112,23 +119,17 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
                 </div>
               </TableCell>
               <TableCell className="py-5">
-                {format(new Date(order.createdAt), 'dd MMM, yyyy')}
+                {format(new Date(order.createdAt), "dd MMM, yyyy")}
               </TableCell>
-              <TableCell className="py-5">৳{order.amount}</TableCell>
+              <TableCell className="py-5">à§³{order.amount}</TableCell>
               <TableCell className={`py-5`}>
                 <p
                   className={`px-2 py-1 rounded-md border ${
-
                     order.status === "Paid"
                       ? "text-green-600/80 border-green-600/40 inline-block text-sm"
+                      : order.status === "Canceled"
+                      ? "text-red-600/80 border-red-600/40 inline-block text-sm"
                       : "text-yellow-600/80 border-yellow-600/40 inline-block text-sm"
-
-                    order.status === 'Paid'
-                      ? 'text-green-600/80 border-green-600/40 inline-block text-sm'
-                      : order.status === 'Canceled'
-                      ? 'text-red-600/80 border-red-600/40 inline-block text-sm'
-                      : 'text-yellow-600/80 border-yellow-600/40 inline-block text-sm'
-
                   }`}
                 >
                   {order.status}
@@ -149,10 +150,10 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
                           handleUpdateStatus(
                             order.customerId._id,
                             order.transactionId,
-                            'Paid'
+                            "Paid"
                           )
                         }
-                        disabled={order.status === 'Paid'}
+                        disabled={order.status === "Paid"}
                       >
                         Mark as Paid
                       </DropdownMenuItem>
@@ -161,10 +162,10 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
                           handleUpdateStatus(
                             order.customerId._id,
                             order.transactionId,
-                            'Canceled'
+                            "Canceled"
                           )
                         }
-                        disabled={order.status === 'Paid'}
+                        disabled={order.status === "Canceled"}
                       >
                         Cancel Order
                       </DropdownMenuItem>
