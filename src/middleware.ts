@@ -27,6 +27,7 @@ export async function middleware(request: NextRequest) {
       "/agent-dashboard/properties-sold",
       "/add-payment",
       "/bookmarked-products",
+      "/inquiries",
     ],
     admin: [
       "/profile",
@@ -37,6 +38,7 @@ export async function middleware(request: NextRequest) {
       "/admin-dashboard/all-users",
       "/admin-dashboard/all-orders",
       "/admin-dashboard/newsletters",
+      "/inquiries",
       "/admin-dashboard/add-product",
       "/bookmarked-products",
       "/add-payment",

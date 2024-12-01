@@ -19,6 +19,7 @@ import {
   BookmarkCheck,
   DollarSign,
   Mails,
+  MailQuestion,
 } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -70,6 +71,11 @@ const roleBasedNavItems = {
       href: "/agent-dashboard/properties-sold",
       icon: CheckCheck,
     },
+    {
+      title: "Inquiries",
+      href: "/inquiries",
+      icon: MailQuestion,
+    },
   ],
   admin: [
     { title: "Dashboard", href: "/admin-dashboard", icon: LayoutDashboard },
@@ -102,6 +108,11 @@ const roleBasedNavItems = {
       title: "Newsletters",
       href: "/admin-dashboard/newsletters",
       icon: Mails,
+    },
+    {
+      title: "Inquiries",
+      href: "/inquiries",
+      icon: MailQuestion,
     },
   ],
 };
