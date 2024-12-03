@@ -59,11 +59,9 @@ const inquiryApi = baseApi.injectEndpoints({
       query: ({ inquiryId, body }) => ({
         url: `/inquiry/${inquiryId}`,
         method: "PATCH",
-        body,
+        body
       }),
-      invalidatesTags: (result, error, { inquiryId }) => [
-        { type: "Inquiry", id: inquiryId },
-      ],
+      invalidatesTags: ["Inquiry"],
     }),
 
     // Delete an inquiry by ID

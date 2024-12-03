@@ -40,6 +40,7 @@ export const baseApi = createApi({
     'Stats',
     'Inquiry',
     'PropertyPayment',
+    "NewsLetter"
   ],
   endpoints: () => ({}),
 });

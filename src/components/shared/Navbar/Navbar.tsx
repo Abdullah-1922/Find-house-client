@@ -13,6 +13,7 @@ import { useUser } from "@/hooks/user.hook";
 
 const Navbar = () => {
   const { user } = useUser();
+  console.log("user", user);
 
   return (
     <>
