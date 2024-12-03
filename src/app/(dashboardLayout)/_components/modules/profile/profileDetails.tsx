@@ -1,13 +1,16 @@
-"use client";
+'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, MapPin, Pencil, Phone } from "lucide-react";
-import { useUser } from "@/hooks/user.hook";
-import { InquiryForm } from "./inwueryForm";
-import Link from "next/link";
-import Spinner from "@/components/ui/spinner";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Mail, MapPin, Pencil, Phone } from 'lucide-react';
+import { useUser } from '@/hooks/user.hook';
+import { InquiryForm } from './inwueryForm';
+import Link from 'next/link';
+import Spinner from '@/components/ui/spinner';
 
 export default function ProfileDetail() {
   const { user } = useUser();
@@ -47,13 +50,13 @@ export default function ProfileDetail() {
             <div className="flex items-center space-x-4">
               <Avatar className="h-20 w-20">
                 <AvatarImage
-                  src={image || "/default-avatar.png"}
+                  src={image || '/default-avatar.png'}
                   alt={`${firstName} ${secondName}`}
                   className="object-cover"
                 />
                 <AvatarFallback>
-                  {firstName?.[0] || ""}
-                  {secondName?.[0] || ""}
+                  {firstName?.[0] || ''}
+                  {secondName?.[0] || ''}
                 </AvatarFallback>
               </Avatar>
               <div>
@@ -61,12 +64,12 @@ export default function ProfileDetail() {
                   {firstName} {secondName}
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  {role || "User"}
+                  {role || 'User'}
                 </p>
               </div>
             </div>
-            <Link href={"/setting"} className="-mt-7">
-              <Button variant={"ghost"} className="text-gray-900">
+            <Link href={'/setting'} className="-mt-7">
+              <Button variant={'ghost'} className="text-gray-900">
                 <Pencil />
               </Button>
             </Link>
@@ -88,7 +91,7 @@ export default function ProfileDetail() {
           </div>
         </div>
 
-        {user?.role === "user" && <InquiryForm />}
+        <InquiryForm />
       </CardContent>
     </Card>
   );

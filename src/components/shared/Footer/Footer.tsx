@@ -1,47 +1,10 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useCreateNewsLetterMutation } from "@/redux/api/features/newsletter/newsletterApi";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader, Twitter } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { FieldValues, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
-
-const emailSchema = z.object({
-  email: z.string({ required_error: "Email is required" }).email({
-    message: "Invalid email address",
-  }),
-});
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Twitter } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer = () => {
-  const form = useForm<z.infer<typeof emailSchema>>({
-    resolver: zodResolver(emailSchema),
-    defaultValues: {
-      email: "",
-    },
-  });
-  const [createNewsletter, { isLoading }] = useCreateNewsLetterMutation();
-  const submitForm = async (values: FieldValues) => {
-    try {
-      await createNewsletter(values);
-      toast.success("Subscribed successfully");
-      form.reset();
-    } catch (error: any) {
-      toast.error(error.data.message || "Something went wrong");
-    }
-  };
-
   return (
     <div className="w-full bg-white border-t">
       <footer className="max-w-7xl mx-auto px-2 md:px-4 flex flex-col justify-around">
@@ -133,46 +96,10 @@ const Footer = () => {
               Sign Up for Our Newsletter to get Latest Updates and Offers.
               Subscribe to receive news in your inbox.
             </p>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(submitForm)}
-                className="space-y-2"
-              >
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Address</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          placeholder="Enter Your Address"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <Button
-                  type="submit"
-                  className="w-full bg-gray-800 hover:bg-gray-900"
-                >
-                  {isLoading ? (
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span>Subscribing...</span>
-                        <Loader className="mr-2 h-4 w-4 animate-spin" />
-                      </div>
-                    </div>
-                  ) : (
-                    "Subscribe"
-                  )}
-                </Button>
-              </form>
-            </Form>
+            <form className="space-y-2">
+              <Input type="email" placeholder="Enter Your Email" />
+              <Button className="w-full">SUBSCRIBE</Button>
+            </form>
           </div>
         </div>
 
@@ -180,7 +107,7 @@ const Footer = () => {
         <div
           style={{
             backgroundImage:
-              "url(https://code-theme.com/html/findhouses/images/bg/bg-white-3.png)",
+              'url(https://code-theme.com/html/findhouses/images/bg/bg-white-3.png)',
           }}
           className="px-4 py-4  "
         >
