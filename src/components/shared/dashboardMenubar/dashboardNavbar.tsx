@@ -21,7 +21,7 @@ const DashboardNavbar = () => {
                 <Link href="#">
                   Listing <i className="fas fa-caret-down"></i>
                 </Link>
-                <div className="dropdown-menu mt-0.5">
+                <div className="dropdown-menu">
                   <ul>
                     <li>
                       <Link href="/list-grid">Listing Grid</Link>
@@ -42,7 +42,7 @@ const DashboardNavbar = () => {
                 <Link href="#">
                   Pages <i className="fas fa-caret-down"></i>
                 </Link>
-                <div className="dropdown-menu mt-0.5">
+                <div className="dropdown-menu">
                   <ul>
                     <li>
                       <Link href="#">

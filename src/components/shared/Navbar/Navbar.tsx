@@ -40,7 +40,7 @@ const Navbar = () => {
                   <Link href="#">
                     Listing <i className="fas fa-caret-down"></i>
                   </Link>
-                  <div className="dropdown-menu mt-0.5">
+                  <div className="dropdown-menu">
                     <ul>
                       <li>
                         <Link href="/list-grid">Listing Grid</Link>
@@ -61,13 +61,13 @@ const Navbar = () => {
                   <Link href="#">
                     Pages <i className="fas fa-caret-down"></i>
                   </Link>
-                  <div className="dropdown-menu mt-0.5">
+                  <div className="dropdown-menu">
                     <ul>
                       <li>
                         <Link href="#">
                           Shop <i className="fas fa-caret-right"></i>
                         </Link>
-                        <div className="dropdown-menu-1 ml-1 -mt-0.5">
+                        <div className="dropdown-menu-1 m-0">
                           <ul>
                             <li>
                               <Link href="#">Order Page</Link>
