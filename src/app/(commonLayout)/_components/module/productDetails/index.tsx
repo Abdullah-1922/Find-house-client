@@ -1,6 +1,6 @@
 "use client";
 
-import { Star } from "lucide-react";
+import { Bookmark, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import BestSeller from "./bestSeller";
@@ -57,6 +57,17 @@ export default function ProductDetails({ productId }: { productId: string }) {
     setSelectedImage(image);
   };
 
+  const handleAddToFavorite = async () => {
+    try {
+      await addFavoriteFn({
+        productId: singleProduct._id,
+        userId: user?._id,
+      });
+      toast.success("Product added to favorite successfully!");
+    } catch (error) {
+      console.error("Error adding product to favorite:", error);
+    }
+  };
   return (
     <div className="max-w-7xl mx-auto px-2 md:px-4 py-8">
       <div className="flex flex-col lg:flex-row gap-2 md:p-5">
@@ -134,35 +145,50 @@ export default function ProductDetails({ productId }: { productId: string }) {
                       ${singleProduct.price}
                     </span>
                   </div>
-                  <div>
-                    {user?.email ? (
-                      <Button
-                        onClick={async () => {
-                          if (!user?._id || !singleProduct?._id) {
-                            return toast.error("User or product ID is missing");
-                          }
+                  <div className="flex items-center gap-3 pt-5">
+                    <div>
+                      {user?.email ? (
+                        <Button
+                          onClick={async () => {
+                            if (!user?._id || !singleProduct?._id) {
+                              return toast.error(
+                                "User or product ID is missing"
+                              );
+                            }
 
-                          try {
-                            await addFavoriteFn({
-                              userId: user._id,
-                              productId: singleProduct._id,
-                            });
-                            toast.success(
-                              "Added to favorite product successfully"
-                            );
-                          } catch (error) {
-                            toast.error(
-                              "Failed to add favorite product. Please try again."
-                            );
-                          }
-                        }}
-                        className="bg-gray-800 hover:bg-gray-900 mt-5"
-                      >
-                        Add To Cart
-                      </Button>
-                    ) : (
-                      <AuthorizationModal buttonText="Add To Card" />
-                    )}
+                            try {
+                              await addFavoriteFn({
+                                userId: user._id,
+                                productId: singleProduct._id,
+                              });
+                              toast.success(
+                                "Added to favorite product successfully"
+                              );
+                            } catch (error) {
+                              toast.error(
+                                "Failed to add favorite product. Please try again."
+                              );
+                            }
+                          }}
+                          className="bg-gray-800 hover:bg-gray-900"
+                        >
+                          Add To Cart
+                        </Button>
+                      ) : (
+                        <AuthorizationModal buttonText="Add To Card" />
+                      )}
+                    </div>
+                    <div>
+                      {user ? (
+                        <Button onClick={handleAddToFavorite}>
+                          <Bookmark size={22} />
+                        </Button>
+                      ) : (
+                        <AuthorizationModal
+                          buttonText={<Bookmark size={22} />}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

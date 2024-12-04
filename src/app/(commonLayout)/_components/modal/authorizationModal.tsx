@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Button } from '@/components/ui/button';
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,10 +9,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { useRouter } from 'next/navigation';
+} from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 
-export function AuthorizationModal({ buttonText }: { buttonText: string }) {
+export function AuthorizationModal({
+  buttonText,
+}: {
+  buttonText: string | React.ReactNode;
+}) {
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
 
@@ -46,7 +50,7 @@ export function AuthorizationModal({ buttonText }: { buttonText: string }) {
           </Button>
           <Button
             onClick={() => {
-              router.push('/signup');
+              router.push("/signup");
               setOpen(false);
             }}
             className="bg-gray-800 hover:bg-gray-900 text-white"
