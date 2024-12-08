@@ -1,25 +1,23 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Edit, MoreHorizontal, Star, Trash } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import Image from 'next/image';
+import * as React from "react";
+import { Edit, MoreHorizontal, Star, Trash } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+
 import {
-  useGetAllProductReviewsQuery,
   useCreateProductReviewMutation,
   useUpdateProductReviewMutation,
   useDeleteProductReviewMutation,
-} from '@/redux/api/features/product/productReviewApi';
-import { TProductReview } from '@/types';
+} from "@/redux/api/features/product/productReviewApi";
+import { TProductReview } from "@/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
   Dialog,
   DialogContent,
@@ -27,9 +25,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { useUser } from '@/hooks/user.hook';
-import { useState } from 'react';
+} from "@/components/ui/dialog";
+import { useUser } from "@/hooks/user.hook";
+import { useState } from "react";
+import { AuthorizationModal } from "../../modal/authorizationModal";
 
 export function ProductReviews({
   productId,
@@ -46,7 +45,7 @@ export function ProductReviews({
   // For editing and deleting reviews
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [editedComment, setEditedComment] = useState('');
+  const [editedComment, setEditedComment] = useState("");
   const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
 
   // Redux hooks for CRUD operations
@@ -67,12 +66,12 @@ export function ProductReviews({
         review: editedComment,
       };
       await createProductReviewFn(reviewData).unwrap();
-      setEditedComment('');
+      setEditedComment("");
       refetch();
       setRating(0);
-      console.log('Review created successfully');
+      console.log("Review created successfully");
     } catch (error) {
-      console.error('Failed to create review', error);
+      console.error("Failed to create review", error);
     }
   };
 
@@ -85,13 +84,13 @@ export function ProductReviews({
           data: { review: editedComment, rating },
         }).unwrap();
         setIsEditOpen(false);
-        setEditedComment('');
+        setEditedComment("");
         setRating(0);
         refetch();
         setSelectedReviewId(null);
-        console.log('Review updated successfully');
+        console.log("Review updated successfully");
       } catch (error) {
-        console.error('Failed to update review', error);
+        console.error("Failed to update review", error);
       }
     }
   };
@@ -104,9 +103,9 @@ export function ProductReviews({
         setIsDeleteOpen(false);
         refetch();
         setSelectedReviewId(null);
-        console.log('Review deleted successfully');
+        console.log("Review deleted successfully");
       } catch (error) {
-        console.error('Failed to delete review', error);
+        console.error("Failed to delete review", error);
       }
     }
   };
@@ -193,8 +192,8 @@ export function ProductReviews({
                           key={i}
                           className={`w-5 h-5 ${
                             i < review.rating
-                              ? 'text-yellow-400 fill-yellow-400'
-                              : 'text-gray-300'
+                              ? "text-yellow-400 fill-yellow-400"
+                              : "text-gray-300"
                           }`}
                         />
                       ))}
@@ -242,8 +241,8 @@ export function ProductReviews({
               <Star
                 className={`w-8 h-8 ${
                   index < rating
-                    ? 'text-yellow-400 fill-yellow-400'
-                    : 'text-gray-300'
+                    ? "text-yellow-400 fill-yellow-400"
+                    : "text-gray-300"
                 }`}
               />
             </button>
@@ -257,13 +256,17 @@ export function ProductReviews({
           placeholder="Write your review here"
           className="min-h-[120px] border-gray-300"
         />
-        <Button
-          onClick={handleCreateReview}
-          disabled={isCreating}
-          className="bg-gray-800 hover:bg-gray-900 text-white mt-4 w-full md:w-auto"
-        >
-          {isCreating ? 'Submitting...' : 'Submit Review'}
-        </Button>
+        {user ? (
+          <Button
+            onClick={handleCreateReview}
+            disabled={isCreating}
+            className="bg-gray-800 hover:bg-gray-900 text-white mt-4 w-full md:w-auto"
+          >
+            {isCreating ? "Submitting..." : "Submit Review"}
+          </Button>
+        ) : (
+          <AuthorizationModal buttonText="Submit Request" />
+        )}
       </div>
 
       {/* Edit Comment Modal */}
@@ -286,8 +289,8 @@ export function ProductReviews({
                 <Star
                   className={`w-8 h-8 ${
                     index < rating
-                      ? 'text-yellow-400 fill-yellow-400'
-                      : 'text-gray-300'
+                      ? "text-yellow-400 fill-yellow-400"
+                      : "text-gray-300"
                   }`}
                 />
               </button>
@@ -304,7 +307,7 @@ export function ProductReviews({
               disabled={isUpdating}
               className="bg-gray-800 hover:bg-gray-900 text-white"
             >
-              {isUpdating ? 'Updating...' : 'Update Review'}
+              {isUpdating ? "Updating..." : "Update Review"}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -327,7 +330,7 @@ export function ProductReviews({
               disabled={isDeleting}
               variant="destructive"
             >
-              {isDeleting ? 'Deleting...' : 'Delete'}
+              {isDeleting ? "Deleting..." : "Delete"}
             </Button>
           </DialogFooter>
         </DialogContent>

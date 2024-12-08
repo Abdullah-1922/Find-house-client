@@ -1,8 +1,8 @@
-import { useGetAllProductsQuery } from '@/redux/api/features/product/productApi';
-import { TProduct } from '@/types';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import { useGetAllProductsQuery } from "@/redux/api/features/product/productApi";
+import { TProduct } from "@/types";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
 export default function BestSeller() {
   const {
@@ -19,7 +19,7 @@ export default function BestSeller() {
         {allProducts?.map((product) => (
           <Link
             key={product?._id}
-            href={`/product/${product?._id}`}
+            href={`/products/${product?._id}`}
             className="flex items-center space-x-4 group border rounded-md"
           >
             <div className="relative w-20 h-20">
