@@ -108,8 +108,10 @@ export type TSchedule = {
 };
 
 export type TRangeFilters = {
-  area?: { $gte: number; $lte: number };
-  price?: { $gte: number; $lte: number };
+  minArea?: number;
+  maxArea?: number;
+  minPrice?: number;
+  maxPrice?: number;
 };
 
 export type TPropertyPayment = {

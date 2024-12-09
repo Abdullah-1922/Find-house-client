@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -53,7 +54,7 @@ export function InquiryForm() {
     values.phone = user.phone;
     values.fullName = user.firstName + " " + user.secondName;
     try {
-      const res = await createInquiry(values);
+      const res:any = await createInquiry(values);
       console.log("res", res);
       if (res?.data?.success) {
         form.reset();

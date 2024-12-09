@@ -1,6 +1,21 @@
 import PropertySearch from './propertySearch';
 
-const Banner = () => {
+const Banner = async() => {
+  let data ={
+    maxPrice: 1000000,
+    minPrice: 1000,
+    maxArea: 10000,
+    minArea: 1000,
+    cities: [ 'Dhaka', 'Tangail' ]
+  };
+  try{
+     const filterRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/stats/filter-stats`);
+      const filterData = await filterRes.json();
+      data=filterData.data;
+  }catch(err){
+    console.log(err);
+  }
+ 
   return (
     <div>
       <div
@@ -19,7 +34,7 @@ const Banner = () => {
               We Have Over Million Properties For You
             </p>
           </div>
-          <PropertySearch />
+          <PropertySearch data={data}/>
         </div>
       </div>
     </div>

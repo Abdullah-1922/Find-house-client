@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useRouter } from 'next/navigation';
-import { Search, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import * as React from "react";
+import { useRouter } from "next/navigation";
+import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
-import { Checkbox } from '@/components/ui/checkbox';
+} from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
+} from "@/components/ui/accordion";
 
 import {
   TProperty,
@@ -29,33 +29,44 @@ import {
   Features,
   ExtraInfoAge,
   TRangeFilters,
-} from '@/types';
-
-const PropertySearch: React.FC = () => {
+} from "@/types";
+type TData = {
+  maxPrice: number;
+  minPrice: number;
+  maxArea: number;
+  minArea: number;
+  cities: string[];
+};
+const PropertySearch = ({ data }: { data: TData }) => {
   const router = useRouter();
-  const [searchType, setSearchType] = React.useState<PropertyCategory>('sell');
+  const [searchType, setSearchType] = React.useState<PropertyCategory>("sell");
   const [filters, setFilters] = React.useState<
     Partial<TProperty> & TRangeFilters
   >({
-    status: 'active',
-    category: 'sell',
+    status: "active",
+    category: searchType,
     type: undefined,
-    area: { $gte: 0, $lte: 10000 },
-    price: { $gte: 0, $lte: 1000000 },
+    minArea: data?.minArea,
+    maxArea: data?.maxArea,
+    minPrice: data?.minPrice,
+    maxPrice: data?.maxPrice,
     rooms: undefined,
-    'extraInfo.bathrooms': undefined,
+    "bathrooms": undefined,
     features: [],
   });
 
   const handleFilterChange = (key: string, value: any) => {
+    console.log(key, value);
+    console.log(key, value);
     setFilters((prev) => {
       const newFilters = { ...prev };
-      if (key.includes('.')) {
-        const [parentKey, childKey] = key.split('.');
+      if (key.includes(".")) {
+        const [parentKey, childKey] = key.split(".");
         newFilters[parentKey] = { ...newFilters[parentKey], [childKey]: value };
       } else {
         newFilters[key] = value;
       }
+
       return newFilters;
     });
   };
@@ -64,48 +75,54 @@ const PropertySearch: React.FC = () => {
     const queryParams = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {
       if (value !== undefined) {
-        if (typeof value === 'object' && value !== null) {
+        if (
+          typeof value === "object" &&
+          value !== null &&
+          !Array.isArray(value)
+        ) {
           Object.entries(value).forEach(([subKey, subValue]) => {
-            if (typeof subValue === 'string' || typeof subValue === 'number') {
+            if (typeof subValue === "string" || typeof subValue === "number") {
               queryParams.append(`${key}.${subKey}`, subValue.toString());
             }
           });
+        } else if (Array.isArray(value)) {
+          queryParams.append(key, value.join(","));
         } else {
           queryParams.append(key, value.toString());
         }
       }
     });
-    queryParams.append('category', searchType);
+    queryParams.append("category", searchType);
     router.push(`/list-grid?${queryParams.toString()}`);
   };
 
   const propertyTypes: PropertyType[] = [
-    'house',
-    'commercial',
-    'apartment',
-    'lot',
-    'garage',
+    "house",
+    "commercial",
+    "apartment",
+    "lot",
+    "garage",
   ];
   const features: Features[] = [
-    'Air Conditioning',
-    'Swimming Pool',
-    'Central Heating',
-    'Laundry Room',
-    'Gym',
-    'Alarm',
-    'Window Covering',
-    'Refrigerator',
-    'TV Cable & WIFI',
-    'Microwave',
+    "Air Conditioning",
+    "Swimming Pool",
+    "Central Heating",
+    "Laundry Room",
+    "Gym",
+    "Alarm",
+    "Window Covering",
+    "Refrigerator",
+    "TV Cable & WIFI",
+    "Microwave",
   ];
   const ageOptions: ExtraInfoAge[] = [
-    '0-1',
-    '0-5',
-    '0-10',
-    '0-15',
-    '0-20',
-    '0-50',
-    '50+',
+    "0-1",
+    "0-5",
+    "0-10",
+    "0-15",
+    "0-20",
+    "0-50",
+    "50+",
   ];
 
   return (
@@ -113,21 +130,29 @@ const PropertySearch: React.FC = () => {
       <div className="mb-6 flex space-x-4">
         <Button
           className={`${
-            searchType === 'sell'
-              ? 'bg-gray-800 hover:bg-gray-900'
-              : 'bg-white border text-gray-800 hover:bg-gray-10'
+            searchType === "sell"
+              ? "bg-gray-800 hover:bg-gray-900"
+              : "bg-white border text-gray-800 hover:bg-gray-10"
           }`}
-          onClick={() => setSearchType('sell')}
+          onClick={() => {
+            return (
+              setSearchType("sell"), handleFilterChange("category", "sell")
+            );
+          }}
         >
           For Sale
         </Button>
         <Button
           className={`${
-            searchType === 'rent'
-              ? 'bg-gray-800 hover:bg-gray-900'
-              : 'bg-white border text-gray-800 hover:bg-gray-10'
+            searchType === "rent"
+              ? "bg-gray-800 hover:bg-gray-900"
+              : "bg-white border text-gray-800 hover:bg-gray-10"
           }`}
-          onClick={() => setSearchType('rent')}
+          onClick={() => {
+            return (
+              setSearchType("rent"), handleFilterChange("category", "rent")
+            );
+          }}
         >
           For Rent
         </Button>
@@ -136,12 +161,12 @@ const PropertySearch: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <Input
           placeholder="Enter keywords..."
-          onChange={(e) => handleFilterChange('title', e.target.value)}
+          onChange={(e) => handleFilterChange("searchTerm", e.target.value)}
         />
 
         <Select
           onValueChange={(value: PropertyType) =>
-            handleFilterChange('type', value)
+            handleFilterChange("type", value)
           }
         >
           <SelectTrigger>
@@ -158,17 +183,18 @@ const PropertySearch: React.FC = () => {
 
         <Select
           onValueChange={(value: string) =>
-            handleFilterChange('location.city', value)
+            handleFilterChange("location", value)
           }
         >
           <SelectTrigger>
             <SelectValue placeholder="Location" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="new-york">New York</SelectItem>
-            <SelectItem value="london">London</SelectItem>
-            <SelectItem value="paris">Paris</SelectItem>
-            <SelectItem value="tokyo">Tokyo</SelectItem>
+            {data.cities.map((city) => (
+              <SelectItem key={city} value={city}>
+                {city}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 
@@ -190,43 +216,42 @@ const PropertySearch: React.FC = () => {
               <div>
                 <h4 className="mb-2 font-medium">Price Range</h4>
                 <Slider
-                  min={0}
-                  max={1000000}
+                  min={data?.minPrice || 0}
+                  max={data?.maxPrice || 1000000}
                   step={1000}
                   value={[
-                    filters.price?.$gte || 0,
-                    filters.price?.$lte || 1000000,
+                    filters.minPrice || data?.minPrice || 0,
+                    filters.maxPrice || data?.maxPrice || 10000000,
                   ]}
-                  onValueChange={(value) =>
-                    handleFilterChange('price', {
-                      $gte: value[0],
-                      $lte: value[1],
-                    })
-                  }
+                  onValueChange={(value) => {
+                    handleFilterChange("minPrice", value[0]);
+                    handleFilterChange("maxPrice", value[1]);
+                  }}
                 />
                 <div className="flex justify-between mt-2">
-                  <span>${filters.price?.$gte}</span>
-                  <span>${filters.price?.$lte}</span>
+                  <span>${filters.minPrice || data?.minPrice}</span>
+                  <span>${filters.maxPrice || data?.maxPrice}</span>
                 </div>
               </div>
 
               <div>
                 <h4 className="mb-2 font-medium">Area Size (sq ft)</h4>
                 <Slider
-                  min={0}
-                  max={10000}
+                  min={data?.minArea || 0}
+                  max={data?.maxArea || 10000}
                   step={100}
-                  value={[filters.area?.$gte || 0, filters.area?.$lte || 10000]}
-                  onValueChange={(value) =>
-                    handleFilterChange('area', {
-                      $gte: value[0],
-                      $lte: value[1],
-                    })
-                  }
+                  value={[
+                    filters.minArea || data?.minArea || 0,
+                    filters.maxArea || data?.minArea || 10000,
+                  ]}
+                  onValueChange={(value) => {
+                    handleFilterChange("minArea", value[0]);
+                    handleFilterChange("maxArea", value[1]);
+                  }}
                 />
                 <div className="flex justify-between mt-2">
-                  <span>{filters.area?.$gte} sq ft</span>
-                  <span>{filters.area?.$lte} sq ft</span>
+                  <span>{filters.minArea || data?.minArea} sq ft</span>
+                  <span>{filters.maxArea || data?.maxArea} sq ft</span>
                 </div>
               </div>
 
@@ -234,16 +259,16 @@ const PropertySearch: React.FC = () => {
                 <h4 className="mb-2 font-medium">Bedrooms</h4>
                 <Select
                   onValueChange={(value) =>
-                    handleFilterChange('rooms', parseInt(value))
+                    handleFilterChange("rooms", parseInt(value))
                   }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Number of bedrooms" />
                   </SelectTrigger>
                   <SelectContent>
-                    {[1, 2, 3, 4, '5+'].map((num) => (
+                    {[1, 2, 3, 4, "5+"].map((num) => (
                       <SelectItem key={num} value={num.toString()}>
-                        {num} {num === 1 ? 'bedroom' : 'bedrooms'}
+                        {num} {num === 1 ? "bedroom" : "bedrooms"}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -254,16 +279,16 @@ const PropertySearch: React.FC = () => {
                 <h4 className="mb-2 font-medium">Bathrooms</h4>
                 <Select
                   onValueChange={(value) =>
-                    handleFilterChange('extraInfo.bathrooms', parseInt(value))
+                    handleFilterChange("bathrooms", parseInt(value))
                   }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Number of bathrooms" />
                   </SelectTrigger>
                   <SelectContent>
-                    {[1, 2, 3, 4, '5+'].map((num) => (
+                    {[1, 2, 3, 4, "5+"].map((num) => (
                       <SelectItem key={num} value={num.toString()}>
-                        {num} {num === 1 ? 'bathroom' : 'bathrooms'}
+                        {num} {num === 1 ? "bathroom" : "bathrooms"}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -274,7 +299,7 @@ const PropertySearch: React.FC = () => {
                 <h4 className="mb-2 font-medium">Property Age</h4>
                 <Select
                   onValueChange={(value: ExtraInfoAge) =>
-                    handleFilterChange('extraInfo.age', value)
+                    handleFilterChange("age", value)
                   }
                 >
                   <SelectTrigger>
@@ -294,7 +319,7 @@ const PropertySearch: React.FC = () => {
                 <h4 className="mb-2 font-medium">Property Status</h4>
                 <Select
                   onValueChange={(value: PropertyStatus) =>
-                    handleFilterChange('status', value)
+                    handleFilterChange("status", value)
                   }
                 >
                   <SelectTrigger>
@@ -317,13 +342,13 @@ const PropertySearch: React.FC = () => {
                       id={feature}
                       onCheckedChange={(checked) => {
                         if (checked) {
-                          handleFilterChange('features', [
+                          handleFilterChange("features", [
                             ...(filters.features || []),
                             feature,
                           ]);
                         } else {
                           handleFilterChange(
-                            'features',
+                            "features",
                             (filters.features || []).filter(
                               (f) => f !== feature
                             )
