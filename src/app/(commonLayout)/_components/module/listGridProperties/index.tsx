@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -10,14 +11,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { LayoutGrid, List, Rotate3D, RotateCw } from 'lucide-react';
+import { LayoutGrid, List, RotateCw } from 'lucide-react';
 import PropertyCard from '@/components/shared/card/PropertyCard';
 import { useGetAllPropertiesQuery } from '@/redux/api/features/property/propertyApi';
 import { TProperty } from '@/types';
 import DynamicPagination from '@/components/shared/pagination/DynamicPagination';
 import PropertyLoadingCard from '@/components/shared/card/PropertyLoadingCard';
 import Link from 'next/link';
-
 export default function ListGridProperties() {
   const [isGridView, setIsGridView] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +33,7 @@ export default function ListGridProperties() {
   // Extract query parameters from the URL
   const sortParam = searchParams.get('sort') || price; // Default to sorting by price descending
   const category = searchParams.get('category');
+  const searchTerm = searchParams.get('searchTerm');
   const type = searchParams.get('type');
   const bathrooms = searchParams.get('bathrooms');
   const features = searchParams.get('features');
@@ -42,8 +43,12 @@ export default function ListGridProperties() {
   const minArea = searchParams.get('minArea');
   const maxArea = searchParams.get('maxArea');
   const pageParam = searchParams.get('page');
+  const bedRooms = searchParams.get('rooms');
+  const bathRooms = searchParams.get('bathrooms');
+  const status = searchParams.get('status');
+  const age = searchParams.get('age');
   const limit = 9;
-
+//  console.log({sortParam, category, type, bathrooms, features, location, minPrice, maxPrice, minArea, maxArea, pageParam, limit});
   // Sync the state with query parameters
   useEffect(() => {
     if (pageParam) setCurrentPage(Number(pageParam));
@@ -76,8 +81,14 @@ export default function ListGridProperties() {
     ...(maxPrice ? { maxPrice } : {}),
     ...(minArea ? { minArea } : {}),
     ...(maxArea ? { maxArea } : {}),
-  }).toString();
+    ...(searchTerm ? { searchTerm }:{}),
+    ...(bedRooms ? { bedrooms: bedRooms } : {}),
+    ...(bathRooms ? { bathrooms: bathRooms } : {}),
+    ...(status ? { status } : {}),
+    ...(age ? { age } : {}),
 
+  }).toString();
+ console.log(query);
   const { data, isLoading } = useGetAllPropertiesQuery(query);
 
   const meta = data?.meta;

@@ -70,9 +70,6 @@ const Navbar = () => {
                         <div className="dropdown-menu-1 m-0">
                           <ul>
                             <li>
-                              <Link href="#">Order Page</Link>
-                            </li>
-                            <li>
                               <Link href="/products">All Product</Link>
                             </li>
                           </ul>
@@ -86,7 +83,7 @@ const Navbar = () => {
                         <Link href="/faq">FAQ</Link>
                       </li>
                       <li>
-                        <Link href="/pricing-packages">Pricing Table</Link>
+                        <Link href="/contact-us">Contact Us</Link>
                       </li>
                       <li>
                         <Link href="/coming-soon">Coming Soon</Link>

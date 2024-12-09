@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
         };
         try {
           const response = await axios.post(
-            'https://find-house-server.vercel.app/api/v2/auth/login/twitter',
+            'https://find-house-server-xi.vercel.app/api/v2/auth/login/twitter',
             userProfile
           );
 
@@ -68,7 +68,7 @@ export const authOptions: NextAuthOptions = {
         };
         try {
           const response = await axios.post(
-            'https://find-house-server.vercel.app/api/v2/auth/login/facebook',
+            'https://find-house-server-xi.vercel.app/api/v2/auth/login/facebook',
             userProfile
           );
           console.log('Facebook login response:', response.data);
