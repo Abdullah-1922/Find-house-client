@@ -41,7 +41,8 @@ export const baseApi = createApi({
     'Inquiry',
     'PropertyPayment',
     "NewsLetter",
-    "PopularPlace"
+    "PopularPlace",
+    "Managements"
   ],
   endpoints: () => ({}),
 });

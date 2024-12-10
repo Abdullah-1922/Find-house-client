@@ -25,7 +25,7 @@ const PopularPlaces = () => {
           ? [1, 2, 3, 4, 5, 6].map((_, index) => (
               <PopularPlacesLoading key={index} />
             ))
-          : locations.map((location: TPopularPlace) => (
+          : locations?.map((location: TPopularPlace) => (
               <div
                 key={location._id}
                 className="max-w-sm overflow-hidden rounded-lg shadow-lg group"
