@@ -9,9 +9,16 @@ import ClientsTestimonials from '../_components/module/homeVideo/ClientsTestimon
 import MeetOurAgents from '@/components/Home/MeetOurAgents/MeetOurAgents';
 import DetailsParallax from '../_components/module/homeMap/detailsParallax';
 import WhyChooseUs from '../_components/module/homeVideo/WhyChooseUs';
+import { useGetAllManagementsQuery } from '@/redux/api/features/management/managementApi';
+import Spinner from '@/components/ui/spinner';
+import Link from 'next/link';
 
 const AboutUs = () => {
+  const { data, isLoading } = useGetAllManagementsQuery('')
+  const aboutData = data?.data[0]?.aboutPage;
+  console.log("data, ", aboutData)
   const [showVideo, setShowVideo] = useState(false);
+
   return (
     <div>
       <div
@@ -35,44 +42,34 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <div className="my-20">
+      {isLoading? <Spinner className='h-[600px]'/> : (
+        <div className="my-20">
         <div className="container mx-auto px-4 py-12 ">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             {/* Text Content */}
             <div className="space-y-6">
               <h2 className="text-4xl font-bold">
-                <span className="text-black">ABOUT</span>{' '}
-                <span className="text-gray-700">FIND HOUSES</span>
+                {aboutData?.title}
               </h2>
 
               <div className="space-y-4 text-gray-700">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Laborum odio id voluptatibus incidunt cum? Atque quasi eum
-                  debitis optio ab. Esse itaque officiis tempora possimus odio
-                  rerum aperiam ratione, sunt.
-                </p>
-
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Laborum odio id voluptatibus incidunt cum? Atque quasi eum
-                  debitis optio ab. Esse itaque officiis tempora possimus odio
-                  rerum aperiam ratione, sunt.
-                </p>
+                <p>{aboutData?.description}</p>
               </div>
 
               <div className="flex justify-around items-center">
-                <Button
-                  variant="outline"
-                  className="border-2 border-gray-text-gray-700 border-gray-700 hover:bg-pink-50 py-7 px-10"
-                >
-                  READ MORE
-                </Button>
+                <Link href={'/'}>
+                  <Button
+                    variant="outline"
+                    className="border-2 border-gray-text-gray-700 border-gray-700 hover:bg-pink-50 py-7 px-10"
+                  >
+                    READ MORE
+                  </Button>
+                </Link>
 
                 <Image
                   width={1000}
                   height={1000}
-                  src="https://code-theme.com/html/findhouses/images/signature.png"
+                  src={aboutData?.signatureImage}
                   alt="Signature"
                   className="h-12 object-contain"
                 />
@@ -85,7 +82,7 @@ const AboutUs = () => {
                 <iframe
                   width="100%"
                   height="400"
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                  src={aboutData?.video}
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -114,6 +111,7 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+      )}
       <WhyChooseUs />
       <DetailsParallax />
       <MeetOurAgents />
