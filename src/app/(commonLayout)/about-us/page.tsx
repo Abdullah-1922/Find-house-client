@@ -16,7 +16,7 @@ import Link from 'next/link';
 const AboutUs = () => {
   const { data, isLoading } = useGetAllManagementsQuery('')
   const aboutData = data?.data[0]?.aboutPage;
-  console.log("data, ", aboutData)
+  
   const [showVideo, setShowVideo] = useState(false);
 
   return (
