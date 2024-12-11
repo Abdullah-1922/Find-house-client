@@ -29,7 +29,6 @@ const Footer = () => {
   const { data } = useGetAllManagementsQuery('')
   const footerData = data?.data[0]?.contactUsPage;
   const aboutData = data?.data[0]?.aboutPage;
-  console.log("data, ", data?.data)
   
   const form = useForm<z.infer<typeof emailSchema>>({
     resolver: zodResolver(emailSchema),
