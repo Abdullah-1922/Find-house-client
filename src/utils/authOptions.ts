@@ -4,7 +4,7 @@ import FacebookProvider from 'next-auth/providers/facebook';
 import { NextAuthOptions } from 'next-auth';
 import axios from 'axios';
 import { cookies } from 'next/headers';
-
+import GoogleProvider from "next-auth/providers/google";
 export const authOptions: NextAuthOptions = {
   providers: [
     TwitterProvider({
@@ -21,13 +21,47 @@ export const authOptions: NextAuthOptions = {
         },
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
+  
   callbacks: {
     signIn: async ({ profile, account }: any) => {
       console.log('Social login ==>', profile, account);
       if (!profile || !account) {
         return false;
       }
+     if(account.provider === 'google'){
+      const name = profile?.name || 'Unknown';
+      const [firstName, ...rest] = name.split(' ');
+      const secondName = rest.join(' ');
+      const userProfile = {
+        firstName,
+        secondName,
+        image: profile?.picture,
+        email: profile?.email,
+
+      };
+      try {
+        const response = await axios.post(
+          'https://find-house-server-xi.vercel.app/api/v2/auth/login/google',
+          userProfile
+        );
+
+        if (response.data.data.accessToken) {
+          cookies().set('accessToken', response.data.data.accessToken);
+        }
+        console.log('Twitter login response:', response.data);
+      } catch (error) {
+        console.error('Error posting to backend:', error);
+      }
+
+    }
+
+
+
 
       if (account.provider === 'twitter') {
         const name = profile?.data?.name || 'Unknown';
