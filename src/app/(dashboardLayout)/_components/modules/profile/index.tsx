@@ -7,10 +7,11 @@ import { useUser } from "@/hooks/user.hook";
 
 export default function Profile() {
   const { user } = useUser();
+  console.log(user?.role);
   return (
     <div className="space-y-5 m-2 my-5 mr-6">
       <ProfileDetail />
-      {user?.role === "admin" || "agent" ? <Properties /> : ""}
+      {(   user?.role == "admin" || user?.role == "agent") && <Properties />}
     </div>
   );
 }

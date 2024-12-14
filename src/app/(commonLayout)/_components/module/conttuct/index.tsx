@@ -25,7 +25,7 @@ const ContactUs = () => {
     const json = JSON.stringify(object);
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact-us`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,13 +84,13 @@ const ContactUs = () => {
               <h2 className="mb-6 text-2xl font-bold">CONTACT US</h2>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <Input
-                  name="name"
+                  name="firstName"
                   type="text"
                   placeholder="First Name"
                   className="border-gray-200"
                 />
                 <Input
-                  name="name"
+                  name="lastName"
                   type="text"
                   placeholder="Last Name"
                   className="border-gray-200"
