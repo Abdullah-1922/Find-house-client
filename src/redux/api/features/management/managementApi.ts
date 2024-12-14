@@ -2,21 +2,24 @@ import { baseApi } from "../../baseApi";
 
 const managementApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    updateManagement: build.mutation({
-      query: (data) => ({
-        url: "/management",
-        method: "PUT",
-        body: data,
-      }),
-      invalidatesTags: ["Managements"],
-    }),
     getAllManagements: build.query({
       query: () => ({
         url: "/management",
         method: "GET",
       }),
       providesTags: ["Managements"],
+    }),
+    updateManagements: build.mutation({
+      query: ({ id, data }) => {
+        const body = { aboutPage: { ...data } }
+        return {
+          url: `/management/${id}`,
+          method: "PATCH",
+          body
+        }
+      },
+      invalidatesTags: ["Managements"]
     })
   }),
 });
-export const { useUpdateManagementMutation, useGetAllManagementsQuery } = managementApi;
+export const { useGetAllManagementsQuery, useUpdateManagementsMutation } = managementApi;

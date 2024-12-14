@@ -20,6 +20,8 @@ import {
   DollarSign,
   Mails,
   MailQuestion,
+  Settings,
+  Info,
 } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -48,7 +50,8 @@ const commonNavItems: NavItem[] = [
   { title: "Payments", href: "/payment", icon: CreditCard },
   { title: "Invoices", href: "/product-invoice", icon: FileText },
   { title: "Schedules", href: "/schedules", icon: CalendarCheck },
-  { title: "Setting", href: "/setting", icon: KeyRound },
+  { title: "Managements", href: "/admin-dashboard/managements", icon: Info },
+  { title: "Setting", href: "/setting", icon: Settings },
 ];
 
 const roleBasedNavItems = {
