@@ -16,7 +16,7 @@ import { useState } from "react";
 
 export default function Managements() {
     const [currentPage, setCurrentPage] = useState(1);
-    const { data, isLoading } = useGetAllContactMessageQuery(`limit=${3}&page=${currentPage}`)
+    const { data, isLoading } = useGetAllContactMessageQuery(`limit=${10}&page=${currentPage}`)
     // handle pagination
     const meta = data?.meta;
     const totalPages = meta?.totalPage;

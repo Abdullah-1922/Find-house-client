@@ -3,8 +3,8 @@ import { baseApi } from "../../baseApi";
 const contactUsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllContactMessage: build.query({
-      query: () => ({
-        url: "/contact-us",
+      query: (query) => ({
+        url: `/contact-us?${query}`,
         method: "GET",
       }),
       providesTags: ["ContactUs"],
