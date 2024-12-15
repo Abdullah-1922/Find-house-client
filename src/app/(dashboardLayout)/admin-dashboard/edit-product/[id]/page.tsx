@@ -167,7 +167,7 @@ export default function EditProductPage({
                           <FormLabel>Category</FormLabel>
                           <Select
                             onValueChange={field.onChange}
-                            defaultValue={product.category}
+                            defaultValue={product?.category}
                           >
                             <FormControl>
                               <SelectTrigger>
