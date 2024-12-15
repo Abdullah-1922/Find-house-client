@@ -44,11 +44,13 @@ export default function PropertiesTable() {
   const [deleteProperty] = useDeletePropertyMutation();
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
-  console.log("params", params);
 
   let queryString = `limit=${limit}&page=${currentPage}`;
   if (params.includes("/my-properties")) {
     queryString += `&author=${user?._id}`;
+  }
+  if (params.includes("/properties-sold")) {
+    queryString += `&author=${user?._id}&status=inActive`;
   }
   if(params.includes("/profile")) {
     queryString += `&author=${user?._id}`;
@@ -57,7 +59,7 @@ export default function PropertiesTable() {
   const { data, isFetching } = useGetAllPropertiesQuery(queryString, {
     skip: user == undefined,
   });
-
+  
   if (isFetching) return <Spinner className="h-[400px]" />;
 
   const properties = data?.data?.map((property: TProperty) => ({
