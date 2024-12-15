@@ -1,51 +1,54 @@
-import { baseApi } from '../../baseApi';
+import { baseApi } from "../../baseApi";
 
 const requestAgentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-   
     getAllAgentRequest: builder.query({
       query: (query) => {
         return {
-          url: query ? `/users/request-agent/?${query}` : '/users/request-agent',
-          method: 'GET',
+          url: query ? `/users/request-agent?${query}` : "/users/request-agent",
+          method: "GET",
         };
       },
-      providesTags: ['RequestAgent'],
+      providesTags: ["RequestAgent"],
     }),
     applyForAgent: builder.mutation({
       query: (body) => {
         return {
           url: `/users/request-agent`,
-          method: 'POST',
-            body,
+          method: "POST",
+          body,
         };
       },
-      invalidatesTags: ['RequestAgent'],
+      invalidatesTags: ["RequestAgent", "Users"],
     }),
     updateRequestAgentStatus: builder.mutation({
       query: (data) => {
         return {
-          url: `/users/${data.id}`,
-          method: 'PUT',
-          body: data?.data,
+          url: `/users/request-agent`,
+          method: "PUT",
+          body: data,
         };
       },
       invalidatesTags: (result, error, { id }) => [
-        { type: 'Users', id },
-        'Users',
+        { type: "Users", id },
+        "Users",
+        "RequestAgent",
       ],
     }),
-    getRoleBasedUser: builder.query({
-      query: (query) => {
+    getUserAgentRequest: builder.query({
+      query: (userId: string) => {
         return {
-          url: query ? `/users/role-based-user/${query}` : '/users',
-          method: 'GET',
+          url: `/users/request-agent/${userId}`,
+          method: "GET",
         };
       },
-      providesTags: ['Users'],
+      providesTags: ["RequestAgent"],
     }),
   }),
 });
 export const {
-
+  useGetAllAgentRequestQuery,
+  useApplyForAgentMutation,
+  useUpdateRequestAgentStatusMutation,
+  useGetUserAgentRequestQuery,
 } = requestAgentApi;

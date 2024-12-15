@@ -50,6 +50,9 @@ export default function PropertiesTable() {
   if (params.includes("/my-properties")) {
     queryString += `&author=${user?._id}`;
   }
+  if(params.includes("/profile")) {
+    queryString += `&author=${user?._id}`;
+  }
 
   const { data, isFetching } = useGetAllPropertiesQuery(queryString, {
     skip: user == undefined,
