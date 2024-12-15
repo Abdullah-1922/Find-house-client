@@ -9,7 +9,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import Spinner from "@/components/ui/spinner";
 import Link from "next/link";
 import {
@@ -21,13 +20,22 @@ import Nodata from "@/components/ui/noData";
 import { useGetAllManagementsQuery } from "@/redux/api/features/management/managementApi";
 import { AboutDataUpdateModal } from "../../_components/modals/AboutDataUpdateModal";
 import { ContactDataUpdateModal } from "../../_components/modals/ContactDataUpdateModal";
+import { FaqUpdateModal } from "../../_components/modals/FaqUpdateModal";
+import { useEffect, useState } from "react";
 
 export default function Managements() {
     const [deleteProduct] = useDeleteProductMutation();
     const { data, isLoading } = useGetAllManagementsQuery('')
+    const [faqs, setFaqs] = useState<string[]>([]);
     const aboutData = data?.data[0]?.aboutPage;
     const contactData = data?.data[0]?.contactUsPage;
     const faqData = data?.data[0]?.faqPage?.faq;
+    console.log("faqs, ", data?.data[0])
+    useEffect(() => {
+        if (faqData?.length) {
+            setFaqs(faqData)
+        }
+    }, [faqData])
 
     // handle delete product
     const handleDeleteProduct = async (id: string) => {
@@ -99,7 +107,7 @@ export default function Managements() {
                                     {aboutData?.btnLink}
                                 </TableCell>
                                 <TableCell className="py-5">
-                                  <AboutDataUpdateModal data={{...aboutData, id: data?.data[0]?._id}}/>
+                                    <AboutDataUpdateModal data={{ ...aboutData, id: data?.data[0]?._id }} />
                                 </TableCell>
                             </TableRow>
                         </TableBody>
@@ -144,7 +152,7 @@ export default function Managements() {
                                     {contactData.time}
                                 </TableCell>
                                 <TableCell className="py-5">
-                                <ContactDataUpdateModal data={{...contactData, id: data?.data[0]?._id}}/>
+                                    <ContactDataUpdateModal data={{ ...contactData, id: data?.data[0]?._id }} />
                                 </TableCell>
                             </TableRow>
 
@@ -167,7 +175,7 @@ export default function Managements() {
                         </TableHeader>
                         <TableBody>
 
-                            {faqData.map((item: any, index: number) => (
+                            {faqs.map((item: any, index: number) => (
                                 <TableRow key={index}>
                                     <TableCell colSpan={2} className="py-5">
                                         <h3 className="font-medium mb-1 leading-none">
@@ -178,21 +186,7 @@ export default function Managements() {
                                         <p>{item.answer}</p>
                                     </TableCell>
                                     <TableCell className="py-5">
-                                        <div className="flex gap-3 items-center justify-end">
-                                            <Link href={`/admin-dashboard/edit-product/${item._id}`}>
-                                                <Button
-                                                    variant="outline"
-                                                    className="text-green-600 hover:text-green-700"
-                                                    size="sm"
-                                                >
-                                                    Edit
-                                                </Button>
-                                            </Link>
-                                            <PopConfirm
-                                                name={"product"}
-                                                onConfirm={() => handleDeleteProduct(item._id)}
-                                            />
-                                        </div>
+                                        <FaqUpdateModal indexToUpdate={index} setFaqs={setFaqs} faqs={faqs} data={{ question: faqData[index]?.question, answer: faqData[index]?.answer }} id={data?.data[0]?._id} />
                                     </TableCell>
                                 </TableRow>
                             ))}
