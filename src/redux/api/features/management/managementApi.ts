@@ -11,11 +11,11 @@ const managementApi = baseApi.injectEndpoints({
     }),
     updateManagements: build.mutation({
       query: ({ id, data }) => {
-        const body = { aboutPage: { ...data } }
+        console.log("inside, ", data)
         return {
           url: `/management/${id}`,
           method: "PATCH",
-          body
+          body: {...data}
         }
       },
       invalidatesTags: ["Managements"]

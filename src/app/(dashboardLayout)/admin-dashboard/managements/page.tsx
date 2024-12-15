@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import Nodata from "@/components/ui/noData";
 import { useGetAllManagementsQuery } from "@/redux/api/features/management/managementApi";
 import { AboutDataUpdateModal } from "../../_components/modals/AboutDataUpdateModal";
+import { ContactDataUpdateModal } from "../../_components/modals/ContactDataUpdateModal";
 
 export default function Managements() {
     const [deleteProduct] = useDeleteProductMutation();
@@ -143,21 +144,7 @@ export default function Managements() {
                                     {contactData.time}
                                 </TableCell>
                                 <TableCell className="py-5">
-                                    <div className="flex gap-3 items-center justify-end">
-                                        <Link href={`/admin-dashboard/edit-product/${contactData._id}`}>
-                                            <Button
-                                                variant="outline"
-                                                className="text-green-600 hover:text-green-700"
-                                                size="sm"
-                                            >
-                                                Edit
-                                            </Button>
-                                        </Link>
-                                        <PopConfirm
-                                            name={"product"}
-                                            onConfirm={() => handleDeleteProduct(contactData._id)}
-                                        />
-                                    </div>
+                                <ContactDataUpdateModal data={{...contactData, id: data?.data[0]?._id}}/>
                                 </TableCell>
                             </TableRow>
 
