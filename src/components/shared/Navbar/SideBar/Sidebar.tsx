@@ -142,6 +142,13 @@ const Sidebar: React.FC = () => {
                 className="nav-link"
                 style={{ '--i': '1.35s' } as CustomCSSProperties}
               >
+                <Link href="/contact-us">Contact Us</Link>
+              </li>
+           
+              <li
+                className="nav-link"
+                style={{ '--i': '1.35s' } as CustomCSSProperties}
+              >
                 <Link href="/contact-us">Contact</Link>
               </li>
             </ul>

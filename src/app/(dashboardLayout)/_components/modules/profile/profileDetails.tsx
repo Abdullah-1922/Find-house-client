@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, MapPin, Pencil, Phone } from "lucide-react";
+import { Loader, Mail, MapPin, Pencil, Phone } from "lucide-react";
 import { useUser } from "@/hooks/user.hook";
 import { InquiryForm } from "./inwueryForm";
 import Link from "next/link";
@@ -25,11 +25,10 @@ export default function ProfileDetail() {
       </Card>
     );
   }
-
+  const isLoading = false;
   const {
     firstName,
     secondName,
-    email,
     image,
     role,
     auth: { email: authEmail },
@@ -85,6 +84,30 @@ export default function ProfileDetail() {
               <Mail className="mr-2 h-4 w-4" />
               {authEmail}
             </p>
+          </div>
+          <div>
+            {user?.role === "user" && (
+              <div className="flex flex-col mt-10 items-center justify-between w-full">
+                <p className="text-sm font-semibold mb-2 text-red-600">
+                  Once you become an agent, you can add properties.
+                </p>
+                <Button
+                  type="submit"
+                  className="w-full  bg-gray-800 hover:bg-gray-900"
+                >
+                  {isLoading ? (
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span>Submitting...</span>{" "}
+                        <Loader className="mr-2 h-4 w-4 animate-spin" />
+                      </div>
+                    </div>
+                  ) : (
+                    " Request for be agent"
+                  )}
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
