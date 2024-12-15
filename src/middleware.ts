@@ -73,8 +73,8 @@ export async function middleware(request: NextRequest) {
     (role === "user" && (isAdminPath || isAgentPath))
   ) {
     const response = NextResponse.redirect(new URL("/", request.url));
-    response.cookies.delete("accessToken");
-    response.cookies.delete("refreshToken");
+    // response.cookies.delete("accessToken");
+    // response.cookies.delete("refreshToken");
     return response;
   }
 

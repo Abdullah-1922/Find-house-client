@@ -14,7 +14,7 @@ import {
   useMakeAcceptedMutation,
   useMakeApproveMutation,
 } from "@/redux/api/features/property/propertyApi";
-import { TSchedule } from "@/types";
+import { TProperty, TSchedule } from "@/types";
 import { format, parse } from "date-fns";
 import { useState } from "react";
 import Spinner from "@/components/ui/spinner";
@@ -22,6 +22,7 @@ import DynamicPagination from "@/components/shared/pagination/DynamicPagination"
 import Nodata from "@/components/ui/noData";
 import { useUser } from "@/hooks/user.hook";
 import { toast } from "sonner";
+import Link from "next/link";
 
 interface Schedule {
   id: string;
@@ -30,10 +31,13 @@ interface Schedule {
   candidateImg: string;
   agent: string;
   date: string;
+  property: TProperty;
   time: string;
   dateAdded: string;
   status: string;
   statusText: string;
+  isAccepted: boolean;
+  isApproved: boolean;
 }
 
 const SchedulePage = () => {
@@ -47,12 +51,16 @@ const SchedulePage = () => {
   if (user?.role === "agent") {
     queryString += `&agent=${user?._id}&isApproved=true`;
   }
-
+  if (user?.role === "user") {
+    queryString += `&user=${user?._id}`;
+  }
+  console.log(queryString);
   const { data, isLoading } = useGetAllSChedulesQuery(queryString, {
     skip: user == undefined,
   });
 
   const scheduleData = data?.data;
+  console.log(scheduleData);
 
   const schedules = scheduleData?.map((schedule: TSchedule) => ({
     id: schedule._id,
@@ -60,6 +68,7 @@ const SchedulePage = () => {
     candidateEmail: schedule.user.email,
     candidateImg: schedule.user.image,
     agent: `${schedule.agent.firstName} ${schedule.agent.secondName}`,
+    property: schedule.property,
     status:
       schedule.isApproved && !schedule.isAccepted ? (
         <p className="px-2 py-1 rounded-md border border-yellow-500 text-yellow-500 inline-block text-sm">
@@ -123,6 +132,7 @@ const SchedulePage = () => {
             <TableHeader className="bg-gray-100">
               <TableRow>
                 <TableHead colSpan={2}>Candidate</TableHead>
+                <TableHead>Property</TableHead>
                 <TableHead>Date Requested</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Date</TableHead>
@@ -163,6 +173,14 @@ const SchedulePage = () => {
                     </div>
                   </TableCell>
                   <TableCell className="py-5">
+                    <Link
+                      className=" hover:underline"
+                      href={`/all-properties/${schedule?.property?._id}`}
+                    >
+                      {schedule?.property?.title.toString().slice(0, 20)}...
+                    </Link>
+                  </TableCell>
+                  <TableCell className="py-5">
                     {format(schedule.dateAdded, "dd MMM, yyyy")}
                   </TableCell>
                   <TableCell className="py-5">
@@ -175,11 +193,14 @@ const SchedulePage = () => {
                   <TableCell className="py-5">
                     <div className="flex gap-3 items-center justify-end">
                       {user?.role === "admin" ? (
-                        schedule.statusText === "approved" ? null : (
+                        schedule.statusText === "approved" ||
+                        schedule.statusText === "accepted" ? null : (
                           <Button
                             onClick={() => handleApprove(schedule.id)}
                             variant="outline"
-                            className="text-yellow-600 hover:text-yellow-600"
+                            className={`text-yellow-600 hover:text-yellow-600 ${
+                              schedule?.isAccepted === true ? "hidden" : "block"
+                            }`}
                             size="sm"
                           >
                             Approve
@@ -189,7 +210,12 @@ const SchedulePage = () => {
                         <Button
                           onClick={() => handleAccept(schedule.id)}
                           variant="outline"
-                          className="text-green-600 hover:text-green-600"
+                          className={`text-green-600 hover:text-green-600 ${
+                            user?.role === "user" ||
+                            schedule?.isAccepted == true
+                              ? "hidden"
+                              : "block"
+                          }`}
                           size="sm"
                         >
                           Accept

@@ -103,6 +103,7 @@ const roleBasedNavItems = {
       icon: Dock,
     },
     { title: "All Users", href: "/admin-dashboard/all-users", icon: User2 },
+    { title: "All Agent Request", href: "/admin-dashboard/agent-request", icon: User2 },
     {
       title: "All Orders",
       href: "/admin-dashboard/all-orders",

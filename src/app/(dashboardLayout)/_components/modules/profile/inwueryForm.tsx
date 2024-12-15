@@ -54,7 +54,7 @@ export function InquiryForm() {
     values.phone = user.phone;
     values.fullName = user.firstName + " " + user.secondName;
     try {
-      const res:any = await createInquiry(values);
+      const res: any = await createInquiry(values);
       console.log("res", res);
       if (res?.data?.success) {
         form.reset();
