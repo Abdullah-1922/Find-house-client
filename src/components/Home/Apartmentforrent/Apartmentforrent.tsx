@@ -21,7 +21,7 @@ console.log(data?.data[0]);
   return (
     <div className="mt-20">
       <div
-        className="h-[600px] flex items-center p-28"
+        className="flex items-center sm:p-28 p-8"
         style={{
           backgroundImage:
             "url(https://code-theme.com/html/findhouses/images/bg/bg-2-home-5.jpg)",
@@ -29,9 +29,9 @@ console.log(data?.data[0]);
       >
         <div
           data-aos="fade-right"
-          className="relative min-h-[300px] w-full max-w-xl overflow-hidden rounded bg-cover bg-center"
+          className="relative md:min-h-[300px] min-h-[350px] w-full max-w-xl overflow-hidden rounded bg-cover bg-center"
         >
-          <div className="absolute inset-0 h-full w-full bg-white/90 p-8">
+          <div className="absolute inset-0 w-full bg-white/90 p-8">
             <div className="max-w-md">
               <h2 className="text-3xl font-semibold text-gray-900">
                 Apartment for sell

@@ -16,7 +16,7 @@ const partnersData = [
 const OurPartners = () => {
   return (
     <div
-      className="h-[400px] "
+      className="pb-20"
       style={{
         backgroundImage:
           'url(https://code-theme.com/html/findhouses/images/bg/bg-white-3.png)',
