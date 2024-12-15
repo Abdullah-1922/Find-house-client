@@ -22,6 +22,7 @@ import {
   MailQuestion,
   Settings,
   Info,
+  MessagesSquare,
 } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -112,6 +113,11 @@ const roleBasedNavItems = {
       title: "Newsletters",
       href: "/admin-dashboard/newsletters",
       icon: Mails,
+    },
+    {
+      title: "Contact Message",
+      href: "/admin-dashboard/contact-messages",
+      icon: MessagesSquare,
     },
     {
       title: "Inquiries",

@@ -8,6 +8,11 @@ import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
 import { useGetAllManagementsQuery } from '@/redux/api/features/management/managementApi';
 import Spinner from '@/components/ui/spinner';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FieldValues, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useSendContactMessageMutation } from '@/redux/api/features/contactUs/contactUsApi';
 
 // Dynamically import with SSR disabled
 const ProperLocation = dynamic(
@@ -16,40 +21,38 @@ const ProperLocation = dynamic(
     ssr: false,
   }
 );
+const contactFormSchema = z.object({
+  firstName: z.string({ required_error: "First name is required" }),
+  lastName: z.string({ required_error: "Last name is required" }),
+  email: z.string({ required_error: "Email is required" }),
+  message: z.string({ required_error: "Message is required" }),
+})
 const ContactUs = () => {
-  const { data, isLoading } = useGetAllManagementsQuery('')
+  const { data, isLoading } = useGetAllManagementsQuery('');
+  const [sendMessage, { isLoading: isMessageSending }] = useSendContactMessageMutation();
   const contactData = data?.data[0]?.contactUsPage;
-  
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
+  const form = useForm({
+    resolver: zodResolver(contactFormSchema)
+  })
 
-    formData.append('access_key', '57cc6553-f453-48db-aa23-d96f406f6bc5');
-
-    const object = Object.fromEntries(formData);
-    const json = JSON.stringify(object);
-
+  const handleSubmit = async (values: FieldValues) => {
+    const loadingToast = toast.loading("Message submitting...");
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact-us`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: json,
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        toast.success('Message sent successfully!');
-        event.target.reset(); // Reset the form
+      const res = await sendMessage(values);
+      if (res?.data?.success) {
+        toast.success("Message Sent Successfully", {
+          id: loadingToast,
+        });
+        form.reset();
       } else {
-        toast.error('Failed to send the message. Please try again.');
+        toast.error("Failed to send message", {
+          id: loadingToast,
+        });
       }
     } catch (error) {
-      console.error('Error:', error);
-      toast.error('An error occurred. Please try again.');
+      toast.error("Failed to send message", {
+        id: loadingToast,
+      })
     }
   };
   return (
@@ -89,37 +92,78 @@ const ContactUs = () => {
               {/* Contact Form */}
               <div>
                 <h2 className="mb-6 text-2xl font-bold">CONTACT US</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <Input
-                    name="name"
-                    type="text"
-                    placeholder="First Name"
-                    className="border-gray-200"
-                  />
-                  <Input
-                    name="name"
-                    type="text"
-                    placeholder="Last Name"
-                    className="border-gray-200"
-                  />
-                  <Input
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    className="border-gray-200"
-                  />
-                  <Textarea
-                    name="message"
-                    placeholder="Message"
-                    className="min-h-[150px] border-gray-200"
-                  />
-                  <Button
-                    type="submit"
-                    className="bg-gray-500 hover:bg-gray-600 text-white"
-                  >
-                    Submit
-                  </Button>
-                </form>
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
+                    <div>
+                      <FormField
+                        control={form.control}
+                        name="firstName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className='text-sm'>First Name</FormLabel>
+                            <FormControl>
+                              <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div>
+                      <FormField
+                        control={form.control}
+                        name="lastName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className='text-sm'>Last Name</FormLabel>
+                            <FormControl>
+                              <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div>
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className='text-sm'>Email</FormLabel>
+                            <FormControl>
+                              <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div>
+                      <FormField
+                        control={form.control}
+                        name="message"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className='text-sm'>Message</FormLabel>
+                            <FormControl>
+                              <Textarea rows={5} {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      className={`bg-gray-500 hover:bg-gray-600 text-white`}
+                      disabled={isMessageSending}
+                    >
+                      {isMessageSending ? "Submitting..." : "Submit"}
+                    </Button>
+                  </form>
+                </Form>
+
               </div>
 
               {/* Contact Details */}
