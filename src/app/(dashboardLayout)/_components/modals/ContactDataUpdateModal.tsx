@@ -16,21 +16,22 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { toast } from "sonner"
 import { useUpdateManagementsMutation } from "@/redux/api/features/management/managementApi"
 
-export function AboutDataUpdateModal({ data }: { data: { id: string,title: string, video: string, description: string, signatureImage: string, btnLink: string } }) {
-    const [updateAboutData] = useUpdateManagementsMutation();
+export function ContactDataUpdateModal({ data }: { data: { id: string,title: string, phone: string, description: string, location: string, email: string , time: string} }) {
+    const [updateContactData] = useUpdateManagementsMutation();
     const form = useForm({
         defaultValues: {
             title: data?.title,
-            signatureImage: data?.signatureImage,
-            video: data?.video,
+            location: data?.location,
+            email: data?.email,
             description: data?.description,
-            btnLink: data?.btnLink,
+            phone: data?.phone,
+            time: data?.time
         }
     });
 
     const handleSubmit = async (values: FieldValues) => {
         console.log("values, ", values)
-        const res = await updateAboutData({  data: {aboutPage: {...values}}, id: data?.id });
+        const res = await updateContactData({  data: {contactUsPage: {...values}}, id: data?.id });
         console.log("res, ", res)
         const loadingToast = toast.loading("data updating...");
         if (res?.data?.success) {
@@ -51,7 +52,7 @@ export function AboutDataUpdateModal({ data }: { data: { id: string,title: strin
                 </AlertDialogTrigger>
                 <AlertDialogContent className="z-[999] h-[85vh] overflow-y-scroll">
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Update About Data</AlertDialogTitle>
+                        <AlertDialogTitle>Update Contact Data</AlertDialogTitle>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                                 <div>
@@ -72,10 +73,10 @@ export function AboutDataUpdateModal({ data }: { data: { id: string,title: strin
                                 <div>
                                     <FormField
                                         control={form.control}
-                                        name="video"
+                                        name="location"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Video</FormLabel>
+                                                <FormLabel>Location</FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
@@ -87,10 +88,10 @@ export function AboutDataUpdateModal({ data }: { data: { id: string,title: strin
                                 <div>
                                     <FormField
                                         control={form.control}
-                                        name="signatureImage"
+                                        name="email"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Signature</FormLabel>
+                                                <FormLabel>Email</FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
@@ -117,10 +118,25 @@ export function AboutDataUpdateModal({ data }: { data: { id: string,title: strin
                                 <div>
                                     <FormField
                                         control={form.control}
-                                        name="btnLink"
+                                        name="phone"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Button Link</FormLabel>
+                                                <FormLabel>Phone</FormLabel>
+                                                <FormControl>
+                                                    <Input {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div>
+                                    <FormField
+                                        control={form.control}
+                                        name="time"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Time</FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
