@@ -15,47 +15,48 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { toast } from "sonner"
 import { useUpdateManagementsMutation } from "@/redux/api/features/management/managementApi"
 import { Dispatch, SetStateAction } from "react"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-export function FaqUpdateModal({ data, id, setFaqs, faqs, indexToUpdate }: { data: { question: string, answer: string }, id: string, setFaqs: Dispatch<SetStateAction<object[]>>, faqs: object[] ,indexToUpdate: number}) {
-    const [updateFaq] = useUpdateManagementsMutation();
+const schema  = z.object({
+    question: z.string({required_error: "Question is required!"}),
+    answer: z.string({required_error: "Answer is required!"})
+})
+
+export function AddFaqModal({ id, setFaqs, faqs }: { id: string, setFaqs: Dispatch<SetStateAction<object[]>>, faqs: object[] }) {
+    const [addFaq] = useUpdateManagementsMutation();
     const form = useForm({
-        defaultValues: {
-            question: data?.question,
-            answer: data?.answer,
-        }
+        resolver: zodResolver(schema)
     });
-    console.log("newfaqs, ", faqs)
+    
     const handleSubmit = async (values: FieldValues) => {
         console.log("values, ", values)
-        const updatedFaqs = faqs.map((item, i) =>
-            i === indexToUpdate ? { ...item, ...values } : item
-        );
-    
+
+        const updatedFaqs = [...faqs, values]
         // Update the state
         setFaqs(updatedFaqs);
-        const res = await updateFaq({  data: {faqPage: {faq: updatedFaqs}}, id });
+        const res = await addFaq({ data: { faqPage: { faq: updatedFaqs } }, id });
         console.log("res, ", res)
-        const loadingToast = toast.loading("data updating...");
+        const loadingToast = toast.loading("faq updating...");
         if (res?.data?.success) {
-            toast.success("data updated Successfully", {
+            toast.success("faq added Successfully", {
                 id: loadingToast,
             });
         } else {
-            toast.error("Failed to update data", {
+            toast.error("Failed to add faq", {
                 id: loadingToast,
             });
         }
     }
-    
     return (
         <div className="">
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <Button variant="outline">Edit</Button>
+                    <Button variant="outline">Add New</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="z-[999]">
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Update Contact Data</AlertDialogTitle>
+                        <AlertDialogTitle>Add A New Faq</AlertDialogTitle>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                                 <div>
@@ -90,7 +91,7 @@ export function FaqUpdateModal({ data, id, setFaqs, faqs, indexToUpdate }: { dat
                                 </div>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction type="submit">Save Changes</AlertDialogAction>
+                                    <AlertDialogAction type="submit">Add</AlertDialogAction>
                                 </AlertDialogFooter>
                             </form>
                         </Form>
