@@ -80,7 +80,7 @@ export default function UserProfileDropdown() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/setting">Settings</Link>
+            <Link href="/setting"></Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link onClick={() => logoutUser()} href="#">

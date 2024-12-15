@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useGetAllManagementsQuery } from "@/redux/api/features/management/managementApi";
 import { useCreateNewsLetterMutation } from "@/redux/api/features/newsletter/newsletterApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader, Twitter } from "lucide-react";
@@ -25,12 +26,17 @@ const emailSchema = z.object({
 });
 
 const Footer = () => {
+  const { data } = useGetAllManagementsQuery('')
+  const footerData = data?.data[0]?.contactUsPage;
+  const aboutData = data?.data[0]?.aboutPage;
+  
   const form = useForm<z.infer<typeof emailSchema>>({
     resolver: zodResolver(emailSchema),
     defaultValues: {
       email: "",
     },
   });
+
   const [createNewsletter, { isLoading }] = useCreateNewsLetterMutation();
   const submitForm = async (values: FieldValues) => {
     try {
@@ -57,16 +63,29 @@ const Footer = () => {
                 height={1000}
               />
             </Link>
-            <p className="text-sm text-muted-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum
-              incidunt architecto soluta laboriosam, perspiciatis, aspernatur
-              officiis esse.
+            {isLoading ? (
+             <>
+              <p className="text-sm text-muted-foreground">
+              {aboutData?.description?.split(".")[0]}.
+             </p>
+             <div className="space-y-2">
+               <p className="text-sm">{footerData?.location}</p>
+               <p className="text-sm">{footerData?.phone}</p>
+               <p className="text-sm">{footerData?.email}</p>
+             </div>
+             </>
+            ): (
+              <>
+              <p className="text-sm text-muted-foreground">
+             {aboutData?.description?.split(".")[0]}.
             </p>
             <div className="space-y-2">
-              <p className="text-sm">95 South Park Avenue, USA</p>
-              <p className="text-sm">+456 875 369 208</p>
-              <p className="text-sm">support@findhouses.com</p>
+              <p className="text-sm">{footerData?.location}</p>
+              <p className="text-sm">{footerData?.phone}</p>
+              <p className="text-sm">{footerData?.email}</p>
             </div>
+              </>
+            )}
           </div>
 
           {/* Navigation Section */}

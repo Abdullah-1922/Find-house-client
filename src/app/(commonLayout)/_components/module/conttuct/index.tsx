@@ -6,6 +6,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
+import { useGetAllManagementsQuery } from '@/redux/api/features/management/managementApi';
+import Spinner from '@/components/ui/spinner';
 
 // Dynamically import with SSR disabled
 const ProperLocation = dynamic(
@@ -15,6 +17,9 @@ const ProperLocation = dynamic(
   }
 );
 const ContactUs = () => {
+  const { data, isLoading } = useGetAllManagementsQuery('')
+  const contactData = data?.data[0]?.contactUsPage;
+  
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -77,82 +82,87 @@ const ContactUs = () => {
       </section>
 
       <section className="my-10">
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid gap-20 lg:grid-cols-2">
-            {/* Contact Form */}
-            <div>
-              <h2 className="mb-6 text-2xl font-bold">CONTACT US</h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <Input
-                  name="firstName"
-                  type="text"
-                  placeholder="First Name"
-                  className="border-gray-200"
-                />
-                <Input
-                  name="lastName"
-                  type="text"
-                  placeholder="Last Name"
-                  className="border-gray-200"
-                />
-                <Input
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  className="border-gray-200"
-                />
-                <Textarea
-                  name="message"
-                  placeholder="Message"
-                  className="min-h-[150px] border-gray-200"
-                />
-                <Button
-                  type="submit"
-                  className="bg-gray-500 hover:bg-gray-600 text-white"
-                >
-                  Submit
-                </Button>
-              </form>
-            </div>
+        {isLoading ? <Spinner className='h-[400px]' /> : (
 
-            {/* Contact Details */}
-            <div
-              className="relative overflow-hidden rounded-lg"
-              style={{
-                backgroundImage:
-                  'url("https://code-theme.com/html/findhouses/images/bg/bg-testimonials.jpg")',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            >
-              <div className="absolute inset-0 bg-blue-600/80" />
-              <div className="relative p-8 text-white">
-                <h2 className="mb-4 text-2xl font-bold">CONTACT DETAILS</h2>
-                <p className="mb-8 text-gray-100">
-                  Please find below contact details and contact us today!
-                </p>
-                <div className="space-y-6">
-                  <div className="flex items-center gap-4">
-                    <MapPin className="h-5 w-5 text-gray-200" />
-                    <span>95 South Park Ave, USA</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <Phone className="h-5 w-5 text-gray-200" />
-                    <span>+456 875 369 208</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <Mail className="h-5 w-5 text-gray-200" />
-                    <span>support@findhouses.com</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <Clock className="h-5 w-5 text-gray-200" />
-                    <span>8:00 a.m - 9:00 p.m</span>
+          <div className="container mx-auto px-4 py-8">
+            <div className="grid gap-20 lg:grid-cols-2">
+              {/* Contact Form */}
+              <div>
+                <h2 className="mb-6 text-2xl font-bold">CONTACT US</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <Input
+                    name="name"
+                    type="text"
+                    placeholder="First Name"
+                    className="border-gray-200"
+                  />
+                  <Input
+                    name="name"
+                    type="text"
+                    placeholder="Last Name"
+                    className="border-gray-200"
+                  />
+                  <Input
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    className="border-gray-200"
+                  />
+                  <Textarea
+                    name="message"
+                    placeholder="Message"
+                    className="min-h-[150px] border-gray-200"
+                  />
+                  <Button
+                    type="submit"
+                    className="bg-gray-500 hover:bg-gray-600 text-white"
+                  >
+                    Submit
+                  </Button>
+                </form>
+              </div>
+
+              {/* Contact Details */}
+              <div
+                className="relative overflow-hidden rounded-lg"
+                style={{
+                  backgroundImage:
+                    'url("https://code-theme.com/html/findhouses/images/bg/bg-testimonials.jpg")',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="absolute inset-0 bg-blue-600/80" />
+                <div className="relative p-8 text-white">
+                  <h2 className="mb-4 text-2xl font-bold">{contactData?.title}</h2>
+                  <p className="mb-8 text-gray-100">
+                    {contactData?.description}
+                  </p>
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4">
+                      <MapPin className="h-5 w-5 text-gray-200" />
+                      <span>{contactData?.location}</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Phone className="h-5 w-5 text-gray-200" />
+                      <span>{contactData?.phone}</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Mail className="h-5 w-5 text-gray-200" />
+                      <span>{contactData?.email}</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Clock className="h-5 w-5 text-gray-200" />
+                      <span>{contactData?.time}</span>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
-        </div>
+        )}
+
       </section>
     </div>
   );
