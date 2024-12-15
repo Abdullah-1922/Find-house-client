@@ -7,10 +7,11 @@ export interface DecodedJWT {
   exp: number;
 }
 
-export * from './property/property.type';
-export * from './auth/auth.type';
-export * from './user/user.type';
-export * from './blog/blog.type';
-export * from './clogComment/blogComment.type';
-export * from './products/product.type';
-export * from './popularPlaces/popularPlaces.type';
+export * from "./property/property.type";
+export * from "./auth/auth.type";
+export * from "./user/user.type";
+export * from "./blog/blog.type";
+export * from "./clogComment/blogComment.type";
+export * from "./products/product.type";
+export * from "./popularPlaces/popularPlaces.type";
+export * from "./agentRequest/agentRequest.type";

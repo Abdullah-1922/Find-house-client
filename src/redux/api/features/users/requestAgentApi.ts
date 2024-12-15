@@ -26,7 +26,7 @@ const requestAgentApi = baseApi.injectEndpoints({
         return {
           url: `/users/request-agent`,
           method: "PUT",
-          body: data?.data,
+          body: data,
         };
       },
       invalidatesTags: (result, error, { id }) => [
