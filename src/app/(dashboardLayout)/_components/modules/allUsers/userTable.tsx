@@ -140,12 +140,7 @@ export default function UserTable({
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                  <Button
-                    variant="outline"
-                    className="text-red-600 hover:text-red-700"
-                  >
-                    <Delete />
-                  </Button>
+               
                 </div>
               </TableCell>
             </TableRow>

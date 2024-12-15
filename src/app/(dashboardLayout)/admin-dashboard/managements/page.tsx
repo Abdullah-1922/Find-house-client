@@ -17,16 +17,17 @@ import {
 import { PopConfirm } from "@/components/ui/pop-confirm";
 import { toast } from "sonner";
 import Nodata from "@/components/ui/noData";
-import { useGetAllManagementsQuery } from "@/redux/api/features/management/managementApi";
+import { useGetAllManagementsQuery, useUpdateManagementsMutation } from "@/redux/api/features/management/managementApi";
 import { AboutDataUpdateModal } from "../../_components/modals/AboutDataUpdateModal";
 import { ContactDataUpdateModal } from "../../_components/modals/ContactDataUpdateModal";
 import { FaqUpdateModal } from "../../_components/modals/FaqUpdateModal";
 import { useEffect, useState } from "react";
+import { AddFaqModal } from "../../_components/modals/AddFaqModal";
 
 export default function Managements() {
-    const [deleteProduct] = useDeleteProductMutation();
+    const [deleteFaq] = useUpdateManagementsMutation()
     const { data, isLoading } = useGetAllManagementsQuery('')
-    const [faqs, setFaqs] = useState<string[]>([]);
+    const [faqs, setFaqs] = useState<object[]>([]);
     const aboutData = data?.data[0]?.aboutPage;
     const contactData = data?.data[0]?.contactUsPage;
     const faqData = data?.data[0]?.faqPage?.faq;
@@ -38,20 +39,23 @@ export default function Managements() {
     }, [faqData])
 
     // handle delete product
-    const handleDeleteProduct = async (id: string) => {
-        const loadingToast = toast.loading("Product deleting...");
-        const res = await deleteProduct(id);
-
+    const handleDeleteFaq = async (index: number) => {
+        const updatedFaqs = [...faqs];
+        updatedFaqs.splice(index, 1);
+        setFaqs(updatedFaqs);
+        const res = await deleteFaq({ data: { faqPage: { faq: updatedFaqs } }, id: data?.data[0]?._id });
+        console.log("res, ", res)
+        const loadingToast = toast.loading("faq deleting...");
         if (res?.data?.success) {
-            toast.success("Product Deleted Successfully", {
+            toast.success("faq deleted Successfully", {
                 id: loadingToast,
             });
         } else {
-            toast.error("Failed to delete product", {
+            toast.error("Failed to delete faq", {
                 id: loadingToast,
             });
         }
-    };
+    }
 
     if (isLoading) return <Spinner className="h-[600px]" />;
     if (data?.data.length === 0) {
@@ -161,9 +165,12 @@ export default function Managements() {
                 </div>
             </div>
             <div className="space-y-6 bg-white rounded-md border p-2 md:p-5 m-4">
-                <h2 className="text-lg md:text-xl font-semibold tracking-tight text-gray-700">
-                    FAQ Page Data
-                </h2>
+                <div className="flex items-center justify-between">
+                    <h2 className="text-lg md:text-xl font-semibold tracking-tight text-gray-700">
+                        FAQ Page Data
+                    </h2>
+                    <AddFaqModal id={data?.data[0]?._id} faqs={faqs} setFaqs={setFaqs} />
+                </div>
                 <div className="w-full">
                     <Table>
                         <TableHeader className="bg-gray-100">
@@ -186,7 +193,10 @@ export default function Managements() {
                                         <p>{item.answer}</p>
                                     </TableCell>
                                     <TableCell className="py-5">
-                                        <FaqUpdateModal indexToUpdate={index} setFaqs={setFaqs} faqs={faqs} data={{ question: faqData[index]?.question, answer: faqData[index]?.answer }} id={data?.data[0]?._id} />
+                                        <div className="flex items-center gap-3">
+                                            <FaqUpdateModal indexToUpdate={index} setFaqs={setFaqs} faqs={faqs} data={{ question: faqData[index]?.question, answer: faqData[index]?.answer }} id={data?.data[0]?._id} />
+                                            <PopConfirm name="faq item" onConfirm={() => handleDeleteFaq(index)} />
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             ))}
