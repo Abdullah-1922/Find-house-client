@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import {
     Table,
@@ -47,8 +48,8 @@ export default function Managements() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {data?.data?.map((item: any, index: number) => (
-                                <TableRow >
+                            {data?.data?.map((item: any) => (
+                                <TableRow key={item._id}>
                                     <TableCell colSpan={2} className="py-5">
                                         <h3 className="font-medium mb-1 leading-none">
                                             {`${item.firstName} ${item.lastName}`}

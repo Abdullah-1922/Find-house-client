@@ -53,11 +53,11 @@ export default function PropertiesTable() {
   if(params.includes("/profile")) {
     queryString += `&author=${user?._id}`;
   }
-
+console.log(queryString);
   const { data, isFetching } = useGetAllPropertiesQuery(queryString, {
     skip: user == undefined,
   });
-
+  console.log(data);
   if (isFetching) return <Spinner className="h-[400px]" />;
 
   const properties = data?.data?.map((property: TProperty) => ({

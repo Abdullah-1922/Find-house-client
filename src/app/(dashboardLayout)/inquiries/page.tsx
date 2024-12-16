@@ -49,7 +49,7 @@ const Inquiries = () => {
     skip: user == undefined,
   });
 
-  const inquiryData = data?.data.result;
+  const inquiryData = data?.data;
   console.log("scheduleData", inquiryData);
 
   const inquiries = inquiryData?.map((inquiry: TInquiry) => ({
