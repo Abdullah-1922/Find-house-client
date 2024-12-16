@@ -40,11 +40,40 @@ const MeetOurAgents = () => {
     >
       <div className="max-w-7xl px-2 md:px-4 mx-auto">
         <SectionTitle header="Meet Our" title="Agents" />
+        <div className='md:hidden grid sm:grid-cols-2 gap-6'>
+          {allAgents?.map((agent) => (
+            <Card key={agent._id} className="overflow-hidden bg-white">
+              <div className="relative">
+                <Image
+                  alt={`${agent.firstName} ${agent.secondName}`}
+                  className="w-full object-cover"
+                  height={300}
+                  src={agent.image || '/default-avatar.png'}
+                  style={{
+                    aspectRatio: '300/300',
+                    objectFit: 'cover',
+                  }}
+                  width={300}
+                />
+              </div>
+              <CardContent className="p-4 text-center">
+                <h3 className="text-xl font-semibold">
+                  {agent.firstName} {agent.secondName}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {agent.role === 'agent'
+                    ? 'Real Estate Agent'
+                    : agent.role}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
         <Carousel
           opts={{
             align: 'start',
           }}
-          className="max-w-7xl"
+          className="max-w-7xl md:block hidden"
         >
           <CarouselContent>
             {allAgents.map((agent) => (
