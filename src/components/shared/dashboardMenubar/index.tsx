@@ -40,7 +40,7 @@ interface NavItem {
 type Role = "user" | "agent" | "admin";
 
 const commonNavItems: NavItem[] = [
-  { title: "My Properties", href: "/my-properties", icon: Building2 },
+
   { title: "Favorite Properties", href: "/favorite-properties", icon: Heart },
   {
     title: "Bookmarked Products",
@@ -64,6 +64,7 @@ const roleBasedNavItems = {
     { title: "Dashboard", href: "/agent-dashboard", icon: LayoutDashboard },
     { title: "Profile", href: "/profile", icon: User2 },
     { title: "Add Property", href: "/add-property", icon: Plus },
+    { title: "My Properties", href: "/my-properties", icon: Building2 },
     { title: "Add Property Payment", href: "/add-payment", icon: Plus },
     {
       title: "All Property Payment",

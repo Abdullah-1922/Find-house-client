@@ -61,7 +61,7 @@ export default function AllUsers() {
           </TabsContent>
 
           {/* Agents Tab */}
-          <TabsContent value="agents">
+          <TabsContent value="Rejected Request">
             {isAgentFetching ? (
               <Spinner className="h-[400px]" />
             ) : (
