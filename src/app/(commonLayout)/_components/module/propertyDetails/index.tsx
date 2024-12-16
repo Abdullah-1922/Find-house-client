@@ -74,7 +74,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
     <div>
       <PropertyCarousel images={slideImages} />
       <div className="max-w-7xl mx-auto px-2 lg:px-4">
-        <div className="flex gap-2 md:p-5 w-full my-8">
+        <div className="flex lg:flex-row flex-col gap-2 md:p-5 w-full my-8">
           <div className="flex flex-col gap-2 md:p-5 w-full space-y-5">
             <PropertyDescription
               category={category}
@@ -93,7 +93,7 @@ export default function Property({ propertyId }: { propertyId: string }) {
             />
           </div>
           {/* Sidebar Forms */}
-          <div className="flex flex-col gap-2 md:p-5 w-[50%] space-y-5">
+          <div className="flex flex-col gap-2 md:p-5 sm:w-[50%] w-full space-y-5">
             {/* Schedule Tour */}
             <CalenderSchedule propertyId={propertyId} agentId={agentId} />
             <AgentInformation agent={agent} />

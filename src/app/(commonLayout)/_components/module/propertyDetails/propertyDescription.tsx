@@ -20,22 +20,33 @@ export default function PropertyDescription({
   category,
 }: PropertyListingProps) {
   return (
-    <Card className="w-full">
+    <Card className="w-full relative">
       <CardHeader className="space-y-4">
         <div className="flex justify-between items-start">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold">{title}</h1>
-              <Badge variant="destructive" className="rounded-full capitalize">
+              <Badge variant="destructive" className="rounded-full capitalize lg:block hidden">
+                For {category}
+              </Badge>
+              <Badge variant="destructive" className="rounded-full capitalize absolute top-2 right-3 lg:hidden block">
                 For {category}
               </Badge>
             </div>
+            <div className="xl:hidden block">
+            <div className="text-2xl font-bold text-destructive">
+              ${price.toLocaleString()}
+            </div>
+            <div className="text-sm text-muted-foreground">
+              ${pricePerSqFt.toLocaleString()} / sq ft
+            </div>
+          </div>
             <div className="flex items-center text-muted-foreground">
               <MapPin className="w-4 h-4 mr-1" />
               <span className="text-sm">{location}</span>
             </div>
           </div>
-          <div className="text-right">
+          <div className="text-right xl:block hidden">
             <div className="text-2xl font-bold text-destructive">
               ${price.toLocaleString()}
             </div>
