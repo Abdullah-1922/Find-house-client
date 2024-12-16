@@ -28,7 +28,7 @@ export default function AllUsers() {
 
   return (
     <div>
-      <div className="space-y-6 bg-white rounded-md border p-2 md:p-5 m-2 my-4 mr-6">
+      <div className="space-y-6  bg-white rounded-md border p-2 md:p-5 m-2 my-4 mr-6">
         <h2 className="text-lg md:text-xl font-semibold tracking-tight text-gray-700">
           All Users
         </h2>

@@ -217,7 +217,7 @@ export default function AddProperties() {
                 Property Description And Price
               </h2>
               <div className="space-y-4">
-                <div className="flex items-center gap-7">
+                <div className="flex flex-col sm:flex-row items-center gap-7">
                   <div className="w-full">
                     <FormField
                       control={form.control}

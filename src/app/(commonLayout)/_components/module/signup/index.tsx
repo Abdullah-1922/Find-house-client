@@ -144,12 +144,6 @@ export default function SignUpForm() {
               type={showPassword ? 'text' : 'password'}
               {...register('password')}
             />
-            <div
-              className="absolute inset-y-0 top-5 flex items-center cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-            </div>
             {errors.password && (
               <p className="text-sm text-red-500">{errors.password.message}</p>
             )}
@@ -163,12 +157,6 @@ export default function SignUpForm() {
               type={showConfirmPassword ? 'text' : 'password'}
               {...register('confirmPassword')}
             />
-            <div
-              className="absolute inset-y-0 top-5 flex items-center cursor-pointer"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            >
-              {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-            </div>
             {errors.confirmPassword && (
               <p className="text-sm text-red-500">
                 {errors.confirmPassword.message}

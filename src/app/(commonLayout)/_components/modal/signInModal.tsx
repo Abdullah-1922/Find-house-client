@@ -145,7 +145,7 @@ export default function SignInModal() {
                 />
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-3 top-2 md:p-5 flex items-center"
+                  className="absolute inset-y-0 right-3 top-[22px] md:p-5 flex items-center"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
                   {showPassword ? (

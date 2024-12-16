@@ -121,7 +121,7 @@ export default function OrderTable({ gatewayName }: { gatewayName: string }) {
               <TableCell className="py-5">
                 {format(new Date(order.createdAt), "dd MMM, yyyy")}
               </TableCell>
-              <TableCell className="py-5">à§³{order.amount}</TableCell>
+              <TableCell className="py-5">{order.amount}</TableCell>
               <TableCell className={`py-5`}>
                 <p
                   className={`px-2 py-1 rounded-md border ${
