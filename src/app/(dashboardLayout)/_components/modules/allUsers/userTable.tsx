@@ -140,7 +140,6 @@ export default function UserTable({
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
                   </DropdownMenu>
-               
                 </div>
               </TableCell>
             </TableRow>
@@ -149,14 +148,15 @@ export default function UserTable({
       </Table>
 
       {users?.length === 0 ? <Nodata /> : ""}
-
-      {totalPages > 1 && (
-        <DynamicPagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-        />
-      )}
+      <div className="overflow-auto">
+        {totalPages > 1 && (
+          <DynamicPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
+        )}
+      </div>
     </div>
   );
 }

@@ -13,8 +13,6 @@ import { useUser } from "@/hooks/user.hook";
 
 const Navbar = () => {
   const { user } = useUser();
-  console.log("user", user);
-
   return (
     <>
       <div className="absolute  top-0 z-[999] w-full">

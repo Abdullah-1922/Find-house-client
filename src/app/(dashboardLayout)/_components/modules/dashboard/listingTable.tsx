@@ -64,10 +64,12 @@ export function AdminListingsTable() {
 
   return (
     <div className="space-y-4 bg-white rounded-md border p-2 md:p-5">
-      <h2 className="text-xl font-semibold tracking-tight text-gray-700">
-        Listing
-      </h2>
-      <div className="rounded-lg border bg-white shadow-sm">
+    <h2 className="text-xl font-semibold tracking-tight text-gray-700">
+      Listing
+    </h2>
+    <div className="rounded-lg border bg-white shadow-sm">
+      {/* Add horizontal scroll container */}
+      <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -79,7 +81,7 @@ export function AdminListingsTable() {
               <TableHead className="w-[80px]">Edit</TableHead>
             </TableRow>
           </TableHeader>
-
+  
           <TableBody>
             {properties?.length !== 0 &&
               properties?.map((property: TProperty) => (
@@ -127,16 +129,17 @@ export function AdminListingsTable() {
           </TableBody>
         </Table>
       </div>
-      {/* Pagination */}
-      {properties?.length === 0 && <Nodata />}
-      {totalPages > 1 && (
-        <DynamicPagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      )}
     </div>
+    {/* Pagination */}
+    {properties?.length === 0 && <Nodata />}
+    {totalPages > 1 && (
+      <DynamicPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+    )}
+  </div>
   );
 }
 export function AgentListingsTable({ user }: { user: TUser }) {

@@ -45,7 +45,7 @@ export default function MessagesList({
 
 export function AdminMessagesList({ user }: { user: any }) {
   const { data } = useGetAllInquiriesQuery("limit=5&page=1");
-  const inquiryData = data?.data?.result;
+  const inquiryData = data?.data;
   const messages: Message[] = inquiryData?.map((data: any, index: number) => {
     const senderName = data.fullName;
     const initials = senderName
@@ -128,7 +128,7 @@ export function AgentMessagesList({ user }: { user: any }) {
     agentId: user._id,
     query: "limit=5&page=1",
   });
-  const inquiryData = data?.data?.result;
+  const inquiryData = data?.data;
 
   const messages: Message[] = inquiryData?.map((data: any, index: number) => {
     const senderName = data.fullName;

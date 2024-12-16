@@ -41,7 +41,6 @@ export default function AllProductsPage() {
     setCurrentPage(page);
     console.log("Selected Page:", page);
   };
-
   // handle delete product
   const handleDeleteProduct = async (id: string) => {
     const loadingToast = toast.loading("Product deleting...");
@@ -57,12 +56,13 @@ export default function AllProductsPage() {
       });
     }
   };
-
   if (isLoading) return <Spinner className="h-[600px]" />;
   if (productData.length === 0) {
     return <Nodata />;
   }
+  
 
+   
   return (
     <div className="space-y-6 bg-white rounded-md border p-2 md:p-5 m-4">
       <h2 className="text-lg md:text-xl font-semibold tracking-tight text-gray-700">
@@ -112,7 +112,7 @@ export default function AllProductsPage() {
                           <Star
                             key={i}
                             className={`h-4 w-4 ${
-                              i < product.rating
+                              i <( product.review.reduce((acc, review) => acc + review.rating, 0) / product.review.length)
                                 ? "fill-yellow-400 text-yellow-400"
                                 : "fill-muted text-muted"
                             }`}
