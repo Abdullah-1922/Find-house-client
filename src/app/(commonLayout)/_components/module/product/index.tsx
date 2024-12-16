@@ -49,7 +49,7 @@ const AllProducts = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-2 md:px-4 my-10">
+    <div className="max-w-7xl mx-auto px-2 md:px-4 my-10 lg:pt-0 pt-16">
       <nav className="mb-4">
         <ol className="flex items-center space-x-2 text-sm text-muted-foreground">
           <li>
