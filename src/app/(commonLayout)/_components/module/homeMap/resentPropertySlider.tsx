@@ -27,7 +27,7 @@ export default function ResentPropertySlider() {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-2 md:px-4 py-8">
+    <div className="max-w-7xl mx-auto px-2 md:px-4 py-8 md:pb-20 pb-12">
       <SectionTitle header="RECENT" title="PROPERTIES" />
       <Carousel
         opts={{

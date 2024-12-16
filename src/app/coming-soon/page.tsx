@@ -46,28 +46,28 @@ const ComingSoon = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-4">
-        <h1 className="text-5xl font-bold mb-8">WE ARE COMING SOON</h1>
+        <h1 className="md:text-5xl text-4xl font-bold mb-8">WE ARE COMING SOON</h1>
 
         {/* Countdown Timer */}
         <div className="flex justify-center gap-2 md:p-5 space-x-4 mb-8">
           <div>
-            <span className="text-4xl font-bold">{timeLeft.days}</span>
+            <span className="md:text-4xl text-3xl font-bold">{timeLeft.days}</span>
             <p className="text-sm">Days</p>
           </div>
           <div>
-            <span className="text-4xl font-bold">
+            <span className="md:text-4xl text-3xl font-bold">
               {timeLeft.hours.toString().padStart(2, '0')}
             </span>
             <p className="text-sm">Hours</p>
           </div>
           <div>
-            <span className="text-4xl font-bold">
+            <span className="md:text-4xl text-3xl font-bold">
               {timeLeft.minutes.toString().padStart(2, '0')}
             </span>
             <p className="text-sm">Minutes</p>
           </div>
           <div>
-            <span className="text-4xl font-bold">
+            <span className="md:text-4xl text-3xl font-bold">
               {timeLeft.seconds.toString().padStart(2, '0')}
             </span>
             <p className="text-sm">Seconds</p>
@@ -79,7 +79,7 @@ const ComingSoon = () => {
           <input
             type="email"
             placeholder="Enter Your Email"
-            className="px-4 py-2 w-64 text-black"
+            className="px-4 py-2 max-w-64 text-black"
             required
           />
           <button
@@ -90,7 +90,7 @@ const ComingSoon = () => {
           </button>
         </form>
 
-        <p className="text-lg max-w-2xl mx-auto">
+        <p className="md:text-lg text-sm max-w-2xl mx-auto px-4">
           Sorry.... We are improving and fixing problems of our website. We will
           be back very soon....
         </p>

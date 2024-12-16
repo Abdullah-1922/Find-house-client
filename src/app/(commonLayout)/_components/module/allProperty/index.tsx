@@ -47,7 +47,7 @@ export default function AllProperties() {
   }, [sortBy]);
 
   return (
-    <div className="max-w-7xl mx-auto pb-20 px-2 md:px-4">
+    <div className="max-w-7xl mx-auto pb-20 px-2 md:px-4 lg:pt-16 pt-20">
       <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <p className="text-muted-foreground text-start">All Properties</p>
         <div className="flex items-center gap-4">
@@ -88,7 +88,7 @@ export default function AllProperties() {
                 !isGridView
                   ? "bg-gray-800 hover:bg-gray-900 text-white"
                   : "bg-gray-100 hover:bg-gray-200 text-gray-800"
-              }`}
+              } md:block hidden`}
               onClick={() => setIsGridView(false)}
             >
               <List className="h-4 w-4" />

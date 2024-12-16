@@ -8,7 +8,7 @@ export default function SectionTitle({
   title: string;
 }) {
   return (
-    <div className="flex items-start space-x-4 py-4 pt-20">
+    <div className="flex items-start space-x-4 py-4 md:pt-20 pt-16">
       <div className="w-4 h-16 bg-gray-800 rounded"></div>
       <div>
         <p className="text-lg font-semibold text-black mb-1">{header}</p>

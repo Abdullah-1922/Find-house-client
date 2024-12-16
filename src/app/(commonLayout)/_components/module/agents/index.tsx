@@ -69,14 +69,14 @@ export default function AllAgents() {
         <h1 className="mb-8 text-3xl font-bold">All Agents</h1>
       </div>
 
-      <div className="flex gap-2 md:p-5 w-full">
+      <div className="flex md:flex-row flex-col gap-2 md:p-5 w-full">
         <div className="flex flex-col gap-2 md:p-5 w-full">
           {/* Filters */}
-          <div className="mb-6 flex flex-row items-center justify-between gap-4">
+          <div className="mb-6 flex flex-row  flex-wrap justify-center lg:justify-start lg:items-center justify-between gap-4">
             <p className="text-muted-foreground">
               {agentData?.total || 0} Search results
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-wrap justify-center lg:justify-start">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium">SORT BY:</span>
                 <Select defaultValue="alphabet">
@@ -179,7 +179,7 @@ export default function AllAgents() {
           )}
         </div>
         {/* Sidebar Forms */}
-        <div className="flex flex-col gap-2 md:p-5 w-[50%]">
+        <div className="flex flex-col gap-2 md:p-5 md:w-[50%]">
           <RequestInquiry />
           <ResentProperties />
           <FeaturedProperties />
