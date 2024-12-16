@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 
 const ListGridPage = () => {
   return (
-    <div className="mt-5 mb-10">
+    <div className="mt-5 mb-10 pt-20">
       <Suspense fallback={<Spinner />}>
         <ListGridProperties />
       </Suspense>

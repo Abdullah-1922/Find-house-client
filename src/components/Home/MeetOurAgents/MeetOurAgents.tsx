@@ -8,8 +8,6 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
-import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import SectionTitle from '@/components/ui/sectionTitle';
 import { useGetRoleBasedUserQuery } from '@/redux/api/features/users/userApi';
@@ -34,7 +32,7 @@ const MeetOurAgents = () => {
 
   return (
     <div
-      className="h-[700px]"
+      className="pb-20"
       style={{
         backgroundImage:
           'url(https://code-theme.com/html/findhouses/images/bg/bg-white-3.png)',

@@ -24,7 +24,7 @@ const WhyChooseUs = () => {
 
   return (
     <div
-      className="h-[600px]"
+      className=""
       style={{
         backgroundImage:
           'url(https://code-theme.com/html/findhouses/images/bg/bg-white-3.png)',

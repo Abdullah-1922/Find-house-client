@@ -13,7 +13,7 @@ const ArticlesAndTips = () => {
 
 
   return (
-    <div className="my-16 px-2 md:px-4 max-w-7xl mx-auto">
+    <div className="my-20 px-2 md:px-4 max-w-7xl mx-auto">
       <div className=" ">
         <h2 className="text-center text-4xl font-bold">Articles & Tips</h2>
         <p className="text-center">Read the latest news from our blog.</p>

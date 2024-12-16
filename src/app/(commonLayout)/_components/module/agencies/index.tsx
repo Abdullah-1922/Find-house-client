@@ -172,14 +172,14 @@ export default function OurAgencies() {
         <h1 className="mb-8 text-3xl font-bold">Our Agencies</h1>
       </div>
 
-      <div className="flex gap-2 md:p-5 w-full">
+      <div className="flex md:flex-row flex-col md:gap-2 gap-6 md:p-5 w-full">
         <div className="flex flex-col gap-2 md:p-5 w-full">
           {/* Filters */}
-          <div className="mb-6 flex flex-row items-center justify-between gap-4">
+          <div className="mb-6 flex flex-row items-center justify-between gap-4  flex-wrap justify-center lg:justify-start">
             <p className="text-muted-foreground">
               {agencies.length} Search results
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-wrap justify-center lg:justify-start">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium">SORT BY:</span>
                 <Select defaultValue="alphabet">
@@ -197,11 +197,10 @@ export default function OurAgencies() {
                 <Button
                   variant={isGridView ? "default" : "outline"}
                   size="icon"
-                  className={`${
-                    isGridView
+                  className={`${isGridView
                       ? "bg-gray-800 hover:bg-gray-900 text-white"
                       : "bg-gray-100 hover:bg-gray-200 text-gray-800"
-                  }`}
+                    }`}
                   onClick={() => setIsGridView(true)}
                 >
                   <LayoutGrid className="h-4 w-4" />
@@ -209,11 +208,10 @@ export default function OurAgencies() {
                 <Button
                   variant={!isGridView ? "default" : "outline"}
                   size="icon"
-                  className={`${
-                    !isGridView
+                  className={`${!isGridView
                       ? "bg-gray-800 hover:bg-gray-900 text-white"
                       : "bg-gray-100 hover:bg-gray-200 text-gray-800"
-                  }`}
+                    } sm:block hidden`}
                   onClick={() => setIsGridView(false)}
                 >
                   <List className="h-4 w-4" />
@@ -224,9 +222,8 @@ export default function OurAgencies() {
 
           {/* Agency Grid */}
           <div
-            className={`mb-8 grid gap-6 ${
-              isGridView ? "md:grid-cols-2" : "grid-cols-1"
-            }`}
+            className={`mb-8 grid gap-6 ${isGridView ? "lg:grid-cols-2" : "grid-cols-1"
+              }`}
           >
             {paginatedAgencies?.map((agency) => (
               <Card
@@ -248,9 +245,8 @@ export default function OurAgencies() {
                   </div>
                 </CardHeader>
                 <div
-                  className={`${
-                    isGridView ? "flex flex-col" : "flex flex-col mt-5"
-                  } w-full`}
+                  className={`${isGridView ? "flex flex-col" : "flex flex-col mt-5"
+                    } w-full`}
                 >
                   <CardContent className="space-y-4">
                     <h3 className="text-xl font-semibold">{agency.name}</h3>
@@ -323,7 +319,7 @@ export default function OurAgencies() {
           </Pagination>
         </div>
         {/* Sidebar Forms */}
-        <div className="flex flex-col gap-2 md:p-5 w-[50%]">
+        <div className="flex flex-col gap-2 md:p-5 md:w-[50%] w-full">
           {/* Schedule Tour */}
           <CalenderSchedule agentId={""} propertyId={""} />
           {/* Request Inquiry */}

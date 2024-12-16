@@ -101,7 +101,7 @@ export default function ListGridProperties() {
         <p className="text-muted-foreground text-start">
           {properties?.length || 0} Search results
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center sm:justify-start justify-center gap-4 flex-wrap">
           <Link href={'/list-grid'}>
             <Button size={'sm'} variant={'outline'}>
               <RotateCw />
@@ -146,7 +146,7 @@ export default function ListGridProperties() {
                 !isGridView
                   ? 'bg-gray-800 hover:bg-gray-900 text-white'
                   : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
-              }`}
+              } sm::block hidden`}
               onClick={() => setIsGridView(false)}
             >
               <List className="h-4 w-4" />

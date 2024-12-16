@@ -7,7 +7,7 @@ const layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="bg-[#F5F7FB]">
       <Navbar />
-      <div className="pt-20">{children}</div>
+      <div className="lg:pt-20">{children}</div>
       <Footer />
       <Toaster duration={2000} position="bottom-right" />
     </div>

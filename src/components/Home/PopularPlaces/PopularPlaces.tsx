@@ -28,7 +28,7 @@ const PopularPlaces = () => {
           : locations?.map((location: TPopularPlace) => (
               <div
                 key={location._id}
-                className="max-w-sm overflow-hidden rounded-lg shadow-lg group"
+                className="max-w-sm overflow-hidden rounded-lg shadow-lg group md:mx-0 mx-auto w-full"
               >
                 <div className="block relative">
                   <div className="relative">
